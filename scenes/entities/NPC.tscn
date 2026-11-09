@@ -14,5 +14,12 @@ modulate = Color(0.788235, 0.682353, 0.486275, 1)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_npc_icon")
 
+[node name="MemoryIndicator" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(0.690196, 0.690196, 0.690196, 1)
+position = Vector2(0, -40)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_npc_icon")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_detection")

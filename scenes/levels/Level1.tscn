@@ -16,6 +16,11 @@ color = Color(0.133333, 0.133333, 0.133333, 1)
 [node name="NPC" parent="." instance=ExtResource("2_npc_scene")]
 position = Vector2(120, 0)
 
+[node name="NPC2" parent="." instance=ExtResource("2_npc_scene")]
+position = Vector2(-120, 0)
+dialogue_id = "option_a"
+is_losing_memory = true
+
 [node name="Player" parent="." unique_id=162365422 instance=ExtResource("1_player_scene")]
 
 [node name="DialogueOverlay" parent="." instance=ExtResource("3_dialogue_overlay_scene")]
