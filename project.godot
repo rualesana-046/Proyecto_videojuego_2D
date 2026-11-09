@@ -23,6 +23,7 @@ config/icon="res://icon.svg"
 
 GameManager="*res://autoloads/GameManager.gd"
 WorldState="*res://autoloads/WorldState.gd"
+DialogueManager="*res://autoloads/DialogueManager.gd"
 
 [input]
 

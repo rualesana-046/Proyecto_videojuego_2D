@@ -1,0 +1,26 @@
+{
+	"start": {
+		"speaker": "El Archivista",
+		"text": "Las páginas de este tomo están perdiendo su tinta. Si nadie interviene, pronto solo quedará el vacío absoluto.",
+		"options": [
+			{
+				"text": "¿Qué sucede con los recuerdos?",
+				"next_id": "option_a"
+			},
+			{
+				"text": "Aún no estoy listo para intervenir.",
+				"next_id": ""
+			}
+		]
+	},
+	"option_a": {
+		"speaker": "El Archivista",
+		"text": "Cuando el último trazo se desvanece, el recuerdo desaparece para siempre. Solo un Protector puede restaurar la memoria.",
+		"options": [
+			{
+				"text": "Entendido, protegeré estas páginas.",
+				"next_id": ""
+			}
+		]
+	}
+}
