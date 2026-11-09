@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://b8m3x7p2laq1w" path="res://scenes/entities/Player.tscn" id="1_player_scene"]
 [ext_resource type="PackedScene" uid="uid://g5m2n8p4r1x9w" path="res://scenes/entities/Chaser.tscn" id="2_chaser_scene"]
 [ext_resource type="Texture2D" path="res://icon.svg" id="3_wall_icon"]
+[ext_resource type="PackedScene" uid="uid://p7m2n9x4q1r8w" path="res://scenes/ui/PauseMenu.tscn" id="4_pause_menu_scene"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
 size = Vector2(64, 192)
@@ -42,3 +43,5 @@ shape = SubResource("RectangleShape2D_wall")
 
 [node name="Chaser" parent="." instance=ExtResource("2_chaser_scene")]
 position = Vector2(300, 0)
+
+[node name="PauseMenu" parent="." instance=ExtResource("4_pause_menu_scene")]

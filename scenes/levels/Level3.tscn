@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scenes/levels/Level3.gd" id="1_level3_script"]
 [ext_resource type="PackedScene" uid="uid://b8m3x7p2laq1w" path="res://scenes/entities/Player.tscn" id="2_player_scene"]
 [ext_resource type="PackedScene" uid="uid://j4n9q2x6m8p1w" path="res://scenes/entities/WaxFragment.tscn" id="3_wax_fragment_scene"]
+[ext_resource type="PackedScene" uid="uid://p7m2n9x4q1r8w" path="res://scenes/ui/PauseMenu.tscn" id="4_pause_menu_scene"]
 
 [node name="Level3" type="Node2D"]
 script = ExtResource("1_level3_script")
@@ -48,3 +49,5 @@ offset_top = 52.0
 offset_right = 260.0
 offset_bottom = 78.0
 text = "Fragmentos de cera: 0"
+
+[node name="PauseMenu" parent="." instance=ExtResource("4_pause_menu_scene")]

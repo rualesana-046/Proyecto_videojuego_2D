@@ -1,0 +1,66 @@
+[gd_scene load_steps=3 format=3 uid="uid://p7m2n9x4q1r8w"]
+
+[ext_resource type="Theme" uid="uid://d2m8x4q9r1p7v" path="res://scenes/ui/main_theme.tres" id="1_main_theme"]
+[ext_resource type="Script" path="res://scenes/ui/PauseMenu.gd" id="2_pause_menu_script"]
+
+[node name="PauseMenu" type="CanvasLayer"]
+process_mode = 3
+layer = 10
+script = ExtResource("2_pause_menu_script")
+
+[node name="Overlay" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5)
+
+[node name="PausePanel" type="Panel" parent="Overlay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -130.0
+offset_right = 150.0
+offset_bottom = 130.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_main_theme")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Overlay/PausePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="Overlay/PausePanel/VBoxContainer"]
+layout_mode = 2
+text = "JUEGO PAUSADO"
+horizontal_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="Overlay/PausePanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+text = "Reanudar"
+
+[node name="SaveButton" type="Button" parent="Overlay/PausePanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+text = "Guardar Partida"
+
+[node name="QuitButton" type="Button" parent="Overlay/PausePanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+text = "Salir al Menú"
