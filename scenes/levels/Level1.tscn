@@ -1,14 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://c4k9n2m6v8x1p"]
+[gd_scene format=3 uid="uid://c4lan2m6v8x1p"]
 
-[ext_resource type="PackedScene" uid="uid://b8m3x7p2k9q1w" path="res://scenes/entities/Player.tscn" id="1_player_scene"]
+[ext_resource type="PackedScene" uid="uid://b8m3x7p2laq1w" path="res://scenes/entities/Player.tscn" id="1_player_scene"]
 
-[node name="Level1" type="Node2D"]
+[node name="Level1" type="Node2D" unique_id=123768958]
 
-[node name="Background" type="ColorRect" parent="."]
-offset_left = -1000.0
-offset_top = -1000.0
-offset_right = 1000.0
-offset_bottom = 1000.0
+[node name="Background" type="ColorRect" parent="." unique_id=1350582177]
+offset_left = -1001.0
+offset_top = -1001.0
+offset_right = 999.0
+offset_bottom = 999.0
 color = Color(0.133333, 0.133333, 0.133333, 1)
 
-[node name="Player" parent="." instance=ExtResource("1_player_scene")]
+[node name="Player" parent="." unique_id=162365422 instance=ExtResource("1_player_scene")]

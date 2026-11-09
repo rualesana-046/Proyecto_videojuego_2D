@@ -1,0 +1,62 @@
+[gd_scene load_steps=2 format=3 uid="uid://e7p4r2n8x5m1q"]
+
+[ext_resource type="Theme" uid="uid://d2m8x4q9r1p7v" path="res://scenes/ui/main_theme.tres" id="1_main_theme"]
+
+[node name="DialogueOverlay" type="CanvasLayer"]
+
+[node name="UIContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_main_theme")
+
+[node name="DialogueBox" type="Panel" parent="UIContainer"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 64.0
+offset_top = -220.0
+offset_right = -64.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="SpeakerName" type="Label" parent="UIContainer/DialogueBox"]
+layout_mode = 1
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 320.0
+offset_bottom = 44.0
+text = "Speaker"
+
+[node name="DialogueText" type="RichTextLabel" parent="UIContainer/DialogueBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 48.0
+offset_right = -24.0
+offset_bottom = -56.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+
+[node name="OptionsContainer" type="HBoxContainer" parent="UIContainer/DialogueBox"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -48.0
+offset_right = -24.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 2
