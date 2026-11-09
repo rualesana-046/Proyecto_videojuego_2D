@@ -1,18 +1,23 @@
-[gd_scene load_steps=5 format=3 uid="uid://c4lan2m6v8x1p"]
+[gd_scene load_steps=6 format=3 uid="uid://c4lan2m6v8x1p"]
 
 [ext_resource type="PackedScene" uid="uid://b8m3x7p2laq1w" path="res://scenes/entities/Player.tscn" id="1_player_scene"]
 [ext_resource type="PackedScene" uid="uid://f3n7r9x2m5p8w" path="res://scenes/entities/NPC.tscn" id="2_npc_scene"]
 [ext_resource type="PackedScene" uid="uid://e7p4r2n8x5m1q" path="res://scenes/ui/DialogueOverlay.tscn" id="3_dialogue_overlay_scene"]
 [ext_resource type="PackedScene" uid="uid://p7m2n9x4q1r8w" path="res://scenes/ui/PauseMenu.tscn" id="4_pause_menu_scene"]
 
-[node name="Level1" type="Node2D" unique_id=123768958]
+[sub_resource type="TileSet" id="TileSet_aldeavieja"]
+tile_size = Vector2i(16, 16)
 
-[node name="Background" type="ColorRect" parent="." unique_id=1350582177]
-offset_left = -1001.0
-offset_top = -1001.0
-offset_right = 999.0
-offset_bottom = 999.0
-color = Color(0.133333, 0.133333, 0.133333, 1)
+[node name="Level1" type="Node2D" unique_id=123768958]
+y_sort_enabled = true
+
+[node name="GroundLayer" type="TileMapLayer" parent="."]
+z_index = -1
+tile_set = SubResource("TileSet_aldeavieja")
+
+[node name="EnvironmentLayer" type="TileMapLayer" parent="."]
+y_sort_enabled = true
+tile_set = SubResource("TileSet_aldeavieja")
 
 [node name="NPC" parent="." instance=ExtResource("2_npc_scene")]
 position = Vector2(120, 0)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://p7m2n9x4q1r8w"]
+[gd_scene format=3 uid="uid://q0lb2a4h8a7u"]
 
 [ext_resource type="Theme" uid="uid://d2m8x4q9r1p7v" path="res://scenes/ui/main_theme.tres" id="1_main_theme"]
 [ext_resource type="Script" path="res://scenes/ui/PauseMenu.gd" id="2_pause_menu_script"]
