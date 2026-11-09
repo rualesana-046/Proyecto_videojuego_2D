@@ -43,14 +43,21 @@ func _create_option_buttons(options: Array) -> void:
 		var option_data: Dictionary = option_variant
 		var option_text: String = str(option_data.get("text", ""))
 		var next_id: String = str(option_data.get("next_id", ""))
+		var raw_effect: Variant = option_data.get("effect", [])
+		var effect: Array = raw_effect if raw_effect is Array else []
 
 		var button: Button = Button.new()
 		button.text = option_text
-		button.pressed.connect(_on_option_selected.bind(next_id))
+		button.pressed.connect(_on_option_selected.bind(next_id, effect))
 		options_container.add_child(button)
 
 
-func _on_option_selected(next_id: String) -> void:
+func _on_option_selected(next_id: String, effect: Array = []) -> void:
+	if effect.size() >= 2:
+		var trait_name: String = str(effect[0])
+		var amount: int = int(effect[1])
+		AIProfiler.add_points(trait_name, amount)
+
 	if next_id.is_empty():
 		DialogueManager.end_dialogue()
 	else:

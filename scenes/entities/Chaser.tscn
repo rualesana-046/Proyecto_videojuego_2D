@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://g5m2n8p4r1x9w"]
+[gd_scene format=3 uid="uid://da7626su7t3i5"]
 
 [ext_resource type="Script" path="res://scenes/entities/Chaser.gd" id="1_chaser_script"]
 [ext_resource type="Texture2D" path="res://icon.svg" id="2_chaser_icon"]

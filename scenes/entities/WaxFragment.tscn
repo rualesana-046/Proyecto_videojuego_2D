@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://j4n9q2x6m8p1w"]
+[gd_scene format=3 uid="uid://ceujkx4oityje"]
 
 [ext_resource type="Script" path="res://scenes/entities/WaxFragment.gd" id="1_wax_fragment_script"]
 [ext_resource type="Texture2D" path="res://icon.svg" id="2_wax_fragment_icon"]

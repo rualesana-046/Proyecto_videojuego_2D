@@ -5,11 +5,13 @@
 		"options": [
 			{
 				"text": "¿Qué sucede con los recuerdos?",
-				"next_id": "option_a"
+				"next_id": "option_a",
+				"effect": ["curiosity", 1]
 			},
 			{
 				"text": "Aún no estoy listo para intervenir.",
-				"next_id": ""
+				"next_id": "",
+				"effect": ["pragmatism", 1]
 			}
 		]
 	},
@@ -19,7 +21,8 @@
 		"options": [
 			{
 				"text": "Entendido, protegeré estas páginas.",
-				"next_id": ""
+				"next_id": "",
+				"effect": ["nostalgia", 1]
 			}
 		]
 	}
