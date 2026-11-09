@@ -22,6 +22,8 @@ func _physics_process(_delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_notebook"):
 		WorldState.toggle_notebook()
+	elif event.is_action_pressed("quick_save"):
+		WorldState.save_game()
 
 
 func apply_colors() -> void:
