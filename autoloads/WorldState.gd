@@ -6,6 +6,11 @@ signal wax_fragment_collected(total: int)
 var state: Dictionary = {}
 var is_notebook_active: bool = false
 var wax_fragments: int = 0
+var player_colors: Dictionary = {
+	"body": Color.WHITE,
+	"hair": Color(0.2, 0.2, 0.2),
+	"clothes": Color(0.02, 0.16, 0.14)
+}
 
 
 func toggle_notebook() -> void:

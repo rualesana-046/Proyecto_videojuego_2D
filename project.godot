@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="El Protector de las Páginas en Blanco"
-run/main_scene="res://scenes/levels/Level3.tscn"
+run/main_scene="res://scenes/ui/CharacterCreator.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 

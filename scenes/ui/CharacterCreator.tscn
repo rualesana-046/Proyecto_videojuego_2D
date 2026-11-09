@@ -1,0 +1,102 @@
+[gd_scene load_steps=4 format=3 uid="uid://n3q8r5x2p6m1w"]
+
+[ext_resource type="Theme" uid="uid://d2m8x4q9r1p7v" path="res://scenes/ui/main_theme.tres" id="1_main_theme"]
+[ext_resource type="Script" path="res://scenes/ui/CharacterCreator.gd" id="2_character_creator_script"]
+[ext_resource type="Texture2D" path="res://icon.svg" id="3_preview_icon"]
+
+[node name="CharacterCreator" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_main_theme")
+script = ExtResource("2_character_creator_script")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08, 0.1, 0.09, 1)
+
+[node name="MainContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -180.0
+offset_right = 160.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="PreviewContainer" type="Control" parent="MainContainer"]
+custom_minimum_size = Vector2(320, 140)
+layout_mode = 2
+
+[node name="PreviewVisuals" type="Node2D" parent="MainContainer/PreviewContainer"]
+position = Vector2(160, 70)
+scale = Vector2(1.4, 1.4)
+
+[node name="BodySprite" type="Sprite2D" parent="MainContainer/PreviewContainer/PreviewVisuals"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_preview_icon")
+
+[node name="ClothesSprite" type="Sprite2D" parent="MainContainer/PreviewContainer/PreviewVisuals"]
+position = Vector2(0, 12)
+scale = Vector2(0.4, 0.28)
+texture = ExtResource("3_preview_icon")
+
+[node name="HairSprite" type="Sprite2D" parent="MainContainer/PreviewContainer/PreviewVisuals"]
+position = Vector2(0, -18)
+scale = Vector2(0.36, 0.2)
+texture = ExtResource("3_preview_icon")
+
+[node name="BodyColorRow" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+
+[node name="BodyColorLabel" type="Label" parent="MainContainer/BodyColorRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Color de Cuerpo"
+
+[node name="BodyColorPicker" type="ColorPickerButton" parent="MainContainer/BodyColorRow"]
+custom_minimum_size = Vector2(80, 32)
+layout_mode = 2
+
+[node name="HairColorRow" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+
+[node name="HairColorLabel" type="Label" parent="MainContainer/HairColorRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Color de Cabello"
+
+[node name="HairColorPicker" type="ColorPickerButton" parent="MainContainer/HairColorRow"]
+custom_minimum_size = Vector2(80, 32)
+layout_mode = 2
+
+[node name="ClothesColorRow" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+
+[node name="ClothesColorLabel" type="Label" parent="MainContainer/ClothesColorRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Color de Ropa"
+
+[node name="ClothesColorPicker" type="ColorPickerButton" parent="MainContainer/ClothesColorRow"]
+custom_minimum_size = Vector2(80, 32)
+layout_mode = 2
+
+[node name="StartButton" type="Button" parent="MainContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "Comenzar Aventura"

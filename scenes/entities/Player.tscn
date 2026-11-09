@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://b8m3x7p2k9q1w"]
+[gd_scene load_steps=4 format=3 uid="uid://b8m3x7p2laq1w"]
 
 [ext_resource type="Script" path="res://scenes/entities/Player.gd" id="1_player_script"]
 [ext_resource type="Texture2D" path="res://icon.svg" id="2_player_icon"]
@@ -10,8 +10,20 @@ size = Vector2(56, 28)
 motion_mode = 1
 script = ExtResource("1_player_script")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="BodySprite" type="Sprite2D" parent="Visuals"]
 scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_player_icon")
+
+[node name="ClothesSprite" type="Sprite2D" parent="Visuals"]
+position = Vector2(0, 12)
+scale = Vector2(0.4, 0.28)
+texture = ExtResource("2_player_icon")
+
+[node name="HairSprite" type="Sprite2D" parent="Visuals"]
+position = Vector2(0, -18)
+scale = Vector2(0.36, 0.2)
 texture = ExtResource("2_player_icon")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
