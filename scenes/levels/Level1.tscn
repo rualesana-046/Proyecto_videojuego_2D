@@ -1,6 +1,8 @@
-[gd_scene format=3 uid="uid://c4lan2m6v8x1p"]
+[gd_scene load_steps=4 format=3 uid="uid://c4lan2m6v8x1p"]
 
 [ext_resource type="PackedScene" uid="uid://b8m3x7p2laq1w" path="res://scenes/entities/Player.tscn" id="1_player_scene"]
+[ext_resource type="PackedScene" uid="uid://f3n7r9x2m5p8w" path="res://scenes/entities/NPC.tscn" id="2_npc_scene"]
+[ext_resource type="PackedScene" uid="uid://e7p4r2n8x5m1q" path="res://scenes/ui/DialogueOverlay.tscn" id="3_dialogue_overlay_scene"]
 
 [node name="Level1" type="Node2D" unique_id=123768958]
 
@@ -11,4 +13,9 @@ offset_right = 999.0
 offset_bottom = 999.0
 color = Color(0.133333, 0.133333, 0.133333, 1)
 
+[node name="NPC" parent="." instance=ExtResource("2_npc_scene")]
+position = Vector2(120, 0)
+
 [node name="Player" parent="." unique_id=162365422 instance=ExtResource("1_player_scene")]
+
+[node name="DialogueOverlay" parent="." instance=ExtResource("3_dialogue_overlay_scene")]
