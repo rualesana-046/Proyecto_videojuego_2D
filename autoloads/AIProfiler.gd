@@ -34,3 +34,11 @@ func get_dominant_profile() -> String:
 		return "nostalgia"
 
 	return dominant_trait
+
+
+func reset_traits() -> void:
+	traits = {
+		"nostalgia": 0,
+		"curiosity": 0,
+		"pragmatism": 0
+	}

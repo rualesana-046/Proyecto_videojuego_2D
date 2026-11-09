@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://c4lan2m6v8x1p"]
+[gd_scene load_steps=9 format=3 uid="uid://c4lan2m6v8x1p"]
 
 [ext_resource type="PackedScene" uid="uid://b8m3x7p2laq1w" path="res://scenes/entities/Player.tscn" id="1_player_scene"]
 [ext_resource type="PackedScene" uid="uid://f3n7r9x2m5p8w" path="res://scenes/entities/NPC.tscn" id="2_npc_scene"]
 [ext_resource type="PackedScene" uid="uid://e7p4r2n8x5m1q" path="res://scenes/ui/DialogueOverlay.tscn" id="3_dialogue_overlay_scene"]
 [ext_resource type="PackedScene" uid="uid://p7m2n9x4q1r8w" path="res://scenes/ui/PauseMenu.tscn" id="4_pause_menu_scene"]
 [ext_resource type="Texture2D" uid="uid://ifxynj3yamlc" path="res://icon.svg" id="5_tileset_texture"]
+[ext_resource type="PackedScene" uid="uid://s6n2r8x4p9m1w" path="res://scenes/entities/LevelTransitionZone.tscn" id="6_transition_zone_scene"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_aldeavieja"]
 texture = ExtResource("5_tileset_texture")
@@ -38,6 +39,10 @@ collision_enabled = false
 y_sort_enabled = true
 tile_set = SubResource("TileSet_aldeavieja")
 
+[node name="ExitZone" parent="." instance=ExtResource("6_transition_zone_scene")]
+position = Vector2(0, -180)
+target_scene_path = "res://scenes/levels/Level2.tscn"
+
 [node name="NPC" parent="." instance=ExtResource("2_npc_scene")]
 position = Vector2(120, 0)
 
@@ -45,6 +50,7 @@ position = Vector2(120, 0)
 position = Vector2(-120, 0)
 dialogue_id = "option_a"
 is_losing_memory = true
+next_scene_path = "res://scenes/levels/Level2.tscn"
 
 [node name="Player" parent="." unique_id=162365422 instance=ExtResource("1_player_scene")]
 

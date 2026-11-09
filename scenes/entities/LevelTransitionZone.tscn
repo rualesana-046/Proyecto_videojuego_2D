@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://s6n2r8x4p9m1w"]
+
+[ext_resource type="Script" path="res://scenes/entities/LevelTransitionZone.gd" id="1_transition_script"]
+[ext_resource type="Texture2D" uid="uid://ifxynj3yamlc" path="res://icon.svg" id="2_transition_icon"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_portal"]
+size = Vector2(64, 64)
+
+[node name="LevelTransitionZone" type="Area2D"]
+script = ExtResource("1_transition_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.18, 0.85, 0.68, 0.85)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_transition_icon")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_portal")

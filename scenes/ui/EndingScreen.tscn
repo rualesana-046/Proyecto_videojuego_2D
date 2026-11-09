@@ -1,0 +1,66 @@
+[gd_scene load_steps=3 format=3 uid="uid://r4m8q2x7p1n9w"]
+
+[ext_resource type="Theme" uid="uid://d2m8x4q9r1p7v" path="res://scenes/ui/main_theme.tres" id="1_main_theme"]
+[ext_resource type="Script" path="res://scenes/ui/EndingScreen.gd" id="2_ending_screen_script"]
+
+[node name="EndingScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_main_theme")
+script = ExtResource("2_ending_screen_script")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.08, 0.07, 1)
+
+[node name="EndingPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -160.0
+offset_right = 260.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EndingPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 28.0
+offset_right = -32.0
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="EndingTitleLabel" type="Label" parent="EndingPanel/VBoxContainer"]
+layout_mode = 2
+text = "Final"
+horizontal_alignment = 1
+
+[node name="EndingDescriptionLabel" type="RichTextLabel" parent="EndingPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Descripción del desenlace."
+
+[node name="MainMenuButton" type="Button" parent="EndingPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+text = "Volver al Menú Principal"

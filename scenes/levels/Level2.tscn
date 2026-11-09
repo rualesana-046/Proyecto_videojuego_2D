@@ -1,9 +1,10 @@
-[gd_scene format=3 uid="uid://iwdk2xktuvme"]
+[gd_scene load_steps=7 format=3 uid="uid://iwdk2xktuvme"]
 
 [ext_resource type="PackedScene" uid="uid://b8m3x7p2laq1w" path="res://scenes/entities/Player.tscn" id="1_player_scene"]
 [ext_resource type="PackedScene" uid="uid://g5m2n8p4r1x9w" path="res://scenes/entities/Chaser.tscn" id="2_chaser_scene"]
 [ext_resource type="Texture2D" path="res://icon.svg" id="3_wall_icon"]
 [ext_resource type="PackedScene" uid="uid://p7m2n9x4q1r8w" path="res://scenes/ui/PauseMenu.tscn" id="4_pause_menu_scene"]
+[ext_resource type="PackedScene" uid="uid://s6n2r8x4p9m1w" path="res://scenes/entities/LevelTransitionZone.tscn" id="5_transition_zone_scene"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
 size = Vector2(64, 192)
@@ -38,6 +39,10 @@ texture = ExtResource("3_wall_icon")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2"]
 shape = SubResource("RectangleShape2D_wall")
+
+[node name="ExitZone" parent="." instance=ExtResource("5_transition_zone_scene")]
+position = Vector2(460, 0)
+target_scene_path = "res://scenes/levels/Level3.tscn"
 
 [node name="Player" parent="." instance=ExtResource("1_player_scene")]
 

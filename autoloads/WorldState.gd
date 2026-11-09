@@ -30,6 +30,14 @@ func reset_wax_fragments() -> void:
 	wax_fragment_collected.emit(wax_fragments)
 
 
+func reset_state() -> void:
+	state.clear()
+	is_notebook_active = false
+	notebook_state_changed.emit(is_notebook_active)
+	reset_wax_fragments()
+	AIProfiler.reset_traits()
+
+
 func save_game() -> void:
 	var serialized_colors: Dictionary = {}
 	for part_key: Variant in player_colors.keys():
