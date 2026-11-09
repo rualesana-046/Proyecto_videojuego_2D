@@ -1,12 +1,30 @@
-[gd_scene load_steps=6 format=3 uid="uid://c4lan2m6v8x1p"]
+[gd_scene load_steps=8 format=3 uid="uid://c4lan2m6v8x1p"]
 
 [ext_resource type="PackedScene" uid="uid://b8m3x7p2laq1w" path="res://scenes/entities/Player.tscn" id="1_player_scene"]
 [ext_resource type="PackedScene" uid="uid://f3n7r9x2m5p8w" path="res://scenes/entities/NPC.tscn" id="2_npc_scene"]
 [ext_resource type="PackedScene" uid="uid://e7p4r2n8x5m1q" path="res://scenes/ui/DialogueOverlay.tscn" id="3_dialogue_overlay_scene"]
 [ext_resource type="PackedScene" uid="uid://p7m2n9x4q1r8w" path="res://scenes/ui/PauseMenu.tscn" id="4_pause_menu_scene"]
+[ext_resource type="Texture2D" uid="uid://ifxynj3yamlc" path="res://icon.svg" id="5_tileset_texture"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_aldeavieja"]
+texture = ExtResource("5_tileset_texture")
+texture_region_size = Vector2i(16, 16)
+0:0/0 = 0
+1:0/0 = 0
+1:0/0/y_sort_origin = 8
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:0/0 = 0
+2:0/0/y_sort_origin = 8
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:0/0 = 0
+3:0/0/y_sort_origin = 8
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSet" id="TileSet_aldeavieja"]
 tile_size = Vector2i(16, 16)
+physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 0
+sources/0 = SubResource("TileSetAtlasSource_aldeavieja")
 
 [node name="Level1" type="Node2D" unique_id=123768958]
 y_sort_enabled = true
@@ -14,6 +32,7 @@ y_sort_enabled = true
 [node name="GroundLayer" type="TileMapLayer" parent="."]
 z_index = -1
 tile_set = SubResource("TileSet_aldeavieja")
+collision_enabled = false
 
 [node name="EnvironmentLayer" type="TileMapLayer" parent="."]
 y_sort_enabled = true
