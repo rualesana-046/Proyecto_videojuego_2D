@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://g5m2n8p4r1x9w"]
+
+[ext_resource type="Script" path="res://scenes/entities/Chaser.gd" id="1_chaser_script"]
+[ext_resource type="Texture2D" path="res://icon.svg" id="2_chaser_icon"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(56, 28)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
+radius = 250.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hit"]
+size = Vector2(72, 72)
+
+[node name="Chaser" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_chaser_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.545098, 0, 0, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_chaser_icon")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 16)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="DetectionZone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
+shape = SubResource("CircleShape2D_detection")
+
+[node name="HitZone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitZone"]
+shape = SubResource("RectangleShape2D_hit")
