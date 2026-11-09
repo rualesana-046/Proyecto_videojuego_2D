@@ -68,8 +68,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Color de Cuerpo"
 
-[node name="BodyColorPicker" type="ColorPickerButton" parent="MainContainer/BodyColorRow"]
-custom_minimum_size = Vector2(80, 32)
+[node name="BodyOption" type="OptionButton" parent="MainContainer/BodyColorRow"]
+custom_minimum_size = Vector2(140, 32)
 layout_mode = 2
 
 [node name="HairColorRow" type="HBoxContainer" parent="MainContainer"]
@@ -80,8 +80,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Color de Cabello"
 
-[node name="HairColorPicker" type="ColorPickerButton" parent="MainContainer/HairColorRow"]
-custom_minimum_size = Vector2(80, 32)
+[node name="HairOption" type="OptionButton" parent="MainContainer/HairColorRow"]
+custom_minimum_size = Vector2(140, 32)
 layout_mode = 2
 
 [node name="ClothesColorRow" type="HBoxContainer" parent="MainContainer"]
@@ -92,8 +92,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Color de Ropa"
 
-[node name="ClothesColorPicker" type="ColorPickerButton" parent="MainContainer/ClothesColorRow"]
-custom_minimum_size = Vector2(80, 32)
+[node name="ClothesOption" type="OptionButton" parent="MainContainer/ClothesColorRow"]
+custom_minimum_size = Vector2(140, 32)
 layout_mode = 2
 
 [node name="StartButton" type="Button" parent="MainContainer"]
