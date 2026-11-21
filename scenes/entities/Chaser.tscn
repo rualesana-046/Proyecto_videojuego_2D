@@ -1,16 +1,28 @@
-[gd_scene load_steps=6 format=3 uid="uid://g5m2n8p4r1x9w"]
+[gd_scene load_steps=7 format=3 uid="uid://g5m2n8p4r1x9w"]
 
 [ext_resource type="Script" path="res://scenes/entities/Chaser.gd" id="1_chaser_script"]
-[ext_resource type="Texture2D" path="res://assets/sprites/chaser.png" id="2_chaser_texture"]
+[ext_resource type="Texture2D" path="res://assets/sprites/el_desvanecido.png" id="2_chaser_texture"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(12, 10)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
-radius = 96.0
+radius = 115.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hit"]
 size = Vector2(18, 18)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_whisper"]
+bg_color = Color(0.0784314, 0.101961, 0.0941176, 0.94)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.788235, 0.682353, 0.486275, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [node name="Chaser" type="CharacterBody2D"]
 motion_mode = 1
@@ -18,6 +30,31 @@ script = ExtResource("1_chaser_script")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_chaser_texture")
+
+[node name="WhisperContainer" type="Node2D" parent="."]
+visible = false
+z_index = 4
+position = Vector2(0, -16)
+
+[node name="WhisperPanel" type="Panel" parent="WhisperContainer"]
+offset_left = -16.0
+offset_top = -5.0
+offset_right = 16.0
+offset_bottom = 5.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_whisper")
+
+[node name="WhisperLabel" type="Label" parent="WhisperContainer/WhisperPanel"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 0.5
+offset_right = 86.0
+offset_bottom = 22.5
+scale = Vector2(0.35, 0.35)
+theme_override_colors/font_color = Color(0.929412, 0.913725, 0.847059, 1)
+theme_override_font_sizes/font_size = 14
+text = "Olvido"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 4)

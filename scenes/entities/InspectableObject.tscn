@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://y2m6q8x3p5n1w"]
+[gd_scene format=3 uid="uid://bu6x7wglcxfic"]
 
 [ext_resource type="Script" path="res://scenes/entities/InspectableObject.gd" id="1_inspectable_script"]
 [ext_resource type="Texture2D" path="res://assets/sprites/clue_sparkle.png" id="2_clue_sparkle"]

@@ -8,13 +8,18 @@ const SFX_BUS_NAME: String = "SFX"
 
 const CHOICE_LABELS: Dictionary = {
 	"prologue_silhouette": "Visión en el taller del abuelo",
-	"lucia_tomas_reconstruction": "Reconstrucción del recuerdo de Lucía"
+	"lucia_tomas_reconstruction": "Reconstrucción del recuerdo de Lucía",
+	"samuel_memory_focus": "Reflexión junto al recuerdo de Samuel",
+	"level2_distractions_used": "Tácticas en la antigua estación"
 }
 
 const CLUE_LABELS: Dictionary = {
 	"clue_photo": "Fotografía antigua junto a la panadería (Lucía y la silueta de una bicicleta)",
 	"clue_paper_flower": "Flor de papel doblada entregada por Marta (encargo de Tomás)",
-	"clue_bridge": "Inscripción en el antiguo puente («Aquí aprendimos a no tener miedo de caer»)"
+	"clue_bridge": "Inscripción en el antiguo puente («Aquí aprendimos a no tener miedo de caer»)",
+	"llave_estacion": "Llave antigua de la estación entregada por Inés",
+	"clue_samuel_photo": "Fotografía de Samuel y el abuelo en el pasillo de mantenimiento",
+	"carta_abuelo": "Carta del abuelo hallada en la caja metálica de la Torre del Reloj"
 }
 
 var _save_feedback_tween: Tween = null

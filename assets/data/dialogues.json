@@ -245,5 +245,200 @@
 				"next_id": ""
 			}
 		]
+	},
+	"ines_inicio": {
+		"speaker": "Inés",
+		"text": "Buenas tardes, joven. Hace mucho que ningún tren se detiene en esta estación, pero yo sigo cuidando la sala de espera. Últimamente se oye un roce de páginas secas por el andén, como si una presencia sin rostro buscara los recuerdos que aquí quedaron.",
+		"options": [
+			{
+				"text": "¿Sabe de dónde viene?",
+				"next_id": "ines_origen",
+				"effect": ["curiosity", 1]
+			},
+			{
+				"text": "¿Conoce a mi abuelo?",
+				"next_id": "ines_abuelo",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "¿Por qué hay recuerdos desapareciendo en el pueblo?",
+				"next_id": "ines_olvido",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"ines_origen": {
+		"speaker": "Inés",
+		"text": "Surgió la noche en que el reloj de la torre dejó de dar las horas. Lo llamamos El Desvanecido: no es un monstruo, sino el eco vacío de las historias que nadie volvió a contar. Se siente atraído por el sonido de la campana del andén.",
+		"options": [
+			{
+				"text": "Si el sonido lo atrae, podré usar la campana para despejar el camino.",
+				"next_id": "ines_entrega_llave",
+				"effect": ["pragmatism", 1]
+			},
+			{
+				"text": "¿Qué guardaban en la torre del reloj antes de que se detuviera?",
+				"next_id": "ines_entrega_llave",
+				"effect": ["curiosity", 1]
+			}
+		]
+	},
+	"ines_abuelo": {
+		"speaker": "Inés",
+		"text": "Por supuesto. Tu abuelo venía cada semana a conversar con Samuel, el antiguo jefe de estación. Pasaban horas en la torre del reloj encuadernando los registros de quienes partían y regresaban a Aldeavieja.",
+		"options": [
+			{
+				"text": "Mi abuelo siempre quiso que nadie fuera olvidado al partir.",
+				"next_id": "ines_entrega_llave",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "Necesito subir a esa torre para ver qué dejaron escrito.",
+				"next_id": "ines_entrega_llave",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"ines_olvido": {
+		"speaker": "Inés",
+		"text": "Porque cuando el tiempo se estanca y dejamos de nombrar el pasado, las páginas se vacían. Samuel intentó advertirlo antes de que su propio recuerdo comenzara a borrarse de la estación.",
+		"options": [
+			{
+				"text": "Investigaremos qué descubrió Samuel sobre el origen de este fenómeno.",
+				"next_id": "ines_entrega_llave",
+				"effect": ["curiosity", 1]
+			},
+			{
+				"text": "Dígame cómo acceder a la torre del reloj para detenerlo.",
+				"next_id": "ines_entrega_llave",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"ines_entrega_llave": {
+		"speaker": "Inés",
+		"text": "Toma esta llave antigua; abre la caja metálica que tu abuelo dejó en la torre del reloj. Pero la reja de la torre está cerrada: primero debes pasar por el pasillo de mantenimiento hacia el andén principal y accionar la palanca de señalización.",
+		"grant_clue": "llave_estacion",
+		"set_state": {
+			"has_station_key": true
+		},
+		"options": [
+			{
+				"text": "Gracias, Inés. Iré al pasillo de mantenimiento y al andén.",
+				"next_id": ""
+			}
+		]
+	},
+	"ines_post_llave": {
+		"speaker": "Inés",
+		"text": "Ya tienes la llave antigua. Recuerda: si El Desvanecido te cierra el paso en el andén, puedes usar la lámpara de mantenimiento, bloquear un pasillo con la caja de herramientas o hacer sonar la campana de la estación para distraerlo.",
+		"options": [
+			{
+				"text": "Lo tendré muy presente.",
+				"next_id": ""
+			}
+		]
+	},
+	"estacion_foto_samuel": {
+		"speaker": "Cuaderno de Cera",
+		"text": "Sobre la pared del pasillo de mantenimiento encuentras una fotografía desgastada: en ella aparecen tu abuelo y Samuel, el antiguo jefe de estación, sosteniendo las llaves del reloj.\n\nAl registrar la imagen en el Cuaderno de Cera, un remolino de hojas blancas se levanta al fondo del pasillo: ¡El Desvanecido ha aparecido!",
+		"grant_clue": "clue_samuel_photo",
+		"set_state": {
+			"samuel_photo_examined": true
+		},
+		"options": [
+			{
+				"text": "¡Avanzar hacia el andén principal para activar la palanca de señalización!",
+				"next_id": ""
+			}
+		]
+	},
+	"recuerdo_samuel": {
+		"speaker": "Recuerdo de Samuel y el Abuelo",
+		"text": "Al accionar la palanca de señalización, el mecanismo de la torre retumba y la cera dorada proyecta las palabras que Samuel y tu abuelo compartieron en este mismo andén:\n\n—«Cada vez que un tren deja de anunciarse, otro recuerdo se apaga en Aldeavieja», murmuró Samuel.\n—«Dime, Samuel, ¿qué has comprendido al observar las páginas en blanco?», preguntó tu abuelo.",
+		"set_state": {
+			"station_lever_pulled": true
+		},
+		"options": [
+			{
+				"text": "El cuaderno no puede inventar recuerdos.",
+				"next_id": "recuerdo_samuel_cierre_1",
+				"effect": ["pragmatism", 1]
+			},
+			{
+				"text": "Los recuerdos necesitan a alguien que los mantenga vivos.",
+				"next_id": "recuerdo_samuel_cierre_2",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "Primero desaparece la historia y después la persona.",
+				"next_id": "recuerdo_samuel_cierre_3",
+				"effect": ["curiosity", 1]
+			}
+		]
+	},
+	"recuerdo_samuel_cierre_1": {
+		"speaker": "Eco del Abuelo",
+		"text": "«Exacto: el cuaderno no puede inventar recuerdos; solo puede restaurar la verdad de lo que realmente fue vivido». Con el tañido de la campana mayor, la reja norte hacia la Torre del Reloj se abre de par en par.",
+		"unlock_memory": "Recuerdo de Samuel en el andén",
+		"important_choice": ["samuel_memory_focus", "Comprendiste que el cuaderno no puede inventar recuerdos."],
+		"consume_wax": 1,
+		"options": [
+			{
+				"text": "Subir hacia la Torre del Reloj al norte",
+				"next_id": ""
+			}
+		]
+	},
+	"recuerdo_samuel_cierre_2": {
+		"speaker": "Eco del Abuelo",
+		"text": "«Así es: los recuerdos necesitan a alguien que los mantenga vivos para no convertirse en papel vacío». Con el tañido de la campana mayor, la reja norte hacia la Torre del Reloj se abre de par en par.",
+		"unlock_memory": "Recuerdo de Samuel en el andén",
+		"important_choice": ["samuel_memory_focus", "Comprendiste que los recuerdos necesitan a alguien que los mantenga vivos."],
+		"consume_wax": 1,
+		"options": [
+			{
+				"text": "Subir hacia la Torre del Reloj al norte",
+				"next_id": ""
+			}
+		]
+	},
+	"recuerdo_samuel_cierre_3": {
+		"speaker": "Eco del Abuelo",
+		"text": "«Esa es la ley del Olvido: primero desaparece la historia y después la persona de la memoria del pueblo». Con el tañido de la campana mayor, la reja norte hacia la Torre del Reloj se abre de par en par.",
+		"unlock_memory": "Recuerdo de Samuel en el andén",
+		"important_choice": ["samuel_memory_focus", "Comprendiste que primero desaparece la historia y después la persona."],
+		"consume_wax": 1,
+		"options": [
+			{
+				"text": "Subir hacia la Torre del Reloj al norte",
+				"next_id": ""
+			}
+		]
+	},
+	"carta_abuelo_torre": {
+		"speaker": "Carta del Abuelo",
+		"text": "Usas la llave antigua de Inés para abrir la caja metálica bajo los engranajes de la Torre del Reloj. En su interior encuentras una carta escrita con el pulso firme de tu abuelo:\n\n«Querido nieto: si estás leyendo esta carta, has logrado despertar la memoria de Samuel en la estación. Pero el origen del Olvido nació donde empezó nuestra propia historia. He resguardado las páginas originales en nuestra antigua casa familiar, al otro lado del bosque. Reúne allí la cera antes de que el cuaderno se cierre para siempre».",
+		"unlock_memory": "Carta del abuelo en la torre del reloj",
+		"grant_clue": "carta_abuelo",
+		"set_state": {
+			"clock_tower_letter_read": true
+		},
+		"options": [
+			{
+				"text": "Guardar la carta y mirar hacia el umbral de la torre",
+				"next_id": "torre_despedida_desvanecido"
+			}
+		]
+	},
+	"torre_despedida_desvanecido": {
+		"speaker": "Cuaderno de Cera",
+		"text": "Al pie de la torre, El Desvanecido detiene su marcha. Las hojas en blanco que forman su silueta caen lentamente mientras un último eco susurra: «Olvido»... antes de desvanecerse por completo.\n\nLa salida norte hacia la antigua casa familiar al otro lado del bosque está abierta.",
+		"options": [
+			{
+				"text": "Partir hacia la antigua casa familiar (Nivel 3)",
+				"next_id": ""
+			}
+		]
 	}
 }

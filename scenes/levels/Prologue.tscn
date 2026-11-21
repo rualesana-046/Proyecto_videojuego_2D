@@ -6,6 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://p7m2n9x4q1r8w" path="res://scenes/ui/PauseMenu.tscn" id="4_pause_menu_scene"]
 [ext_resource type="Theme" uid="uid://d2m8x4rar1p7v" path="res://scenes/ui/main_theme.tres" id="5_main_theme"]
 [ext_resource type="FontFile" path="res://assets/fonts/Almendra-Bold.ttf" id="6_title_font"]
+[ext_resource type="Texture2D" path="res://assets/sprites/silhouette_girl.png" id="7_silhouette_girl"]
+[ext_resource type="Texture2D" path="res://assets/sprites/silhouette_elder.png" id="8_silhouette_elder"]
+[ext_resource type="Texture2D" path="res://assets/sprites/silhouette_third.png" id="9_silhouette_third"]
+[ext_resource type="Texture2D" path="res://assets/sprites/silhouette_self.png" id="10_silhouette_self"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_table"]
 radius = 28.0
@@ -176,11 +180,14 @@ layout_mode = 2
 size_flags_horizontal = 3
 alignment = 1
 
-[node name="Figure" type="ColorRect" parent="PrologueOverlay/Dimmer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteGirl"]
-custom_minimum_size = Vector2(44, 54)
+[node name="Figure" type="TextureRect" parent="PrologueOverlay/Dimmer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteGirl"]
+texture_filter = 1
+custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
 size_flags_horizontal = 4
-color = Color(0.32, 0.24, 0.16, 0.85)
+texture = ExtResource("7_silhouette_girl")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Caption" type="Label" parent="PrologueOverlay/Dimmer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteGirl"]
 layout_mode = 2
@@ -195,11 +202,14 @@ layout_mode = 2
 size_flags_horizontal = 3
 alignment = 1
 
-[node name="Figure" type="ColorRect" parent="PrologueOverlay/Dimmer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteElder"]
-custom_minimum_size = Vector2(48, 58)
+[node name="Figure" type="TextureRect" parent="PrologueOverlay/Dimmer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteElder"]
+texture_filter = 1
+custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
 size_flags_horizontal = 4
-color = Color(0.26, 0.2, 0.14, 0.85)
+texture = ExtResource("8_silhouette_elder")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Caption" type="Label" parent="PrologueOverlay/Dimmer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteElder"]
 layout_mode = 2
@@ -214,11 +224,14 @@ layout_mode = 2
 size_flags_horizontal = 3
 alignment = 1
 
-[node name="Figure" type="ColorRect" parent="PrologueOverlay/Dimmer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteDistant"]
-custom_minimum_size = Vector2(42, 56)
+[node name="Figure" type="TextureRect" parent="PrologueOverlay/Dimmer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteDistant"]
+texture_filter = 1
+custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
 size_flags_horizontal = 4
-color = Color(0.22, 0.26, 0.25, 0.78)
+texture = ExtResource("9_silhouette_third")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Caption" type="Label" parent="PrologueOverlay/Dimmer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteDistant"]
 layout_mode = 2
@@ -233,11 +246,14 @@ layout_mode = 2
 size_flags_horizontal = 3
 alignment = 1
 
-[node name="Figure" type="ColorRect" parent="PrologueOverlay/Dimmer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteSelf"]
-custom_minimum_size = Vector2(48, 58)
+[node name="Figure" type="TextureRect" parent="PrologueOverlay/Dimmer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteSelf"]
+texture_filter = 1
+custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
 size_flags_horizontal = 4
-color = Color(0.05, 0.24, 0.2, 0.92)
+texture = ExtResource("10_silhouette_self")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Caption" type="Label" parent="PrologueOverlay/Dimmer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteSelf"]
 layout_mode = 2
