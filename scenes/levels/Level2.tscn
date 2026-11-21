@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://s6n2r8x4p9m1w" path="res://scenes/entities/LevelTransitionZone.tscn" id="5_transition_zone_scene"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
-size = Vector2(64, 192)
+size = Vector2(16, 48)
 
 [node name="Level2" type="Node2D"]
 
@@ -19,34 +19,34 @@ offset_bottom = 1000.0
 color = Color(0.133333, 0.133333, 0.133333, 1)
 
 [node name="Wall1" type="StaticBody2D" parent="."]
-position = Vector2(140, -90)
+position = Vector2(48, -30)
 
 [node name="Sprite2D" type="Sprite2D" parent="Wall1"]
 modulate = Color(0, 0, 0, 1)
-scale = Vector2(0.5, 1.5)
+scale = Vector2(0.125, 0.375)
 texture = ExtResource("3_wall_icon")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall1"]
 shape = SubResource("RectangleShape2D_wall")
 
 [node name="Wall2" type="StaticBody2D" parent="."]
-position = Vector2(140, 140)
+position = Vector2(48, 46)
 
 [node name="Sprite2D" type="Sprite2D" parent="Wall2"]
 modulate = Color(0, 0, 0, 1)
-scale = Vector2(0.5, 1.5)
+scale = Vector2(0.125, 0.375)
 texture = ExtResource("3_wall_icon")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2"]
 shape = SubResource("RectangleShape2D_wall")
 
 [node name="ExitZone" parent="." instance=ExtResource("5_transition_zone_scene")]
-position = Vector2(460, 0)
+position = Vector2(150, 0)
 target_scene_path = "res://scenes/levels/Level3.tscn"
 
 [node name="Player" parent="." instance=ExtResource("1_player_scene")]
 
 [node name="Chaser" parent="." instance=ExtResource("2_chaser_scene")]
-position = Vector2(300, 0)
+position = Vector2(100, 0)
 
 [node name="PauseMenu" parent="." instance=ExtResource("4_pause_menu_scene")]

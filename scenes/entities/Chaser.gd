@@ -1,7 +1,7 @@
 class_name Chaser
 extends CharacterBody2D
 
-const SPEED: float = 120.0
+const SPEED: float = 55.0
 
 var target_player: Player = null
 

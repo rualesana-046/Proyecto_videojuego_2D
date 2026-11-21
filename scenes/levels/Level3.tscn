@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://bmig0y7hyf4um"]
+[gd_scene load_steps=5 format=3 uid="uid://bmig0y7hyf4um"]
 
 [ext_resource type="Script" path="res://scenes/levels/Level3.gd" id="1_level3_script"]
 [ext_resource type="PackedScene" uid="uid://b8m3x7p2laq1w" path="res://scenes/entities/Player.tscn" id="2_player_scene"]
@@ -16,16 +16,16 @@ offset_bottom = 1000.0
 color = Color(0.133333, 0.133333, 0.133333, 1)
 
 [node name="WaxFragment1" parent="." instance=ExtResource("3_wax_fragment_scene")]
-position = Vector2(200, -150)
+position = Vector2(68, -50)
 
 [node name="WaxFragment2" parent="." instance=ExtResource("3_wax_fragment_scene")]
-position = Vector2(-220, -140)
+position = Vector2(-72, -48)
 
 [node name="WaxFragment3" parent="." instance=ExtResource("3_wax_fragment_scene")]
-position = Vector2(-180, 180)
+position = Vector2(-60, 60)
 
 [node name="WaxFragment4" parent="." instance=ExtResource("3_wax_fragment_scene")]
-position = Vector2(240, 160)
+position = Vector2(80, 54)
 
 [node name="Player" parent="." instance=ExtResource("2_player_scene")]
 

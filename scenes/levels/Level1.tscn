@@ -40,14 +40,14 @@ y_sort_enabled = true
 tile_set = SubResource("TileSet_aldeavieja")
 
 [node name="ExitZone" parent="." instance=ExtResource("6_transition_zone_scene")]
-position = Vector2(0, -180)
+position = Vector2(0, -60)
 target_scene_path = "res://scenes/levels/Level2.tscn"
 
 [node name="NPC" parent="." instance=ExtResource("2_npc_scene")]
-position = Vector2(120, 0)
+position = Vector2(40, 0)
 
 [node name="NPC2" parent="." instance=ExtResource("2_npc_scene")]
-position = Vector2(-120, 0)
+position = Vector2(-40, 0)
 dialogue_id = "option_a"
 is_losing_memory = true
 next_scene_path = "res://scenes/levels/Level2.tscn"
