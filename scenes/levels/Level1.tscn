@@ -27,12 +27,12 @@ target_scene_path = "res://scenes/levels/Level2.tscn"
 
 [node name="NPC" parent="." instance=ExtResource("3_npc_scene")]
 position = Vector2(40, 0)
+dialogue_id = "abuelo_inicio"
 
 [node name="NPC2" parent="." instance=ExtResource("3_npc_scene")]
 position = Vector2(-40, 0)
-dialogue_id = "option_a"
+dialogue_id = "aldeana_olvido"
 is_losing_memory = true
-next_scene_path = "res://scenes/levels/Level2.tscn"
 
 [node name="Player" parent="." unique_id=162365422 instance=ExtResource("2_player_scene")]
 

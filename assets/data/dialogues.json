@@ -1,28 +1,211 @@
 {
-	"start": {
-		"speaker": "El Archivista",
-		"text": "Las páginas de este tomo están perdiendo su tinta. Si nadie interviene, pronto solo quedará el vacío absoluto.",
+	"abuelo_inicio": {
+		"speaker": "Maestro Encuadernador",
+		"text": "Aprendiz, qué alivio verte en la plaza. Las crónicas de Aldeavieja se están desvaneciendo hoja por hoja; el Olvido avanza desde las ruinas del norte.",
 		"options": [
 			{
-				"text": "¿Qué sucede con los recuerdos?",
-				"next_id": "option_a",
+				"text": "No permitiré que las memorias de nuestra gente se pierdan.",
+				"next_id": "abuelo_cuaderno_nostalgia",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "¿Por qué está ocurriendo esto ahora? ¿Qué provoca el Olvido?",
+				"next_id": "abuelo_cuaderno_curiosity",
 				"effect": ["curiosity", 1]
 			},
 			{
-				"text": "Aún no estoy listo para intervenir.",
+				"text": "Dime qué herramientas necesito para detenerlo de inmediato.",
+				"next_id": "abuelo_cuaderno_pragmatism",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"abuelo_cuaderno_nostalgia": {
+		"speaker": "Maestro Encuadernador",
+		"text": "Tu corazón honra a nuestros ancestros. Lleva contigo el Cuaderno de Cera: presiona la tecla [Q] para abrirlo y revelar qué habitantes están perdiendo sus recuerdos.",
+		"options": [
+			{
+				"text": "Hablaré con cada vecino para resguardar sus vivencias.",
+				"next_id": "abuelo_portal",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "¿Cómo logra la cera hacer visible lo que el Olvido borra?",
+				"next_id": "abuelo_portal",
+				"effect": ["curiosity", 1]
+			},
+			{
+				"text": "Identificaré a los afectados y marcharé directo hacia las ruinas.",
+				"next_id": "abuelo_portal",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"abuelo_cuaderno_curiosity": {
+		"speaker": "Maestro Encuadernador",
+		"text": "Una grieta en el Gran Tomo Fundacional liberó la niebla blanca. Si presionas la tecla [Q] para abrir tu Cuaderno de Cera, podrás percibir las páginas incompletas sobre quienes sufren el Olvido.",
+		"options": [
+			{
+				"text": "Es doloroso pensar en todo lo que ya habrán olvidado.",
+				"next_id": "abuelo_portal",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "Quiero estudiar esas marcas antes de cruzar hacia el origen.",
+				"next_id": "abuelo_portal",
+				"effect": ["curiosity", 1]
+			},
+			{
+				"text": "Entendido. Usaré el cuaderno con [Q] y buscaré una solución práctica.",
+				"next_id": "abuelo_portal",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"abuelo_cuaderno_pragmatism": {
+		"speaker": "Maestro Encuadernador",
+		"text": "Directo al grano, como buen protector. Tu herramienta principal es el Cuaderno de Cera: presiona [Q] para activarlo y detectar al instante quién está perdiendo sus recuerdos en la plaza.",
+		"options": [
+			{
+				"text": "Primero escucharé a nuestra gente antes de partir.",
+				"next_id": "abuelo_portal",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "¿Qué relación tienen esas marcas con las sombras de las ruinas?",
+				"next_id": "abuelo_portal",
+				"effect": ["curiosity", 1]
+			},
+			{
+				"text": "Perfecto. ¿Cuál es el siguiente paso tras revisar la plaza?",
+				"next_id": "abuelo_portal",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"abuelo_portal": {
+		"speaker": "Maestro Encuadernador",
+		"text": "Al norte de la plaza verás el portal hacia las Ruinas del Olvido. Esquiva allí a los Recolectores encapuchados hasta llegar al Taller de Encuadernación, donde tendrás treinta segundos para reunir los cuatro Fragmentos de Cera.",
+		"options": [
+			{
+				"text": "Protegeré cada página tal como fue escrita desde el principio.",
+				"next_id": "",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "Descubriré la verdad que esconden las ruinas y el Gran Tomo.",
+				"next_id": "",
+				"effect": ["curiosity", 1]
+			},
+			{
+				"text": "Reuniré la cera a tiempo y aseguraré el futuro de Aldeavieja.",
 				"next_id": "",
 				"effect": ["pragmatism", 1]
 			}
 		]
 	},
-	"option_a": {
-		"speaker": "El Archivista",
-		"text": "Cuando el último trazo se desvanece, el recuerdo desaparece para siempre. Solo un Protector puede restaurar la memoria.",
+	"aldeana_olvido": {
+		"speaker": "Elena, Habitante de Aldeavieja",
+		"text": "Disculpa, joven encuadernador... Miraba hacia el norte y de pronto olvidé cómo se llamaba nuestra antigua biblioteca. También había una canción de cuna que mi madre cantaba... pero las palabras se me escapan como arena.",
 		"options": [
 			{
-				"text": "Entendido, protegeré estas páginas.",
+				"text": "Cierra los ojos; aún puedes sentir la calidez de aquella melodía de tu infancia.",
+				"next_id": "aldeana_cancion_nostalgia",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "¿Cuándo empezaste a notar que los nombres se borraban? ¿Viste algo extraño?",
+				"next_id": "aldeana_cancion_curiosity",
+				"effect": ["curiosity", 1]
+			},
+			{
+				"text": "No te esfuerces ahora; necesito saber por dónde se fue la tinta para recuperarla.",
+				"next_id": "aldeana_cancion_pragmatism",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"aldeana_cancion_nostalgia": {
+		"speaker": "Elena, Habitante de Aldeavieja",
+		"text": "Sí... hablaba del aroma del papel antiguo y del dorado de las hojas en otoño. Qué hermoso sería que nada en Aldeavieja cambiara jamás y que nuestros seres queridos permanecieran siempre en estas páginas.",
+		"options": [
+			{
+				"text": "Te prometo que restauraré cada verso para que todo vuelva a ser como antes.",
+				"next_id": "aldeana_despedida",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "Esa canción parece describir el sello original del Gran Tomo. Investigaré su letra.",
+				"next_id": "aldeana_despedida",
+				"effect": ["curiosity", 1]
+			},
+			{
+				"text": "Para conservarla, debo actuar rápido y conseguir la cera en el taller.",
+				"next_id": "aldeana_despedida",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"aldeana_cancion_curiosity": {
+		"speaker": "Elena, Habitante de Aldeavieja",
+		"text": "Comenzó anoche, cuando un viento frío sopló desde el portal del norte. Vi siluetas encapuchadas de ojos carmesí merodeando cerca de las ruinas, como si buscaran el origen mismo de nuestra tinta.",
+		"options": [
+			{
+				"text": "No dejaré que esas sombras nos arrebaten la historia de nuestras familias.",
+				"next_id": "aldeana_despedida",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "Si los Recolectores buscan el origen de la tinta, la respuesta está tras ese portal.",
+				"next_id": "aldeana_despedida",
+				"effect": ["curiosity", 1]
+			},
+			{
+				"text": "Esas sombras son un obstáculo más; las esquivaré para llegar a la cera.",
+				"next_id": "aldeana_despedida",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"aldeana_cancion_pragmatism": {
+		"speaker": "Elena, Habitante de Aldeavieja",
+		"text": "Tienes razón, el lamento no detendrá la página en blanco. El Maestro dijo que la reserva de Fragmentos de Cera quedó encerrada en el taller, cruzando los pasillos de las ruinas.",
+		"options": [
+			{
+				"text": "Recuperaré esa cera para que nunca olvides la voz de tu madre.",
+				"next_id": "aldeana_despedida",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "Me pregunto por qué los fragmentos quedaron dispersos precisamente allí.",
+				"next_id": "aldeana_despedida",
+				"effect": ["curiosity", 1]
+			},
+			{
+				"text": "Iré de inmediato. Treinta segundos en el taller bastarán para recolectarlos.",
+				"next_id": "aldeana_despedida",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"aldeana_despedida": {
+		"speaker": "Elena, Habitante de Aldeavieja",
+		"text": "Gracias por escucharme. Siento que mi mente se aclara un poco. Cuando cruces hacia las ruinas y llegues al Gran Tomo, ¿qué harás con las páginas en blanco de Aldeavieja?",
+		"options": [
+			{
+				"text": "Sellaré los recuerdos antiguos para que nuestra tradición viva eternamente.",
 				"next_id": "",
 				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "Descifraré el misterio oculto tras la tinta y el origen del Olvido.",
+				"next_id": "",
+				"effect": ["curiosity", 1]
+			},
+			{
+				"text": "Escribiré un nuevo capítulo para que la aldea avance sin temor al mañana.",
+				"next_id": "",
+				"effect": ["pragmatism", 1]
 			}
 		]
 	}
