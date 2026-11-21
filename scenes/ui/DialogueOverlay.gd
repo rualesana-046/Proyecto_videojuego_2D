@@ -26,6 +26,9 @@ func _on_dialogue_line_updated(speaker_name: String, text: String, options: Arra
 	show()
 	speaker_name_label.text = speaker_name
 	dialogue_text_label.text = text
+	if not speaker_name.is_empty() and not WorldState.known_characters.has(speaker_name):
+		WorldState.known_characters.append(speaker_name)
+		WorldState.exploration_score += 1
 	_clear_options()
 	_create_option_buttons(options)
 

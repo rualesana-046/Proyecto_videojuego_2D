@@ -26,6 +26,10 @@ func _input(event: InputEvent) -> void:
 	if is_player_near and not DialogueManager.is_dialogue_active and event.is_action_pressed("interact"):
 		if not next_scene_path.is_empty():
 			_awaiting_dialogue_transition = true
+		if is_losing_memory and WorldState.is_notebook_active:
+			var memory_entry: String = "Recuerdo de Aldeavieja (" + dialogue_id + ")"
+			if not WorldState.recovered_memories.has(memory_entry):
+				WorldState.recovered_memories.append(memory_entry)
 		DialogueManager.start_dialogue(dialogue_id)
 
 

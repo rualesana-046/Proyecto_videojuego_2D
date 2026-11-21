@@ -1,7 +1,7 @@
 class_name CharacterCreator
 extends Control
 
-const FIRST_LEVEL_PATH: String = "res://scenes/levels/Level1.tscn"
+const FIRST_LEVEL_PATH: String = "res://scenes/levels/Prologue.tscn"
 const MAIN_MENU_PATH: String = "res://scenes/ui/MainMenu.tscn"
 
 const BODY_PALETTE: Array[Color] = [
@@ -92,6 +92,7 @@ func _on_clothes_option_selected(index: int) -> void:
 
 
 func _on_start_button_pressed() -> void:
+	WorldState.current_level = FIRST_LEVEL_PATH
 	get_tree().change_scene_to_file(FIRST_LEVEL_PATH)
 
 
