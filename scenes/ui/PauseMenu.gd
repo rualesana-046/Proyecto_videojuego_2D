@@ -10,7 +10,9 @@ const CHOICE_LABELS: Dictionary = {
 	"prologue_silhouette": "Visión en el taller del abuelo",
 	"lucia_tomas_reconstruction": "Reconstrucción del recuerdo de Lucía",
 	"samuel_memory_focus": "Reflexión junto al recuerdo de Samuel",
-	"level2_distractions_used": "Tácticas en la antigua estación"
+	"level2_distractions_used": "Tácticas en la antigua estación",
+	"study_investigation_focus": "Investigación en el estudio del abuelo",
+	"final_decision": "Decisión frente a La Memoria Compartida"
 }
 
 const CLUE_LABELS: Dictionary = {
@@ -19,7 +21,12 @@ const CLUE_LABELS: Dictionary = {
 	"clue_bridge": "Inscripción en el antiguo puente («Aquí aprendimos a no tener miedo de caer»)",
 	"llave_estacion": "Llave antigua de la estación entregada por Inés",
 	"clue_samuel_photo": "Fotografía de Samuel y el abuelo en el pasillo de mantenimiento",
-	"carta_abuelo": "Carta del abuelo hallada en la caja metálica de la Torre del Reloj"
+	"carta_abuelo": "Carta del abuelo hallada en la caja metálica de la Torre del Reloj",
+	"item_dried_flower": "Flor seca conservada en el jardín de la casa familiar",
+	"item_photo": "Fotografía del abuelo junto a Elena en la sala principal",
+	"item_letter": "Carta inconclusa hallada en el estudio de encuadernación",
+	"item_ribbon": "Cinta de encuadernación hallada en el estudio",
+	"item_last_letter": "Última carta guardada en la habitación del abuelo"
 }
 
 var _save_feedback_tween: Tween = null

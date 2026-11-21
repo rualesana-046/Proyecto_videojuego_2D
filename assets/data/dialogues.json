@@ -440,5 +440,197 @@
 				"next_id": ""
 			}
 		]
+	},
+	"casa_escena1_llegada": {
+		"speaker": "Cuaderno de Cera",
+		"text": "Sobre la repisa de la sala principal, junto a un reloj antiguo que aún funciona con un tic-tac sereno, encuentras una fotografía enmarcada: tu abuelo sonríe junto a Elena frente al jardín de esta misma casa.\n\nAl recoger la fotografía, el Cuaderno de Cera se entibia entre tus manos. Los recuerdos de lo que ocurrió aquí siguen esperando ser reunidos para abrir los tres sellos del sótano.",
+		"grant_clue": "item_photo",
+		"options": [
+			{
+				"text": "Guardar la Fotografía del abuelo y Elena, y recorrer la casa",
+				"next_id": ""
+			}
+		]
+	},
+	"casa_escena2_estudio": {
+		"speaker": "Eco del Estudio",
+		"text": "Al examinar el estudio de encuadernación con el Cuaderno de Cera abierto, los frascos de pigmento y las prensas de madera revelan las anotaciones más íntimas de tu abuelo. Una pregunta resuena en tu interior:",
+		"options": [
+			{
+				"text": "Quiero saber qué pasó con Elena.",
+				"next_id": "casa_estudio_elena",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "Quiero entender por qué el abuelo utilizó el cuaderno.",
+				"next_id": "casa_estudio_cuaderno",
+				"effect": ["curiosity", 1]
+			},
+			{
+				"text": "Necesito descubrir cómo detener el olvido.",
+				"next_id": "casa_estudio_detener",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"casa_estudio_elena": {
+		"speaker": "Apuntes del Abuelo",
+		"text": "«Elena fue la primera en sentir que las tardes se deshilachaban en su memoria. Intenté escribir cada conversación nuestra para que jamás se apartara de nuestro hogar».",
+		"important_choice": ["study_investigation_focus", "Buscaste comprender qué ocurrió con Elena."],
+		"options": [
+			{
+				"text": "Reunir los objetos de la casa y acudir a la Mesa de Encuadernación",
+				"next_id": ""
+			}
+		]
+	},
+	"casa_estudio_cuaderno": {
+		"speaker": "Apuntes del Abuelo",
+		"text": "«Descubrí que la cera dorada podía fijar un recuerdo vivo dentro del papel. Pero cuanto más sellaba las páginas de Aldeavieja, más inmóvil quedaba el tiempo a nuestro alrededor».",
+		"important_choice": ["study_investigation_focus", "Investigaste por qué el abuelo utilizó el Cuaderno de Cera."],
+		"options": [
+			{
+				"text": "Reunir los objetos de la casa y acudir a la Mesa de Encuadernación",
+				"next_id": ""
+			}
+		]
+	},
+	"casa_estudio_detener": {
+		"speaker": "Apuntes del Abuelo",
+		"text": "«Para abrir el sótano donde reposa el núcleo de la memoria compartida es necesario reconstruir nuestros tres recuerdos fundamentales en la mesa de encuadernación: El primer encuentro, La promesa y La despedida».",
+		"important_choice": ["study_investigation_focus", "Te enfocaste en descubrir cómo abrir el sótano y detener el Olvido."],
+		"options": [
+			{
+				"text": "Reunir los objetos de la casa y acudir a la Mesa de Encuadernación",
+				"next_id": ""
+			}
+		]
+	},
+	"recuerdo_primer_encuentro": {
+		"speaker": "Recuerdo I: El Primer Encuentro",
+		"text": "La cera dorada une la fotografía de la sala con la carta inconclusa del estudio. Las voces jóvenes de tu abuelo y Elena cobran vida en la habitación:\n\n—«¿Por qué guardas tantas cosas?», preguntó Elena.\n—«Porque tengo miedo de olvidar», respondió tu abuelo.\n\nEl primer sello de la puerta del sótano se ilumina.",
+		"unlock_memory": "El primer encuentro (Abuelo y Elena)",
+		"options": [
+			{
+				"text": "Continuar en la Mesa de Encuadernación",
+				"next_id": ""
+			}
+		]
+	},
+	"recuerdo_la_promesa": {
+		"speaker": "Recuerdo II: La Promesa",
+		"text": "Al entrelazar la cinta de encuadernación con la flor seca del jardín, el perfume de una tarde lejana envuelve el estudio y escuchas el juramento que sellaron sobre el primer cuaderno:\n\n—«Prometo que nadie olvidará lo que vivimos aquí».\n\nEl segundo sello de la puerta del sótano se abre con un destello dorado.",
+		"unlock_memory": "La promesa del estudio",
+		"options": [
+			{
+				"text": "Continuar en la Mesa de Encuadernación",
+				"next_id": ""
+			}
+		]
+	},
+	"recuerdo_la_despedida": {
+		"speaker": "Recuerdo III: La Despedida",
+		"text": "El sello de cera dorada revela las líneas finales de la última carta de la habitación: cuando Elena desapareció, el temor a que su recuerdo se extinguiera llevó a tu abuelo a encerrar las memorias de toda Aldeavieja dentro de la cera, deteniendo sin querer el fluir natural de sus vidas.\n\nEl tercer sello cede y la puerta norte hacia el sótano queda abierta.",
+		"unlock_memory": "La despedida de Elena",
+		"options": [
+			{
+				"text": "Entrar al sótano de la casa",
+				"next_id": ""
+			}
+		]
+	},
+	"sotano_abuelo_inicio": {
+		"speaker": "Memoria del Abuelo",
+		"text": "Junto a la mesa central del sótano, donde descansa el Gran Libro abierto de Aldeavieja, la presencia translúcida de tu abuelo te recibe con una sonrisa serena:\n\n—«Sabía que algún día encontrarías este lugar... Por miedo a perder el recuerdo de Elena, encerré las historias del pueblo en la cera. Creí que las protegía, pero las estaba dejando sin futuro».",
+		"options": [
+			{
+				"text": "Lo hiciste por amor a Elena y a nuestra gente, abuelo.",
+				"next_id": "sotano_abuelo_consejo",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "Ahora comprendo por qué las páginas en blanco avanzaban por el pueblo.",
+				"next_id": "sotano_abuelo_consejo",
+				"effect": ["curiosity", 1]
+			},
+			{
+				"text": "Estoy aquí para terminar lo que empezaste y liberar a Aldeavieja.",
+				"next_id": "sotano_abuelo_consejo",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"sotano_abuelo_consejo": {
+		"speaker": "Memoria del Abuelo",
+		"text": "La figura de tu abuelo contempla la esfera resplandeciente que levita sobre el libro —La memoria compartida— y te entrega su último consejo:\n\n—«No guardes las historias para ti. Devuélvelas a quienes les pertenecen».",
+		"options": [
+			{
+				"text": "Contemplar La memoria compartida y tomar la Decisión Final",
+				"next_id": "sotano_decision_final"
+			}
+		]
+	},
+	"sotano_decision_final": {
+		"speaker": "La Memoria Compartida",
+		"text": "Ante ti brilla La memoria compartida de Aldeavieja: los recuerdos de Lucía y Tomás, de Samuel e Inés, y de tu abuelo y Elena laten dentro de la cera dorada. ¿Qué decides hacer con el Gran Libro?",
+		"options": [
+			{
+				"text": "Compartir los recuerdos",
+				"next_id": "final_eleccion_share",
+				"effect": ["nostalgia", 2]
+			},
+			{
+				"text": "Conservar el recuerdo",
+				"next_id": "final_eleccion_preserve",
+				"effect": ["curiosity", 2]
+			},
+			{
+				"text": "Dejar que los recuerdos sigan su curso",
+				"next_id": "final_eleccion_let_go",
+				"effect": ["pragmatism", 2]
+			}
+		]
+	},
+	"final_eleccion_share": {
+		"speaker": "Cuaderno de Cera",
+		"text": "Abres las páginas del Gran Libro y permites que la cera dorada fluya hacia cada rincón de Aldeavieja, devolviendo las historias a las manos y voces de quienes las vivieron.",
+		"important_choice": ["final_decision", "share"],
+		"set_state": {
+			"final_decision_made": true
+		},
+		"options": [
+			{
+				"text": "Ver el desenlace de Aldeavieja",
+				"next_id": ""
+			}
+		]
+	},
+	"final_eleccion_preserve": {
+		"speaker": "Cuaderno de Cera",
+		"text": "Sellas con cuidado el Gran Libro para custodiar cada recuerdo intacto en el santuario del taller, preservando para siempre el testimonio de lo que Aldeavieja vivió.",
+		"important_choice": ["final_decision", "preserve"],
+		"set_state": {
+			"final_decision_made": true
+		},
+		"options": [
+			{
+				"text": "Ver el desenlace de Aldeavieja",
+				"next_id": ""
+			}
+		]
+	},
+	"final_eleccion_let_go": {
+		"speaker": "Cuaderno de Cera",
+		"text": "Dejas que la cera antigua se disuelva con suavidad en el aire, permitiendo que los recuerdos cumplan su ciclo natural para que Aldeavieja pueda escribir páginas nuevas sin ataduras.",
+		"important_choice": ["final_decision", "let_go"],
+		"set_state": {
+			"final_decision_made": true
+		},
+		"options": [
+			{
+				"text": "Ver el desenlace de Aldeavieja",
+				"next_id": ""
+			}
+		]
 	}
 }

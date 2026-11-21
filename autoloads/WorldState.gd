@@ -43,6 +43,7 @@ func toggle_notebook() -> void:
 
 func add_wax_fragment() -> void:
 	wax_fragments += 1
+	wax_remaining += 1
 	wax_fragment_collected.emit(wax_fragments)
 
 
