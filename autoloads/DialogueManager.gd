@@ -49,11 +49,51 @@ func start_dialogue(dialogue_id: String) -> void:
 		dialogue_started.emit()
 
 	var node_data: Dictionary = dialogues[dialogue_id]
+	_process_node_events(node_data)
+
 	var speaker_name: String = str(node_data.get("speaker", ""))
 	var text: String = str(node_data.get("text", ""))
 	var options: Array = node_data.get("options", [])
 
 	dialogue_line_updated.emit(speaker_name, text, options)
+
+
+func show_custom_message(speaker_name: String, text: String, close_label: String = "Cerrar") -> void:
+	if not is_dialogue_active:
+		is_dialogue_active = true
+		dialogue_started.emit()
+
+	var single_option: Array = [
+		{
+			"text": close_label,
+			"next_id": ""
+		}
+	]
+	dialogue_line_updated.emit(speaker_name, text, single_option)
+
+
+func _process_node_events(node_data: Dictionary) -> void:
+	if node_data.has("grant_clue"):
+		var clue_id: String = str(node_data["grant_clue"])
+		WorldState.register_clue(clue_id)
+
+	if node_data.has("unlock_memory"):
+		var memory_title: String = str(node_data["unlock_memory"])
+		WorldState.register_recovered_memory(memory_title)
+
+	if node_data.has("set_state") and node_data["set_state"] is Dictionary:
+		var state_updates: Dictionary = node_data["set_state"]
+		for state_key: Variant in state_updates.keys():
+			WorldState.state[str(state_key)] = state_updates[state_key]
+
+	if node_data.has("important_choice") and node_data["important_choice"] is Array:
+		var choice_pair: Array = node_data["important_choice"]
+		if choice_pair.size() >= 2:
+			WorldState.important_choices[str(choice_pair[0])] = str(choice_pair[1])
+
+	if node_data.has("consume_wax"):
+		var wax_cost: int = int(node_data["consume_wax"])
+		WorldState.wax_remaining = maxi(0, WorldState.wax_remaining - wax_cost)
 
 
 func end_dialogue() -> void:

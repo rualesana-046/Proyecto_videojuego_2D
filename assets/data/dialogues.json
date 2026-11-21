@@ -1,211 +1,248 @@
 {
-	"abuelo_inicio": {
-		"speaker": "Maestro Encuadernador",
-		"text": "Aprendiz, qué alivio verte en la plaza. Las crónicas de Aldeavieja se están desvaneciendo hoja por hoja; el Olvido avanza desde las ruinas del norte.",
+	"lucia_inicio": {
+		"speaker": "Lucía",
+		"text": "Hola... Estoy intentando dibujar en mi cuaderno a alguien que venía conmigo a la plaza todas las tardes, pero cada vez que trazo su rostro, el papel parece quedarse en blanco. Sé que era muy importante para mí...",
 		"options": [
 			{
-				"text": "No permitiré que las memorias de nuestra gente se pierdan.",
-				"next_id": "abuelo_cuaderno_nostalgia",
+				"text": "Tranquila, Lucía. A veces el corazón recuerda el afecto antes que el rostro.",
+				"next_id": "lucia_bicicleta_nostalgia",
 				"effect": ["nostalgia", 1]
 			},
 			{
-				"text": "¿Por qué está ocurriendo esto ahora? ¿Qué provoca el Olvido?",
-				"next_id": "abuelo_cuaderno_curiosity",
+				"text": "¿Recuerdas algún lugar u objeto que estuviera con ustedes en esas tardes?",
+				"next_id": "lucia_bicicleta_curiosity",
 				"effect": ["curiosity", 1]
 			},
 			{
-				"text": "Dime qué herramientas necesito para detenerlo de inmediato.",
-				"next_id": "abuelo_cuaderno_pragmatism",
+				"text": "Concentrémonos en lo que sí sabes. Si reunimos pistas en la plaza, lo encontraremos.",
+				"next_id": "lucia_bicicleta_pragmatism",
 				"effect": ["pragmatism", 1]
 			}
 		]
 	},
-	"abuelo_cuaderno_nostalgia": {
-		"speaker": "Maestro Encuadernador",
-		"text": "Tu corazón honra a nuestros ancestros. Lleva contigo el Cuaderno de Cera: presiona la tecla [Q] para abrirlo y revelar qué habitantes están perdiendo sus recuerdos.",
+	"lucia_bicicleta_nostalgia": {
+		"speaker": "Lucía",
+		"text": "Sí... cuando cierro los ojos siento el viento en la cara y unas manos firmes sujetando el asiento para que no cayera. Me enseñó a montar bicicleta cerca del antiguo puente del norte, y creo que nos tomaron una fotografía junto a la panadería.",
 		"options": [
 			{
-				"text": "Hablaré con cada vecino para resguardar sus vivencias.",
-				"next_id": "abuelo_portal",
-				"effect": ["nostalgia", 1]
-			},
-			{
-				"text": "¿Cómo logra la cera hacer visible lo que el Olvido borra?",
-				"next_id": "abuelo_portal",
-				"effect": ["curiosity", 1]
-			},
-			{
-				"text": "Identificaré a los afectados y marcharé directo hacia las ruinas.",
-				"next_id": "abuelo_portal",
-				"effect": ["pragmatism", 1]
-			}
-		]
-	},
-	"abuelo_cuaderno_curiosity": {
-		"speaker": "Maestro Encuadernador",
-		"text": "Una grieta en el Gran Tomo Fundacional liberó la niebla blanca. Si presionas la tecla [Q] para abrir tu Cuaderno de Cera, podrás percibir las páginas incompletas sobre quienes sufren el Olvido.",
-		"options": [
-			{
-				"text": "Es doloroso pensar en todo lo que ya habrán olvidado.",
-				"next_id": "abuelo_portal",
-				"effect": ["nostalgia", 1]
-			},
-			{
-				"text": "Quiero estudiar esas marcas antes de cruzar hacia el origen.",
-				"next_id": "abuelo_portal",
-				"effect": ["curiosity", 1]
-			},
-			{
-				"text": "Entendido. Usaré el cuaderno con [Q] y buscaré una solución práctica.",
-				"next_id": "abuelo_portal",
-				"effect": ["pragmatism", 1]
-			}
-		]
-	},
-	"abuelo_cuaderno_pragmatism": {
-		"speaker": "Maestro Encuadernador",
-		"text": "Directo al grano, como buen protector. Tu herramienta principal es el Cuaderno de Cera: presiona [Q] para activarlo y detectar al instante quién está perdiendo sus recuerdos en la plaza.",
-		"options": [
-			{
-				"text": "Primero escucharé a nuestra gente antes de partir.",
-				"next_id": "abuelo_portal",
-				"effect": ["nostalgia", 1]
-			},
-			{
-				"text": "¿Qué relación tienen esas marcas con las sombras de las ruinas?",
-				"next_id": "abuelo_portal",
-				"effect": ["curiosity", 1]
-			},
-			{
-				"text": "Perfecto. ¿Cuál es el siguiente paso tras revisar la plaza?",
-				"next_id": "abuelo_portal",
-				"effect": ["pragmatism", 1]
-			}
-		]
-	},
-	"abuelo_portal": {
-		"speaker": "Maestro Encuadernador",
-		"text": "Al norte de la plaza verás el portal hacia las Ruinas del Olvido. Esquiva allí a los Recolectores encapuchados hasta llegar al Taller de Encuadernación, donde tendrás treinta segundos para reunir los cuatro Fragmentos de Cera.",
-		"options": [
-			{
-				"text": "Protegeré cada página tal como fue escrita desde el principio.",
+				"text": "Buscaré esa fotografía y las huellas en el puente para devolverte su recuerdo.",
 				"next_id": "",
 				"effect": ["nostalgia", 1]
 			},
 			{
-				"text": "Descubriré la verdad que esconden las ruinas y el Gran Tomo.",
+				"text": "Iré a examinar el puente y hablaré con Don Elías y Marta en la plaza.",
 				"next_id": "",
 				"effect": ["curiosity", 1]
 			},
 			{
-				"text": "Reuniré la cera a tiempo y aseguraré el futuro de Aldeavieja.",
+				"text": "Revisaré la panadería y el puente de inmediato. Espérame junto a la fuente.",
 				"next_id": "",
 				"effect": ["pragmatism", 1]
 			}
 		]
 	},
-	"aldeana_olvido": {
-		"speaker": "Elena, Habitante de Aldeavieja",
-		"text": "Disculpa, joven encuadernador... Miraba hacia el norte y de pronto olvidé cómo se llamaba nuestra antigua biblioteca. También había una canción de cuna que mi madre cantaba... pero las palabras se me escapan como arena.",
+	"lucia_bicicleta_curiosity": {
+		"speaker": "Lucía",
+		"text": "Recuerdo el sonido de una cadena y dos ruedas girando sobre las piedras del antiguo puente del norte. Él me enseñaba a montar bicicleta... También había una fotografía nuestra junto a la panadería, y Don Elías solía saludarnos desde el reloj.",
 		"options": [
 			{
-				"text": "Cierra los ojos; aún puedes sentir la calidez de aquella melodía de tu infancia.",
-				"next_id": "aldeana_cancion_nostalgia",
-				"effect": ["nostalgia", 1]
-			},
-			{
-				"text": "¿Cuándo empezaste a notar que los nombres se borraban? ¿Viste algo extraño?",
-				"next_id": "aldeana_cancion_curiosity",
-				"effect": ["curiosity", 1]
-			},
-			{
-				"text": "No te esfuerces ahora; necesito saber por dónde se fue la tinta para recuperarla.",
-				"next_id": "aldeana_cancion_pragmatism",
-				"effect": ["pragmatism", 1]
-			}
-		]
-	},
-	"aldeana_cancion_nostalgia": {
-		"speaker": "Elena, Habitante de Aldeavieja",
-		"text": "Sí... hablaba del aroma del papel antiguo y del dorado de las hojas en otoño. Qué hermoso sería que nada en Aldeavieja cambiara jamás y que nuestros seres queridos permanecieran siempre en estas páginas.",
-		"options": [
-			{
-				"text": "Te prometo que restauraré cada verso para que todo vuelva a ser como antes.",
-				"next_id": "aldeana_despedida",
-				"effect": ["nostalgia", 1]
-			},
-			{
-				"text": "Esa canción parece describir el sello original del Gran Tomo. Investigaré su letra.",
-				"next_id": "aldeana_despedida",
-				"effect": ["curiosity", 1]
-			},
-			{
-				"text": "Para conservarla, debo actuar rápido y conseguir la cera en el taller.",
-				"next_id": "aldeana_despedida",
-				"effect": ["pragmatism", 1]
-			}
-		]
-	},
-	"aldeana_cancion_curiosity": {
-		"speaker": "Elena, Habitante de Aldeavieja",
-		"text": "Comenzó anoche, cuando un viento frío sopló desde el portal del norte. Vi siluetas encapuchadas de ojos carmesí merodeando cerca de las ruinas, como si buscaran el origen mismo de nuestra tinta.",
-		"options": [
-			{
-				"text": "No dejaré que esas sombras nos arrebaten la historia de nuestras familias.",
-				"next_id": "aldeana_despedida",
-				"effect": ["nostalgia", 1]
-			},
-			{
-				"text": "Si los Recolectores buscan el origen de la tinta, la respuesta está tras ese portal.",
-				"next_id": "aldeana_despedida",
-				"effect": ["curiosity", 1]
-			},
-			{
-				"text": "Esas sombras son un obstáculo más; las esquivaré para llegar a la cera.",
-				"next_id": "aldeana_despedida",
-				"effect": ["pragmatism", 1]
-			}
-		]
-	},
-	"aldeana_cancion_pragmatism": {
-		"speaker": "Elena, Habitante de Aldeavieja",
-		"text": "Tienes razón, el lamento no detendrá la página en blanco. El Maestro dijo que la reserva de Fragmentos de Cera quedó encerrada en el taller, cruzando los pasillos de las ruinas.",
-		"options": [
-			{
-				"text": "Recuperaré esa cera para que nunca olvides la voz de tu madre.",
-				"next_id": "aldeana_despedida",
-				"effect": ["nostalgia", 1]
-			},
-			{
-				"text": "Me pregunto por qué los fragmentos quedaron dispersos precisamente allí.",
-				"next_id": "aldeana_despedida",
-				"effect": ["curiosity", 1]
-			},
-			{
-				"text": "Iré de inmediato. Treinta segundos en el taller bastarán para recolectarlos.",
-				"next_id": "aldeana_despedida",
-				"effect": ["pragmatism", 1]
-			}
-		]
-	},
-	"aldeana_despedida": {
-		"speaker": "Elena, Habitante de Aldeavieja",
-		"text": "Gracias por escucharme. Siento que mi mente se aclara un poco. Cuando cruces hacia las ruinas y llegues al Gran Tomo, ¿qué harás con las páginas en blanco de Aldeavieja?",
-		"options": [
-			{
-				"text": "Sellaré los recuerdos antiguos para que nuestra tradición viva eternamente.",
+				"text": "No dejaré que un recuerdo tan hermoso se borre de Aldeavieja.",
 				"next_id": "",
 				"effect": ["nostalgia", 1]
 			},
 			{
-				"text": "Descifraré el misterio oculto tras la tinta y el origen del Olvido.",
+				"text": "Examinaré esa fotografía con el Cuaderno de Cera [Q] y buscaré en el puente.",
 				"next_id": "",
 				"effect": ["curiosity", 1]
 			},
 			{
-				"text": "Escribiré un nuevo capítulo para que la aldea avance sin temor al mañana.",
+				"text": "Con esos tres puntos en la plaza tengo suficiente para empezar a buscar.",
 				"next_id": "",
 				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"lucia_bicicleta_pragmatism": {
+		"speaker": "Lucía",
+		"text": "Tienes razón. Sé tres cosas con certeza: íbamos al antiguo puente del norte donde aprendí a montar bicicleta, había una fotografía nuestra en la pared de la panadería, y solíamos pasar por la floristería de Marta.",
+		"options": [
+			{
+				"text": "Cada uno de esos lugares guarda una parte del cariño que compartían.",
+				"next_id": "",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "Usaré el Cuaderno de Cera [Q] en esos sitios para ver qué oculta el Olvido.",
+				"next_id": "",
+				"effect": ["curiosity", 1]
+			},
+			{
+				"text": "Iré a inspeccionar la panadería, la floristería y el puente ahora mismo.",
+				"next_id": "",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"elias_inicio": {
+		"speaker": "Don Elías",
+		"text": "Mire usted este reloj... Se detuvo justo cuando empecé a sentir que faltaba alguien en la plaza. Todas las tardes veía pasar a la pequeña Lucía riendo junto a un muchacho, pero hoy su nombre me baila en la punta de la lengua...",
+		"options": [
+			{
+				"text": "Los buenos momentos de la plaza nunca se pierden del todo, Don Elías.",
+				"next_id": "elias_recuerda_tomas",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "Intente recordar algún detalle de su aspecto o hacia dónde caminaban.",
+				"next_id": "elias_recuerda_tomas",
+				"effect": ["curiosity", 1]
+			},
+			{
+				"text": "Piense en sus costumbres diarias; cualquier dato concreto nos ayudará.",
+				"next_id": "elias_recuerda_tomas",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"elias_recuerda_tomas": {
+		"speaker": "Don Elías",
+		"text": "¡Espere! ¡Tomás! Así se llamaba el muchacho: Tomás, el joven que cuidaba de las tardes de Lucía. Siempre llevaba en el bolsillo del abrigo una pequeña flor de papel doblada que encargaba en la floristería de Marta.",
+		"options": [
+			{
+				"text": "«Tomás»... Qué alivio recuperar su nombre. Hablaré con Marta sobre esa flor.",
+				"next_id": "",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "¿Por qué una flor de papel doblada? Iré a preguntarle a Marta en la floristería.",
+				"next_id": "",
+				"effect": ["curiosity", 1]
+			},
+			{
+				"text": "Gracias, Don Elías. Con el nombre de Tomás iré directo a la floristería.",
+				"next_id": "",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"marta_inicio": {
+		"speaker": "Marta",
+		"text": "Bienvenido a la floristería. Hoy abrí mi libreta de encargos y encontré una página casi en blanco... Solo quedaba escrita una nota al margen sobre enseñar a alguien a perder el miedo, y junto a la libreta hallé esta flor de papel doblada.",
+		"options": [
+			{
+				"text": "Qué detalle tan tierno; quien la dobló quería que perdurara más que las flores frescas.",
+				"next_id": "marta_entrega_flor",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "Don Elías recordó que Tomás llevaba siempre una flor de papel así en el bolsillo.",
+				"next_id": "marta_entrega_flor",
+				"effect": ["curiosity", 1]
+			},
+			{
+				"text": "Esa flor es la pieza que me faltaba. ¿Puedo llevársela a Lucía?",
+				"next_id": "marta_entrega_flor",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"marta_entrega_flor": {
+		"speaker": "Marta",
+		"text": "¡Claro, Tomás! Él mismo doblaba estas flores de papel para regalárselas a Lucía cada vez que lograba cruzar el antiguo puente sin caerse de la bicicleta. Llévate la flor de papel; seguro ayudará a tu Cuaderno de Cera.",
+		"grant_clue": "clue_paper_flower",
+		"options": [
+			{
+				"text": "Gracias, Marta. Con esto el recuerdo de Tomás volverá a florecer.",
+				"next_id": "",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "Revisaré las pistas de la plaza para reconstruir la escena junto a Lucía.",
+				"next_id": "",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"lucia_reconstruccion": {
+		"speaker": "Cuaderno de Cera",
+		"text": "Al acercarte a Lucía con la fotografía de la panadería, la flor de papel y la inscripción del antiguo puente registradas, las páginas del Cuaderno de Cera se abren e iluminan. ¿Cómo reconstruyes el recuerdo de Lucía y Tomás?",
+		"options": [
+			{
+				"text": "«Tomás le enseñó a Lucía a montar bicicleta».",
+				"next_id": "lucia_escena5_completa",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "«Tomás siempre esperaba a Lucía junto al puente».",
+				"next_id": "lucia_escena5_parcial_puente",
+				"effect": ["curiosity", 1]
+			},
+			{
+				"text": "«Tomás le prometió que nunca dejaría de acompañarla».",
+				"next_id": "lucia_escena5_parcial_promesa",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"lucia_escena5_completa": {
+		"speaker": "Lucía",
+		"text": "¡Sí! ¡Era Tomás! —sus ojos se iluminan mientras sostiene la flor de papel—. Él corría a mi lado por el antiguo puente sujetando el sillín de la bicicleta y me decía: «Aquí aprendimos a no tener miedo de caer». ¡Ya puedo dibujar su rostro completo!",
+		"unlock_memory": "Recuerdo de Lucía y Tomás (Completo)",
+		"important_choice": ["lucia_tomas_reconstruction", "Reconstrucción precisa: «Tomás le enseñó a Lucía a montar bicicleta»."],
+		"consume_wax": 1,
+		"options": [
+			{
+				"text": "Observar la nueva página que se dibuja en el Cuaderno de Cera",
+				"next_id": "escena5_cuaderno_estacion"
+			}
+		]
+	},
+	"lucia_escena5_parcial_puente": {
+		"speaker": "Lucía",
+		"text": "¡Tomás! —Lucía mira la flor de papel con emoción contenida—. Sí, él me esperaba junto al antiguo puente con la bicicleta... Aunque algunos instantes de aquella tarde siguen difusos, ya recuerdo su nombre y su voz.",
+		"unlock_memory": "Recuerdo de Lucía y Tomás (Parcial)",
+		"important_choice": ["lucia_tomas_reconstruction", "Reconstrucción parcial: «Tomás siempre esperaba a Lucía junto al puente»."],
+		"consume_wax": 1,
+		"options": [
+			{
+				"text": "Observar la nueva página que se dibuja en el Cuaderno de Cera",
+				"next_id": "escena5_cuaderno_estacion"
+			}
+		]
+	},
+	"lucia_escena5_parcial_promesa": {
+		"speaker": "Lucía",
+		"text": "¡Tomás! —Lucía aprieta la flor de papel contra su pecho—. Él me prometió que no tuviera miedo de caer mientras practicábamos en el puente. Aún me cuesta recordar toda la tarde, pero su promesa vuelve a estar clara.",
+		"unlock_memory": "Recuerdo de Lucía y Tomás (Parcial)",
+		"important_choice": ["lucia_tomas_reconstruction", "Reconstrucción parcial: «Tomás le prometió que nunca dejaría de acompañarla»."],
+		"consume_wax": 1,
+		"options": [
+			{
+				"text": "Observar la nueva página que se dibuja en el Cuaderno de Cera",
+				"next_id": "escena5_cuaderno_estacion"
+			}
+		]
+	},
+	"escena5_cuaderno_estacion": {
+		"speaker": "Cuaderno de Cera",
+		"text": "Desde el reloj de la plaza, Don Elías sonríe conmovido al recordar también a Tomás. En tu Cuaderno de Cera la cera dorada traza una nueva frase señalando más allá del antiguo puente del norte:\n\n«Cuando el tiempo deja de avanzar, los recuerdos comienzan a quedarse atrás».\n\nEl camino hacia la antigua estación se ha despejado.",
+		"set_state": {
+			"lucia_tomas_reconstructed": true
+		},
+		"options": [
+			{
+				"text": "Avanzar hacia el antiguo puente del norte",
+				"next_id": ""
+			}
+		]
+	},
+	"lucia_post_reconstruccion": {
+		"speaker": "Lucía",
+		"text": "Gracias por devolverme el recuerdo de Tomás. El sendero que cruza el antiguo puente del norte hacia la estación ya se ha despejado; ten mucho cuidado en tu camino.",
+		"options": [
+			{
+				"text": "Hasta pronto, Lucía.",
+				"next_id": ""
 			}
 		]
 	}

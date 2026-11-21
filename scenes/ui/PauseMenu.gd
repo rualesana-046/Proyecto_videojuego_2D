@@ -7,7 +7,14 @@ const MUSIC_BUS_NAME: String = "Music"
 const SFX_BUS_NAME: String = "SFX"
 
 const CHOICE_LABELS: Dictionary = {
-	"prologue_silhouette": "Visión en el taller del abuelo"
+	"prologue_silhouette": "Visión en el taller del abuelo",
+	"lucia_tomas_reconstruction": "Reconstrucción del recuerdo de Lucía"
+}
+
+const CLUE_LABELS: Dictionary = {
+	"clue_photo": "Fotografía antigua junto a la panadería (Lucía y la silueta de una bicicleta)",
+	"clue_paper_flower": "Flor de papel doblada entregada por Marta (encargo de Tomás)",
+	"clue_bridge": "Inscripción en el antiguo puente («Aquí aprendimos a no tener miedo de caer»)"
 }
 
 var _save_feedback_tween: Tween = null
@@ -147,6 +154,14 @@ func _refresh_journal_display() -> void:
 	else:
 		for memory_text: String in WorldState.recovered_memories:
 			lines.append("• " + memory_text)
+
+	lines.append("\n[b][color=#C9AE7C]Pistas y objetos descubiertos[/color][/b]")
+	if WorldState.clues_found.is_empty():
+		lines.append("• Aún no has registrado pistas en este capítulo.")
+	else:
+		for clue_id: String in WorldState.clues_found:
+			var clue_desc: String = str(CLUE_LABELS.get(clue_id, clue_id))
+			lines.append("• " + clue_desc)
 
 	lines.append("\n[b][color=#C9AE7C]Decisiones importantes[/color][/b]")
 	if WorldState.important_choices.is_empty():

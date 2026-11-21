@@ -4,15 +4,23 @@ extends Area2D
 @export var dialogue_id: String = "start"
 @export var is_losing_memory: bool = false
 @export var next_scene_path: String = ""
+@export var npc_texture: Texture2D = null
+@export var puzzle_ready_dialogue_id: String = ""
+@export var completed_state_key: String = ""
+@export var completed_dialogue_id: String = ""
 
 var is_player_near: bool = false
 var _awaiting_dialogue_transition: bool = false
 
+@onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var memory_indicator: Sprite2D = $MemoryIndicator
 @onready var interact_prompt: Node2D = $InteractPrompt
 
 
 func _ready() -> void:
+	if npc_texture != null and sprite_2d != null:
+		sprite_2d.texture = npc_texture
+
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 	WorldState.notebook_state_changed.connect(_on_notebook_state_changed)
@@ -26,11 +34,21 @@ func _input(event: InputEvent) -> void:
 	if is_player_near and not DialogueManager.is_dialogue_active and event.is_action_pressed("interact"):
 		if not next_scene_path.is_empty():
 			_awaiting_dialogue_transition = true
-		if is_losing_memory and WorldState.is_notebook_active:
-			var memory_entry: String = "Recuerdo de Aldeavieja (" + dialogue_id + ")"
-			if not WorldState.recovered_memories.has(memory_entry):
-				WorldState.recovered_memories.append(memory_entry)
-		DialogueManager.start_dialogue(dialogue_id)
+
+		var active_id: String = _resolve_active_dialogue_id()
+		DialogueManager.start_dialogue(active_id)
+		get_viewport().set_input_as_handled()
+
+
+func _resolve_active_dialogue_id() -> String:
+	if not completed_state_key.is_empty() and bool(WorldState.state.get(completed_state_key, false)):
+		if not completed_dialogue_id.is_empty():
+			return completed_dialogue_id
+
+	if not puzzle_ready_dialogue_id.is_empty() and WorldState.has_all_level1_clues():
+		return puzzle_ready_dialogue_id
+
+	return dialogue_id
 
 
 func _on_body_entered(body: Node2D) -> void:
@@ -46,7 +64,11 @@ func _on_body_exited(body: Node2D) -> void:
 
 
 func _on_notebook_state_changed(is_active: bool) -> void:
-	memory_indicator.visible = is_losing_memory and is_active
+	var memory_already_restored: bool = (
+		not completed_state_key.is_empty()
+		and bool(WorldState.state.get(completed_state_key, false))
+	)
+	memory_indicator.visible = is_losing_memory and is_active and not memory_already_restored
 
 
 func _on_dialogue_started() -> void:
@@ -54,6 +76,7 @@ func _on_dialogue_started() -> void:
 
 
 func _on_dialogue_ended() -> void:
+	_on_notebook_state_changed(WorldState.is_notebook_active)
 	_update_interact_prompt()
 	if _awaiting_dialogue_transition and not next_scene_path.is_empty():
 		_awaiting_dialogue_transition = false

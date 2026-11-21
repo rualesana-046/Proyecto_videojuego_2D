@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://w4m9q3x7p2n1w"]
+[gd_scene format=3 uid="uid://dslwstdxv2a83"]
 
 [ext_resource type="Script" path="res://scenes/levels/Prologue.gd" id="1_prologue_script"]
 [ext_resource type="TileSet" uid="uid://t2m7q4x8p1n5w" path="res://assets/tilesets/aldeavieja_tileset.tres" id="2_tileset"]
