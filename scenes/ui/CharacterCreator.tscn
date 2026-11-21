@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://n3q8r5x2p6m1w"]
+[gd_scene load_steps=6 format=3 uid="uid://n3q8r5x2p6m1w"]
 
 [ext_resource type="Theme" uid="uid://d2m8x4q9r1p7v" path="res://scenes/ui/main_theme.tres" id="1_main_theme"]
 [ext_resource type="Script" path="res://scenes/ui/CharacterCreator.gd" id="2_character_creator_script"]
-[ext_resource type="Texture2D" path="res://icon.svg" id="3_preview_icon"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player_body.png" id="3_player_body"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player_clothes.png" id="4_player_clothes"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player_hair.png" id="5_player_hair"]
 
 [node name="CharacterCreator" type="Control"]
 layout_mode = 3
@@ -43,22 +45,18 @@ custom_minimum_size = Vector2(320, 140)
 layout_mode = 2
 
 [node name="PreviewVisuals" type="Node2D" parent="MainContainer/PreviewContainer"]
+texture_filter = 1
 position = Vector2(160, 70)
-scale = Vector2(1.4, 1.4)
+scale = Vector2(5, 5)
 
 [node name="BodySprite" type="Sprite2D" parent="MainContainer/PreviewContainer/PreviewVisuals"]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("3_preview_icon")
+texture = ExtResource("3_player_body")
 
 [node name="ClothesSprite" type="Sprite2D" parent="MainContainer/PreviewContainer/PreviewVisuals"]
-position = Vector2(0, 12)
-scale = Vector2(0.4, 0.28)
-texture = ExtResource("3_preview_icon")
+texture = ExtResource("4_player_clothes")
 
 [node name="HairSprite" type="Sprite2D" parent="MainContainer/PreviewContainer/PreviewVisuals"]
-position = Vector2(0, -18)
-scale = Vector2(0.36, 0.2)
-texture = ExtResource("3_preview_icon")
+texture = ExtResource("5_player_hair")
 
 [node name="BodyColorRow" type="HBoxContainer" parent="MainContainer"]
 layout_mode = 2

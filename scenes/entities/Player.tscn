@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://b8m3x7p2laq1w"]
+[gd_scene load_steps=6 format=3 uid="uid://b8m3x7p2laq1w"]
 
 [ext_resource type="Script" path="res://scenes/entities/Player.gd" id="1_player_script"]
-[ext_resource type="Texture2D" path="res://icon.svg" id="2_player_icon"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player_body.png" id="2_player_body"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player_clothes.png" id="3_player_clothes"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player_hair.png" id="4_player_hair"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_base"]
 size = Vector2(12, 10)
@@ -15,18 +17,13 @@ script = ExtResource("1_player_script")
 [node name="Visuals" type="Node2D" parent="."]
 
 [node name="BodySprite" type="Sprite2D" parent="Visuals"]
-scale = Vector2(0.125, 0.125)
-texture = ExtResource("2_player_icon")
+texture = ExtResource("2_player_body")
 
 [node name="ClothesSprite" type="Sprite2D" parent="Visuals"]
-position = Vector2(0, 3)
-scale = Vector2(0.1, 0.07)
-texture = ExtResource("2_player_icon")
+texture = ExtResource("3_player_clothes")
 
 [node name="HairSprite" type="Sprite2D" parent="Visuals"]
-position = Vector2(0, -4.5)
-scale = Vector2(0.09, 0.05)
-texture = ExtResource("2_player_icon")
+texture = ExtResource("4_player_hair")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 4)
