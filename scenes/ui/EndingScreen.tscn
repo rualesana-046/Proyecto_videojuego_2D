@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://r4m8q2x7p1n9w"]
+[gd_scene load_steps=6 format=3 uid="uid://r4m8q2x7p1n9w"]
 
 [ext_resource type="Theme" uid="uid://d2m8x4rar1p7v" path="res://scenes/ui/main_theme.tres" id="1_main_theme"]
 [ext_resource type="Script" path="res://scenes/ui/EndingScreen.gd" id="2_ending_screen_script"]
 [ext_resource type="FontFile" path="res://assets/fonts/Almendra-Bold.ttf" id="3_title_font"]
+[ext_resource type="Texture2D" path="res://assets/sprites/main_menu_bg.png" id="4_bg_art"]
+[ext_resource type="Texture2D" path="res://assets/sprites/floating_page.png" id="5_floating_page"]
 
 [node name="EndingScreen" type="Control"]
 layout_mode = 3
@@ -14,57 +16,111 @@ grow_vertical = 2
 theme = ExtResource("1_main_theme")
 script = ExtResource("2_ending_screen_script")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="BackgroundArt" type="TextureRect" parent="."]
+texture_filter = 2
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.0196078, 0.164706, 0.141176, 1)
+texture = ExtResource("4_bg_art")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="EndingPanel" type="Panel" parent="."]
+[node name="DarkVeil" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.02, 0.06, 0.05, 0.55)
+
+[node name="FloatingPagesParticles" type="CPUParticles2D" parent="."]
+texture_filter = 1
+position = Vector2(576, 420)
+amount = 16
+lifetime = 7.5
+preprocess = 3.0
+texture = ExtResource("5_floating_page")
+emission_shape = 3
+emission_rect_extents = Vector2(560, 240)
+direction = Vector2(0.3, -1)
+spread = 35.0
+gravity = Vector2(4, -8)
+initial_velocity_min = 10.0
+initial_velocity_max = 20.0
+angular_velocity_min = -20.0
+angular_velocity_max = 20.0
+scale_amount_min = 1.2
+scale_amount_max = 2.0
+color = Color(1, 0.96, 0.88, 0.78)
+
+[node name="EndingPanel" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -280.0
-offset_top = -170.0
-offset_right = 280.0
-offset_bottom = 170.0
+offset_left = -370.0
+offset_top = -265.0
+offset_right = 370.0
+offset_bottom = 265.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="EndingPanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 32.0
-offset_top = 28.0
-offset_right = -32.0
-offset_bottom = -28.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 18
+[node name="MarginContainer" type="MarginContainer" parent="EndingPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 26
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 26
+theme_override_constants/margin_bottom = 20
 
-[node name="EndingTitleLabel" type="Label" parent="EndingPanel/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="EndingPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="EndingTitleLabel" type="Label" parent="EndingPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.788235, 0.682353, 0.486275, 1)
 theme_override_fonts/font = ExtResource("3_title_font")
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 32
 text = "Final"
 horizontal_alignment = 1
+autowrap_mode = 2
 
-[node name="EndingDescriptionLabel" type="RichTextLabel" parent="EndingPanel/VBoxContainer"]
+[node name="EndingSubtitleLabel" type="Label" parent="EndingPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.929412, 0.913725, 0.847059, 0.88)
+theme_override_font_sizes/font_size = 15
+text = "Desenlace de Aldeavieja"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Separator" type="HSeparator" parent="EndingPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="EndingPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="EndingDescriptionLabel" type="RichTextLabel" parent="EndingPanel/MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.929412, 0.913725, 0.847059, 1)
 bbcode_enabled = true
+fit_content = true
+scroll_active = false
 text = "Descripción del desenlace."
 
-[node name="MainMenuButton" type="Button" parent="EndingPanel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 42)
+[node name="ContinueToCreditsButton" type="Button" parent="EndingPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(250, 42)
 layout_mode = 2
-text = "Volver al Menú Principal"
+size_flags_horizontal = 4
+text = "Continuar a los Créditos"
+autowrap_mode = 2
