@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://n3q8r5x2p6m1w"]
 
-[ext_resource type="Theme" uid="uid://d2m8x4q9r1p7v" path="res://scenes/ui/main_theme.tres" id="1_main_theme"]
+[ext_resource type="Theme" uid="uid://d2m8x4rar1p7v" path="res://scenes/ui/main_theme.tres" id="1_main_theme"]
 [ext_resource type="Script" path="res://scenes/ui/CharacterCreator.gd" id="2_character_creator_script"]
 [ext_resource type="Texture2D" path="res://assets/sprites/player_body.png" id="3_player_body"]
 [ext_resource type="Texture2D" path="res://assets/sprites/player_clothes.png" id="4_player_clothes"]
@@ -99,7 +99,7 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "Comenzar Aventura"
 
-[node name="LoadButton" type="Button" parent="MainContainer"]
+[node name="BackButton" type="Button" parent="MainContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-text = "Cargar Partida"
+text = "Volver"

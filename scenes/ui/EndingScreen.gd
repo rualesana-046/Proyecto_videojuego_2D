@@ -1,7 +1,7 @@
 class_name EndingScreen
 extends Control
 
-const MAIN_MENU_PATH: String = "res://scenes/ui/CharacterCreator.tscn"
+const MAIN_MENU_PATH: String = "res://scenes/ui/MainMenu.tscn"
 
 const ENDINGS_DATA: Dictionary = {
 	"nostalgia": {

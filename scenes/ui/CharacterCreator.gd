@@ -2,6 +2,7 @@ class_name CharacterCreator
 extends Control
 
 const FIRST_LEVEL_PATH: String = "res://scenes/levels/Level1.tscn"
+const MAIN_MENU_PATH: String = "res://scenes/ui/MainMenu.tscn"
 
 const BODY_PALETTE: Array[Color] = [
 	Color.WHITE,
@@ -27,7 +28,7 @@ const CLOTHES_PALETTE: Array[Color] = [
 @onready var hair_option: OptionButton = $MainContainer/HairColorRow/HairOption
 @onready var clothes_option: OptionButton = $MainContainer/ClothesColorRow/ClothesOption
 @onready var start_button: Button = $MainContainer/StartButton
-@onready var load_button: Button = $MainContainer/LoadButton
+@onready var back_button: Button = $MainContainer/BackButton
 
 
 func _ready() -> void:
@@ -40,7 +41,7 @@ func _ready() -> void:
 	hair_option.item_selected.connect(_on_hair_option_selected)
 	clothes_option.item_selected.connect(_on_clothes_option_selected)
 	start_button.pressed.connect(_on_start_button_pressed)
-	load_button.pressed.connect(_on_load_button_pressed)
+	back_button.pressed.connect(_on_back_button_pressed)
 
 
 func _create_color_icon(color: Color) -> Texture2D:
@@ -94,8 +95,5 @@ func _on_start_button_pressed() -> void:
 	get_tree().change_scene_to_file(FIRST_LEVEL_PATH)
 
 
-func _on_load_button_pressed() -> void:
-	if WorldState.load_game():
-		get_tree().change_scene_to_file(FIRST_LEVEL_PATH)
-	else:
-		push_warning("No save file found or failed to load save data.")
+func _on_back_button_pressed() -> void:
+	get_tree().change_scene_to_file(MAIN_MENU_PATH)

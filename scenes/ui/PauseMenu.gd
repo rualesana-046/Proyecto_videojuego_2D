@@ -1,7 +1,7 @@
 class_name PauseMenu
 extends CanvasLayer
 
-const MAIN_MENU_PATH: String = "res://scenes/ui/CharacterCreator.tscn"
+const MAIN_MENU_PATH: String = "res://scenes/ui/MainMenu.tscn"
 
 @onready var resume_button: Button = $Overlay/PausePanel/VBoxContainer/ResumeButton
 @onready var save_button: Button = $Overlay/PausePanel/VBoxContainer/SaveButton
