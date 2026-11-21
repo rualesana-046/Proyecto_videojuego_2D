@@ -1,8 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://e7p4r2n8x5m1q"]
+[gd_scene load_steps=6 format=3 uid="uid://e7p4r2n8x5m1q"]
 
 [ext_resource type="Theme" uid="uid://d2m8x4rar1p7v" path="res://scenes/ui/main_theme.tres" id="1_main_theme"]
 [ext_resource type="Script" path="res://scenes/ui/DialogueOverlay.gd" id="2_dialogue_overlay_script"]
 [ext_resource type="FontFile" path="res://assets/fonts/Almendra-Bold.ttf" id="3_title_font"]
+[ext_resource type="Texture2D" path="res://assets/sprites/dialogue_frame.png" id="4_dialogue_frame"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dialogue"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+texture = ExtResource("4_dialogue_frame")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
 
 [node name="DialogueOverlay" type="CanvasLayer"]
 script = ExtResource("2_dialogue_overlay_script")
@@ -17,6 +29,7 @@ grow_vertical = 2
 theme = ExtResource("1_main_theme")
 
 [node name="DialogueBox" type="PanelContainer" parent="UIContainer"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 12
 anchor_left = 0.0
@@ -29,13 +42,14 @@ offset_right = -48.0
 offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxTexture_dialogue")
 
 [node name="MarginContainer" type="MarginContainer" parent="UIContainer/DialogueBox"]
 layout_mode = 2
-theme_override_constants/margin_left = 22
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 22
-theme_override_constants/margin_bottom = 16
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 10
 
 [node name="ContentLayout" type="VBoxContainer" parent="UIContainer/DialogueBox/MarginContainer"]
 layout_mode = 2

@@ -1,20 +1,20 @@
-[gd_resource type="Theme" load_steps=3 format=3 uid="uid://d2m8x4rar1p7v"]
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://d2m8x4rar1p7v"]
 
 [ext_resource type="FontFile" path="res://assets/fonts/Lora.ttf" id="1_lora_font"]
+[ext_resource type="Texture2D" path="res://assets/sprites/dialogue_frame.png" id="2_dialogue_frame"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
-bg_color = Color(0.0196078, 0.164706, 0.141176, 0.92)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.788235, 0.682353, 0.486275, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ornamental"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+texture = ExtResource("2_dialogue_frame")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
 
 [resource]
 default_font = ExtResource("1_lora_font")
-Panel/styles/panel = SubResource("StyleBoxFlat_panel")
-PanelContainer/styles/panel = SubResource("StyleBoxFlat_panel")
+Panel/styles/panel = SubResource("StyleBoxTexture_ornamental")
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_ornamental")
