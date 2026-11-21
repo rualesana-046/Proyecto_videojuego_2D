@@ -1,4 +1,6 @@
-[gd_resource type="Theme" format=3 uid="uid://d2m8x4rar1p7v"]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://d2m8x4rar1p7v"]
+
+[ext_resource type="FontFile" path="res://assets/fonts/Lora.ttf" id="1_lora_font"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(0.0196078, 0.164706, 0.141176, 0.9)
@@ -13,4 +15,5 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
 [resource]
+default_font = ExtResource("1_lora_font")
 Panel/styles/panel = SubResource("StyleBoxFlat_panel")

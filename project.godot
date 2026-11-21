@@ -31,6 +31,10 @@ AIProfiler="*res://autoloads/AIProfiler.gd"
 window/stretch/mode="canvas_items"
 window/stretch/aspect="keep"
 
+[gui]
+
+theme/custom="res://scenes/ui/main_theme.tres"
+
 [input]
 
 move_up={
