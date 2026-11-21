@@ -19,6 +19,7 @@ theme = ExtResource("1_main_theme")
 [node name="DialogueBox" type="PanelContainer" parent="UIContainer"]
 layout_mode = 1
 anchors_preset = 12
+anchor_left = 0.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -57,5 +58,5 @@ scroll_active = false
 
 [node name="OptionsContainer" type="VBoxContainer" parent="UIContainer/DialogueBox/MarginContainer/ContentLayout"]
 layout_mode = 2
- size_flags_horizontal = 3
+size_flags_horizontal = 3
 theme_override_constants/separation = 8

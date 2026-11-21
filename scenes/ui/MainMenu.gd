@@ -6,6 +6,11 @@ const MASTER_BUS_NAME: String = "Master"
 const MUSIC_BUS_NAME: String = "Music"
 const SFX_BUS_NAME: String = "SFX"
 
+var _intro_tween: Tween = null
+var _is_intro_playing: bool = false
+
+@onready var intro_title_overlay: VBoxContainer = $IntroTitleOverlay
+@onready var menu_panel: PanelContainer = $MenuPanel
 @onready var new_game_button: Button = $MenuPanel/MarginContainer/VBoxContainer/NewGameButton
 @onready var continue_button: Button = $MenuPanel/MarginContainer/VBoxContainer/ContinueButton
 @onready var options_button: Button = $MenuPanel/MarginContainer/VBoxContainer/OptionsButton
@@ -35,6 +40,58 @@ func _ready() -> void:
 	sfx_slider.value_changed.connect(_on_bus_volume_changed.bind(SFX_BUS_NAME))
 	fullscreen_check_button.toggled.connect(_on_fullscreen_toggled)
 	close_options_button.pressed.connect(_on_close_options_button_pressed)
+
+	_start_intro_sequence()
+
+
+func _input(event: InputEvent) -> void:
+	if not _is_intro_playing:
+		return
+
+	var is_skip_pressed: bool = (
+		event.is_action_pressed("ui_accept")
+		or event.is_action_pressed("ui_cancel")
+		or (event is InputEventKey and event.pressed and not event.echo)
+		or (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT)
+	)
+	if is_skip_pressed:
+		_skip_intro_sequence()
+		get_viewport().set_input_as_handled()
+
+
+func _start_intro_sequence() -> void:
+	_is_intro_playing = true
+	menu_panel.visible = false
+	menu_panel.modulate.a = 0.0
+	intro_title_overlay.visible = true
+	intro_title_overlay.modulate.a = 0.0
+
+	_intro_tween = create_tween()
+	_intro_tween.tween_property(intro_title_overlay, "modulate:a", 1.0, 1.2)
+	_intro_tween.tween_interval(1.8)
+	_intro_tween.tween_property(intro_title_overlay, "modulate:a", 0.0, 0.6)
+	_intro_tween.tween_callback(_show_menu_panel_for_fade)
+	_intro_tween.tween_property(menu_panel, "modulate:a", 1.0, 0.8)
+	_intro_tween.tween_callback(_on_intro_sequence_finished)
+
+
+func _show_menu_panel_for_fade() -> void:
+	intro_title_overlay.visible = false
+	menu_panel.visible = true
+
+
+func _on_intro_sequence_finished() -> void:
+	_is_intro_playing = false
+
+
+func _skip_intro_sequence() -> void:
+	if _intro_tween != null and _intro_tween.is_valid():
+		_intro_tween.kill()
+	_is_intro_playing = false
+	intro_title_overlay.visible = false
+	intro_title_overlay.modulate.a = 0.0
+	menu_panel.visible = true
+	menu_panel.modulate.a = 1.0
 
 
 func _ensure_audio_buses() -> void:
