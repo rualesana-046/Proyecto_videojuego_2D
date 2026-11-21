@@ -20,4 +20,5 @@ func _on_body_entered(body: Node2D) -> void:
 
 
 func _change_scene() -> void:
+	WorldState.current_level = target_scene_path
 	get_tree().change_scene_to_file(target_scene_path)

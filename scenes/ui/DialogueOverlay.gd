@@ -1,9 +1,9 @@
 class_name DialogueOverlay
 extends CanvasLayer
 
-@onready var speaker_name_label: Label = $UIContainer/DialogueBox/SpeakerName
-@onready var dialogue_text_label: RichTextLabel = $UIContainer/DialogueBox/DialogueText
-@onready var options_container: HBoxContainer = $UIContainer/DialogueBox/OptionsContainer
+@onready var speaker_name_label: Label = $UIContainer/DialogueBox/MarginContainer/ContentLayout/SpeakerName
+@onready var dialogue_text_label: RichTextLabel = $UIContainer/DialogueBox/MarginContainer/ContentLayout/DialogueText
+@onready var options_container: VBoxContainer = $UIContainer/DialogueBox/MarginContainer/ContentLayout/OptionsContainer
 
 
 func _ready() -> void:
@@ -48,6 +48,9 @@ func _create_option_buttons(options: Array) -> void:
 
 		var button: Button = Button.new()
 		button.text = option_text
+		button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		button.pressed.connect(_on_option_selected.bind(next_id, effect))
 		options_container.add_child(button)
 

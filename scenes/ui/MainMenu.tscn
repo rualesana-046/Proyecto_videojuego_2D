@@ -1,7 +1,10 @@
-[gd_scene format=3 uid="uid://cwmqswdsv4ah3"]
+[gd_scene load_steps=6 format=3 uid="uid://v8n3q6x2p4m9w"]
 
 [ext_resource type="Theme" uid="uid://d2m8x4rar1p7v" path="res://scenes/ui/main_theme.tres" id="1_main_theme"]
 [ext_resource type="Script" path="res://scenes/ui/MainMenu.gd" id="2_main_menu_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/main_menu_bg.png" id="3_menu_bg"]
+[ext_resource type="Texture2D" path="res://assets/sprites/floating_page.png" id="4_floating_page"]
+[ext_resource type="FontFile" path="res://assets/fonts/Almendra-Bold.ttf" id="5_title_font"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -13,72 +16,196 @@ grow_vertical = 2
 theme = ExtResource("1_main_theme")
 script = ExtResource("2_main_menu_script")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="BackgroundArt" type="TextureRect" parent="."]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.0196078, 0.164706, 0.141176, 1)
+texture = ExtResource("3_menu_bg")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="MenuPanel" type="Panel" parent="."]
+[node name="FloatingPagesParticles" type="CPUParticles2D" parent="."]
+texture_filter = 1
+position = Vector2(576, 420)
+amount = 18
+lifetime = 7.5
+preprocess = 3.0
+texture = ExtResource("4_floating_page")
+emission_shape = 3
+emission_rect_extents = Vector2(540, 220)
+direction = Vector2(0.3, -1)
+spread = 35.0
+gravity = Vector2(4, -8)
+initial_velocity_min = 10.0
+initial_velocity_max = 22.0
+angular_velocity_min = -25.0
+angular_velocity_max = 25.0
+scale_amount_min = 1.2
+scale_amount_max = 2.2
+color = Color(1, 0.98, 0.92, 0.85)
+
+[node name="MenuPanel" type="PanelContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
 offset_left = -280.0
-offset_top = -190.0
+offset_top = 36.0
 offset_right = 280.0
-offset_bottom = 190.0
+offset_bottom = 396.0
 grow_horizontal = 2
-grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MenuPanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 36.0
-offset_top = 32.0
-offset_right = -36.0
-offset_bottom = -32.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 16
+[node name="MarginContainer" type="MarginContainer" parent="MenuPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
 alignment = 1
 
-[node name="TitleLabel" type="Label" parent="MenuPanel/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.788235, 0.682353, 0.486275, 1)
+theme_override_fonts/font = ExtResource("5_title_font")
 theme_override_font_sizes/font_size = 34
-text = "El Protector de las Páginas en Blanco"
+text = "El Guardián de las Páginas en Blanco"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="SubtitleLabel" type="Label" parent="MenuPanel/VBoxContainer"]
+[node name="SubtitleLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.929412, 0.913725, 0.847059, 1)
 theme_override_font_sizes/font_size = 16
 text = "Crónicas de Aldeavieja"
 horizontal_alignment = 1
 
-[node name="Separator" type="HSeparator" parent="MenuPanel/VBoxContainer"]
+[node name="Separator" type="HSeparator" parent="MenuPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="NewGameButton" type="Button" parent="MenuPanel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 42)
+[node name="NewGameButton" type="Button" parent="MenuPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
-text = "Nueva Partida"
+text = "Nueva partida"
 
-[node name="LoadGameButton" type="Button" parent="MenuPanel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 42)
+[node name="ContinueButton" type="Button" parent="MenuPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
-text = "Cargar Partida"
+text = "Continuar"
 
-[node name="QuitButton" type="Button" parent="MenuPanel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 42)
+[node name="OptionsButton" type="Button" parent="MenuPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+text = "Opciones"
+
+[node name="QuitButton" type="Button" parent="MenuPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
 text = "Salir"
+
+[node name="OptionsModal" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.65)
+
+[node name="OptionsPanel" type="PanelContainer" parent="OptionsModal"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -170.0
+offset_right = 220.0
+offset_bottom = 170.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="OptionsModal/OptionsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsModal/OptionsPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="OptionsTitleLabel" type="Label" parent="OptionsModal/OptionsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.788235, 0.682353, 0.486275, 1)
+theme_override_fonts/font = ExtResource("5_title_font")
+theme_override_font_sizes/font_size = 26
+text = "Opciones"
+horizontal_alignment = 1
+
+[node name="MasterRow" type="HBoxContainer" parent="OptionsModal/OptionsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MasterLabel" type="Label" parent="OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/MasterRow"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+text = "Volumen General"
+
+[node name="MasterSlider" type="HSlider" parent="OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/MasterRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="MusicRow" type="HBoxContainer" parent="OptionsModal/OptionsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MusicLabel" type="Label" parent="OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/MusicRow"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+text = "Música"
+
+[node name="MusicSlider" type="HSlider" parent="OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/MusicRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="SfxRow" type="HBoxContainer" parent="OptionsModal/OptionsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SfxLabel" type="Label" parent="OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/SfxRow"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+text = "Efectos"
+
+[node name="SfxSlider" type="HSlider" parent="OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/SfxRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="FullscreenCheckButton" type="CheckButton" parent="OptionsModal/OptionsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Pantalla Completa"
+
+[node name="CloseOptionsButton" type="Button" parent="OptionsModal/OptionsPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+text = "Cerrar"

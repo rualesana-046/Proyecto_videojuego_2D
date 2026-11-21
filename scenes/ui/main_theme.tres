@@ -3,7 +3,7 @@
 [ext_resource type="FontFile" path="res://assets/fonts/Lora.ttf" id="1_lora_font"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
-bg_color = Color(0.0196078, 0.164706, 0.141176, 0.9)
+bg_color = Color(0.0196078, 0.164706, 0.141176, 0.92)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -17,3 +17,4 @@ corner_radius_bottom_left = 4
 [resource]
 default_font = ExtResource("1_lora_font")
 Panel/styles/panel = SubResource("StyleBoxFlat_panel")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_panel")

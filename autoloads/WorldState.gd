@@ -4,6 +4,8 @@ signal notebook_state_changed(is_active: bool)
 signal wax_fragment_collected(total: int)
 
 const SAVE_PATH: String = "user://savegame.json"
+const DEFAULT_LEVEL_PATH: String = "res://scenes/levels/Level1.tscn"
+const DEFAULT_WAX_REMAINING: int = 5
 
 var state: Dictionary = {}
 var is_notebook_active: bool = false
@@ -13,6 +15,15 @@ var player_colors: Dictionary = {
 	"hair": Color(0.2, 0.2, 0.2),
 	"clothes": Color(0.02, 0.16, 0.14)
 }
+
+var recovered_memories: Array[String] = []
+var known_characters: Array[String] = []
+var important_choices: Dictionary = {}
+var exploration_score: int = 0
+var time_management: Dictionary = {}
+var narrative_profile: String = "nostalgia"
+var wax_remaining: int = DEFAULT_WAX_REMAINING
+var current_level: String = DEFAULT_LEVEL_PATH
 
 
 func toggle_notebook() -> void:
@@ -35,10 +46,20 @@ func reset_state() -> void:
 	is_notebook_active = false
 	notebook_state_changed.emit(is_notebook_active)
 	reset_wax_fragments()
+	recovered_memories.clear()
+	known_characters.clear()
+	important_choices.clear()
+	exploration_score = 0
+	time_management.clear()
+	narrative_profile = "nostalgia"
+	wax_remaining = DEFAULT_WAX_REMAINING
+	current_level = DEFAULT_LEVEL_PATH
 	AIProfiler.reset_traits()
 
 
 func save_game() -> void:
+	narrative_profile = AIProfiler.get_dominant_profile()
+
 	var serialized_colors: Dictionary = {}
 	for part_key: Variant in player_colors.keys():
 		var color_value: Color = player_colors[part_key]
@@ -48,7 +69,15 @@ func save_game() -> void:
 		"player_colors": serialized_colors,
 		"wax_fragments": wax_fragments,
 		"is_notebook_active": is_notebook_active,
-		"traits": AIProfiler.traits.duplicate()
+		"traits": AIProfiler.traits.duplicate(),
+		"recovered_memories": recovered_memories.duplicate(),
+		"known_characters": known_characters.duplicate(),
+		"important_choices": important_choices.duplicate(true),
+		"exploration_score": exploration_score,
+		"time_management": time_management.duplicate(true),
+		"narrative_profile": narrative_profile,
+		"wax_remaining": wax_remaining,
+		"current_level": current_level
 	}
 
 	var file: FileAccess = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
@@ -100,5 +129,31 @@ func load_game() -> bool:
 			var key_name: String = str(trait_key)
 			if AIProfiler.traits.has(key_name):
 				AIProfiler.traits[key_name] = int(saved_traits[trait_key])
+
+	recovered_memories.clear()
+	var saved_memories_variant: Variant = save_data.get("recovered_memories", [])
+	if saved_memories_variant is Array:
+		for item: Variant in saved_memories_variant:
+			recovered_memories.append(str(item))
+
+	known_characters.clear()
+	var saved_characters_variant: Variant = save_data.get("known_characters", [])
+	if saved_characters_variant is Array:
+		for item: Variant in saved_characters_variant:
+			known_characters.append(str(item))
+
+	var saved_choices_variant: Variant = save_data.get("important_choices", {})
+	important_choices = saved_choices_variant.duplicate(true) if saved_choices_variant is Dictionary else {}
+
+	exploration_score = int(save_data.get("exploration_score", 0))
+
+	var saved_time_variant: Variant = save_data.get("time_management", {})
+	time_management = saved_time_variant.duplicate(true) if saved_time_variant is Dictionary else {}
+
+	narrative_profile = str(save_data.get("narrative_profile", AIProfiler.get_dominant_profile()))
+	wax_remaining = int(save_data.get("wax_remaining", DEFAULT_WAX_REMAINING))
+	current_level = str(save_data.get("current_level", DEFAULT_LEVEL_PATH))
+	if current_level.is_empty():
+		current_level = DEFAULT_LEVEL_PATH
 
 	return true
