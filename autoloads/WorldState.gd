@@ -105,7 +105,7 @@ func reset_state() -> void:
 	AIProfiler.reset_traits()
 
 
-func save_game() -> void:
+func save_game() -> bool:
 	narrative_profile = AIProfiler.get_dominant_profile()
 
 	var serialized_colors: Dictionary = {}
@@ -134,11 +134,12 @@ func save_game() -> void:
 	var file: FileAccess = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	if file == null:
 		push_error("Failed to open save file for writing: " + SAVE_PATH)
-		return
+		return false
 
 	file.store_string(JSON.stringify(save_data, "\t"))
 	file.close()
 	print("Game saved successfully to: " + SAVE_PATH)
+	return true
 
 
 func load_game() -> bool:
