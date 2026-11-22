@@ -4,6 +4,17 @@
 
 ---
 
+## Jugar en línea
+
+¡Puedes jugar la aventura directamente desde tu navegador sin necesidad de instalar nada!
+
+🎮 **Versión web en itch.io:** [El Guardián de las Páginas en Blanco en itch.io](https://ana099.itch.io/el-guardin-de-las-pginas-en-blanco)
+
+* **Compatibilidad:** Se ejecuta directamente en el navegador web (compatible con **Windows** y **macOS**).
+* **Soporte bilingüe:** Totalmente jugable en **Español** e **Inglés** (**ES/EN**) con alternancia de idioma en tiempo real.
+
+---
+
 ## 📖 Sinopsis
 
 En el pueblo de **Aldeavieja**, los recuerdos compartidos han comenzado a disiparse como tinta lavada por la lluvia. Tras el fallecimiento de su abuelo, maestro encuadernador del pueblo, el protagonista regresa a su antiguo taller para descubrir que ha heredado una responsabilidad ancestral: convertirse en el **Guardián de las Páginas en Blanco**.
