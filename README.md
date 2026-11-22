@@ -22,6 +22,7 @@ Equipado con un cuaderno mágico encuadernado a mano y el calor de una vela de c
   * **Nivel 3 (Casa Familiar del Abuelo):** Deducción y reconstrucción íntima de recuerdos mediante objetos cargados de memoria (jardín, estudio de encuadernación y habitación principal) antes de alcanzar el santuario final.
 * **Menú de pausa con Diario del Cuaderno de Cera:** Panel integral accesible en cualquier momento (`Esc`) que recopila el inventario de pistas, páginas desbloqueadas, decisiones trascendentales y progreso de la aventura.
 * **Sistema de audio dinámico y buses independientes:** Paisaje sonoro ambiental cálido y efectos (SFX) sintetizados proceduralmente, controlados a través de tres buses de audio (`Master`, `Music` y `SFX`) ajustables en tiempo real tanto en el menú principal como en la pausa.
+* **Soporte bilingüe integral en tiempo real (Español / Inglés):** Motor de localización reactivo (`LocaleManager`) que permite alternar el idioma de forma instantánea en cualquier punto de la partida (menús, HUDs de los 3 niveles, objetivos, los 56 nodos de diálogo y el Diario del Cuaderno de Cera) sin necesidad de reiniciar.
 * **Tres finales narrativos adaptativos:** Desenlaces dinámicos calculados a través del perfilador narrativo (`AIProfiler`), reflejando las decisiones éticas y emocionales del jugador frente a la memoria y el paso del tiempo.
 
 ---
@@ -60,6 +61,7 @@ graph TD
 * **`AIProfiler.gd` (`Autoload`):** Registra el peso de las elecciones del jugador a lo largo del viaje para modular la respuesta narrativa y calcular el epílogo.
 * **`DialogueManager.gd` (`Autoload`) & `dialogues.json`:** Sistema modular de diálogos *data-driven* con bifurcaciones, condiciones de estado, asignación de pistas y efectos en tiempo real.
 * **`AudioManager.gd` (`Autoload`):** Controlador sonoro continuo con soporte para recuperación ante restricciones de *autoplay* en plataformas web (HTML5) y enlace a señales de progresión.
+* **`LocaleManager.gd` (`Autoload`):** Motor de internacionalización y localización en vivo (Español / Inglés) con persistencia de configuración (`user://settings.cfg`), traducción de interfaces y alternancia dinámica de diálogos.
 * **`InspectableObject.gd` & `NPC.gd`:** Entidades interactivas que gestionan destellos de cera dorada, retroalimentación visual en pantalla y diálogos de seguimiento reactivos sin repetición.
 
 ---
