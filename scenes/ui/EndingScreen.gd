@@ -136,9 +136,25 @@ func _build_continuity_summary() -> String:
 			or bool(WorldState.state.get("waiting_room_page_unlocked", false))
 		)
 		var escape_sec: float = float(WorldState.time_management.get("level2_escape_seconds", 0.0))
-		var distractions_note: String = str(
-			WorldState.important_choices.get("level2_distractions_used", "You traversed the platform cautiously.")
+		var raw_distractions: String = str(
+			WorldState.important_choices.get("level2_distractions_used", "")
 		)
+		var distractions_note: String = "You traversed the platform cautiously."
+		if not raw_distractions.is_empty():
+			if raw_distractions.contains("sin usar"):
+				distractions_note = "Cleared the station without using distractions."
+			elif raw_distractions.contains("Utilizaste"):
+				distractions_note = (
+					raw_distractions
+					.replace("Utilizaste", "Used")
+					.replace("recurso(s) del entorno", "environmental resource(s)")
+					.replace("último:", "last:")
+					.replace("Lámpara de mantenimiento (atajo iluminado)", "Maintenance lamp (illuminated shortcut)")
+					.replace("Caja de herramientas (obstáculo temporal)", "Toolbox (temporary obstacle)")
+					.replace("Campana de la estación (distracción sonora)", "Station bell (sound distraction)")
+				)
+			else:
+				distractions_note = raw_distractions
 		var station_summary: String = "• [b]The Old Station (Samuel & Inés):[/b] "
 		if found_station_bonus:
 			station_summary += "You found the hidden waiting room page about your grandfather and Samuel's travels. "

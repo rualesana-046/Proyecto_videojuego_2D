@@ -80,6 +80,7 @@ var _open_tween: Tween = null
 @onready var pause_footer_label: Label = $Overlay/MainPausePanel/MarginContainer/VBoxContainer/PauseFooterLabel
 
 @onready var journal_panel: PanelContainer = $Overlay/JournalPanel
+@onready var journal_title_label: Label = $Overlay/JournalPanel/MarginContainer/VBoxContainer/JournalTitleLabel
 @onready var journal_content_label: RichTextLabel = $Overlay/JournalPanel/MarginContainer/VBoxContainer/ScrollContainer/JournalContentLabel
 @onready var close_journal_button: Button = $Overlay/JournalPanel/MarginContainer/VBoxContainer/CloseJournalButton
 
@@ -254,6 +255,8 @@ func _update_locale_texts() -> void:
 	fullscreen_check_button.text = LocaleManager.t("fullscreen")
 	tutorial_button.text = LocaleManager.t("how_to_play")
 	close_options_button.text = LocaleManager.t("back")
+	if journal_title_label != null:
+		journal_title_label.text = LocaleManager.t("journal")
 	close_journal_button.text = LocaleManager.t("back")
 
 	tutorial_title_label.text = LocaleManager.t("tutorial_title")

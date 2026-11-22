@@ -30,10 +30,16 @@ var _is_ready_to_transition: bool = false
 
 @onready var prologue_overlay: CanvasLayer = $PrologueOverlay
 @onready var prologue_panel: PanelContainer = $PrologueOverlay/Dimmer/CenterContainer/ProloguePanel
+@onready var prologue_title_label: Label = $PrologueOverlay/Dimmer/CenterContainer/ProloguePanel/MarginContainer/VBoxContainer/TitleLabel
 @onready var narrative_text_label: RichTextLabel = $PrologueOverlay/Dimmer/CenterContainer/ProloguePanel/MarginContainer/VBoxContainer/NarrativeTextLabel
 @onready var notebook_page_container: PanelContainer = $PrologueOverlay/Dimmer/CenterContainer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer
 @onready var choices_container: VBoxContainer = $PrologueOverlay/Dimmer/CenterContainer/ProloguePanel/MarginContainer/VBoxContainer/ChoicesContainer
 @onready var continue_button: Button = $PrologueOverlay/Dimmer/CenterContainer/ProloguePanel/MarginContainer/VBoxContainer/ContinueButton
+
+@onready var caption_girl: Label = $PrologueOverlay/Dimmer/CenterContainer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteGirl/Caption
+@onready var caption_elder: Label = $PrologueOverlay/Dimmer/CenterContainer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteElder/Caption
+@onready var caption_distant: Label = $PrologueOverlay/Dimmer/CenterContainer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteDistant/Caption
+@onready var caption_self: Label = $PrologueOverlay/Dimmer/CenterContainer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteSelf/Caption
 
 @onready var silhouette_nodes: Dictionary = {
 	"girl": $PrologueOverlay/Dimmer/CenterContainer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteGirl,
@@ -62,6 +68,18 @@ func _update_locale_texts() -> void:
 	if examine_prompt_label != null:
 		examine_prompt_label.text = LocaleManager.pick("[E] Examinar cuaderno", "[E] Examine notebook") if LocaleManager != null else "[E] Examinar cuaderno"
 
+	if prologue_title_label != null:
+		prologue_title_label.text = LocaleManager.pick("PRÓLOGO", "PROLOGUE") if LocaleManager != null else "PRÓLOGO"
+
+	if caption_girl != null:
+		caption_girl.text = LocaleManager.pick("La niña", "The girl") if LocaleManager != null else "La niña"
+	if caption_elder != null:
+		caption_elder.text = LocaleManager.pick("El anciano", "The old man") if LocaleManager != null else "El anciano"
+	if caption_distant != null:
+		caption_distant.text = LocaleManager.pick("La 3.ª figura", "The 3rd figure") if LocaleManager != null else "La 3.ª figura"
+	if caption_self != null:
+		caption_self.text = LocaleManager.pick("Tu silueta", "Your silhouette") if LocaleManager != null else "Tu silueta"
+
 	if _is_ready_to_transition:
 		continue_button.text = LocaleManager.pick("Salir a Aldeavieja", "Step out into Aldeavieja") if LocaleManager != null else "Salir a Aldeavieja"
 		narrative_text_label.text = GRANDFATHER_CLOSING_LINE_EN if LocaleManager != null and LocaleManager.current_lang == "en" else GRANDFATHER_CLOSING_LINE_ES
@@ -76,6 +94,9 @@ func _update_locale_texts() -> void:
 				"Across the blank paper, four silhouettes emerge traced in golden wax. Which of them draws your focus?"
 			) if LocaleManager != null else "Sobre el papel blanco emergen cuatro siluetas trazadas en cera dorada. ¿En cuál de ellas enfocas tu atención?"
 			_populate_silhouette_choice_buttons()
+	else:
+		if continue_button != null:
+			continue_button.text = LocaleManager.pick("Continuar", "Continue") if LocaleManager != null else "Continuar"
 
 
 func _on_language_changed(_new_lang: String) -> void:
