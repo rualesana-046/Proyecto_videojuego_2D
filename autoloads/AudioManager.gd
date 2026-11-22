@@ -20,21 +20,40 @@ func _ready() -> void:
 	_connect_world_state_signals()
 
 
+func _input(event: InputEvent) -> void:
+	if music_player == null or music_player.playing:
+		return
+
+	var is_trigger_event: bool = (
+		(event is InputEventKey and event.pressed and not event.echo)
+		or (event is InputEventMouseButton and event.pressed)
+	)
+	if is_trigger_event:
+		music_player.play()
+
+
 func _setup_music_player() -> void:
 	var wav_stream: AudioStreamWAV = AMBIENT_THEME as AudioStreamWAV
 	if wav_stream != null:
 		wav_stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
+		if wav_stream.loop_end <= 0 and wav_stream.data.size() > 0:
+			wav_stream.loop_end = wav_stream.data.size() / 2
 
 	music_player = AudioStreamPlayer.new()
 	music_player.bus = &"Music"
 	music_player.stream = AMBIENT_THEME
-	music_player.volume_db = -24.0
-	music_player.finished.connect(music_player.play)
+	music_player.volume_db = -10.0
+	music_player.finished.connect(_on_music_finished)
 	add_child(music_player)
 	music_player.play()
 
 	var tween: Tween = create_tween()
-	tween.tween_property(music_player, "volume_db", 0.0, 2.0)
+	tween.tween_property(music_player, "volume_db", -4.0, 1.0)
+
+
+func _on_music_finished() -> void:
+	if music_player != null and not music_player.playing:
+		music_player.play()
 
 
 func _setup_sfx_pool() -> void:

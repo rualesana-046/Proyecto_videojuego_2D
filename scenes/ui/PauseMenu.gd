@@ -70,6 +70,7 @@ var _open_tween: Tween = null
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_ensure_audio_buses()
+	_sync_options_controls()
 	hide()
 
 	resume_button.pressed.connect(_on_resume_button_pressed)

@@ -7,23 +7,23 @@ const ENDING_SCREEN_PATH: String = "res://scenes/ui/EndingScreen.tscn"
 const CREDITS_SECTIONS: Array[Dictionary] = [
 	{
 		"title": "Desarrollo",
-		"body": "[center]Programación y Arquitectura en Godot 4 (GDScript)\nSistemas de estado persistente (WorldState), perfilador narrativo adaptativo (AIProfiler)\ny mecánicas de exploración, persecución y reconstrucción de recuerdos.[/center]"
+		"body": "[center]Ana María Ruales\nProgramación y arquitectura en Godot Engine 4 (GDScript)[/center]"
 	},
 	{
 		"title": "Diseño narrativo",
-		"body": "[center]Historia original, guion ramificado y construcción de mundo de\n[i]«El Guardián de las Páginas en Blanco: Crónicas de Aldeavieja»[/i]\nPersonajes: Lucía, Tomás, Don Elías, Marta, Inés, Samuel, Elena y el Abuelo.[/center]"
+		"body": "[center]Ana María Ruales\nHistoria original, diálogos y sistema de decisiones[/center]"
 	},
 	{
 		"title": "Diseño visual",
-		"body": "[center]Dirección de arte cálida desaturada y portada ilustrada al atardecer\nSprites y tilesets pixel-art 16×16, siluetas en tinta sepia y cera dorada\nTipografía literaria Almendra & Lora y marcos ornamentales en verde esmeralda y dorado champán.[/center]"
+		"body": "[center]Ana María Ruales\nDirección de arte, interfaz ornamental y sprites 2D\nIlustraciones conceptuales asistidas con Gemini\nTipografías Almendra y Lora (Google Fonts)[/center]"
 	},
 	{
 		"title": "Música y sonido",
-		"body": "[center]Paisaje sonoro ambiental y arquitectura de buses de audio\n(Volumen General, Música y Efectos)\nAtmósferas de lluvia en el taller, campanas de estación y brisa de atardecer.[/center]"
+		"body": "[center]Audio ambiental y efectos (SFX) sintetizados proceduralmente[/center]"
 	},
 	{
 		"title": "Agradecimientos",
-		"body": "[center]A quienes conservan fotografías antiguas, doblan flores de papel\ny mantienen vivas las historias compartidas de su comunidad.\n\nY especialmente a ti, por acompañar al Guardián hasta la última página.[/center]"
+		"body": "[center]Materia: Diseño de interfaces de software\n\nPruebas de jugabilidad:\nJuan Ruales · Luisa Arteaga · Danilo Zamora\nStefany Portillo · Daniela Arias[/center]"
 	}
 ]
 
@@ -43,6 +43,9 @@ var _is_showing_final_card: bool = false
 
 
 func _ready() -> void:
+	for btn: Button in [skip_button, main_menu_button, replay_ending_button, quit_game_button]:
+		btn.pressed.connect(AudioManager.play_ui_click)
+
 	skip_button.pressed.connect(_show_final_card)
 	main_menu_button.pressed.connect(_on_main_menu_button_pressed)
 	replay_ending_button.pressed.connect(_on_replay_ending_button_pressed)
