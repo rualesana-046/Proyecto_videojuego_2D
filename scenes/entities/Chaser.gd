@@ -67,8 +67,12 @@ func vanish_with_whisper(whisper_text: String = "Olvido") -> void:
 	is_distracted = false
 	velocity = Vector2.ZERO
 
+	var resolved_whisper: String = whisper_text
+	if resolved_whisper == "Olvido" and LocaleManager != null:
+		resolved_whisper = LocaleManager.pick("Olvido", "Oblivion")
+
 	if whisper_label != null:
-		whisper_label.text = whisper_text
+		whisper_label.text = resolved_whisper
 	if whisper_container != null:
 		whisper_container.show()
 

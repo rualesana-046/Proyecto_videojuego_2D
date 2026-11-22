@@ -62,9 +62,13 @@ func register_clue(clue_id: String) -> bool:
 	if has_all_level1_clues() and not bool(state.get("lucia_tomas_reconstructed", false)):
 		if not bool(state.get("level1_clues_notified", false)):
 			state["level1_clues_notified"] = true
-			status_notification_requested.emit(
-				"El Cuaderno de Cera brilla... vuelve con Lucía para reconstruir el recuerdo."
+			var notification_msg: String = (
+				LocaleManager.pick(
+					"El Cuaderno de Cera brilla... vuelve con Lucía para reconstruir el recuerdo.",
+					"The Wax Notebook glows... return to Lucía to reconstruct the memory."
+				) if LocaleManager != null else "El Cuaderno de Cera brilla... vuelve con Lucía para reconstruir el recuerdo."
 			)
+			status_notification_requested.emit(notification_msg)
 	return true
 
 

@@ -3,6 +3,99 @@ extends Area2D
 
 signal object_inspected(inspected_id: String, used_wax: bool)
 
+const OBJECT_TRANSLATIONS_EN: Dictionary = {
+	"plaza_stopped_clock": {
+		"name": "Stopped Public Clock",
+		"inspect": "The old clock in the central plaza. Its bronze hands remain motionless at a quarter past five.",
+		"wax": "Upon opening the Wax Notebook, a golden mark glows upon the clock face: time seemed to stop the afternoon the forgetting began."
+	},
+	"plaza_bench_no_plaque": {
+		"name": "Bench without Plaque",
+		"inspect": "A wooden bench facing the fountain. It retains the four rivets of a commemorative plaque that has disappeared.",
+		"wax": "The golden wax reveals an invisible dedication carved in the wood: 'For those who guide the first steps without letting go of the hand'."
+	},
+	"bakery_old_photo": {
+		"name": "Old Photograph (Bakery)",
+		"inspect": "A framed photograph next to the bakery facade. It shows Lucía smiling, but the figure beside her has completely faded away.",
+		"wax": "Bringing the Wax Notebook close, the blurred space clearly outlines the golden silhouette of a bicycle."
+	},
+	"alley_incomplete_mural": {
+		"name": "Incomplete Mural (Alley)",
+		"inspect": "A colorful mural in the southwestern alley depicting daily life in Oldtown. One of the painted faces is dissolving into white chalk.",
+		"wax": "The Wax Notebook reacts to the lost pigment: when an inhabitant is no longer named, their stroke also fades from the walls."
+	},
+	"bridge_faded_inscription": {
+		"name": "Faded Inscription (Old Bridge)",
+		"inspect": "On the railing of the old northern bridge are carved letters almost erased by time: 'Here we learned not to fear falling'.",
+		"wax": "The Wax Notebook illuminates the full engraving beside a drawing of two wheels: 'Here we learned not to fear falling — Tomás & Lucía'."
+	},
+	"station_entrance_posters": {
+		"name": "Worn Posters (Entrance)",
+		"inspect": "Posters of old railway routes at the station entrance. The names of neighboring stations have faded into illegibility.",
+		"wax": "The Wax Notebook reveals the last destination recorded by Samuel: 'Northern Line — Oldtown'."
+	},
+	"waiting_room_photos": {
+		"name": "Old Photographs (Waiting Room)",
+		"inspect": "A gallery of portraits of travelers in the waiting room. In several frames, only the empty platform background remains.",
+		"wax": "The golden wax reveals your grandfather's silhouette seeing off travelers with a notebook under his arm."
+	},
+	"waiting_room_schedule": {
+		"name": "Timetable Board",
+		"inspect": "A wooden board with metal tiles. All departures are marked at the exact time the plaza clock stopped.",
+		"wax": "At the bottom of the board a wax note reads: 'Samuel kept the records next to the tower mechanism'."
+	},
+	"waiting_room_lost_box": {
+		"name": "Lost and Found Box",
+		"inspect": "A wooden chest full of unstamped tickets, pocket watches without hands, and unaddressed letters.",
+		"wax": "Among the items glows a bookbinder's seal identical to the one your grandfather used in his workshop."
+	},
+	"house_garden_fountain": {
+		"name": "Small Garden Fountain",
+		"inspect": "A stone fountain covered in dry leaves in the family garden. Though water no longer flows, it retains an aura of peace.",
+		"wax": "The golden wax depicts Elena and your grandfather conversing by the stone edge at dusk."
+	},
+	"house_item_dried_flower": {
+		"name": "Dried Garden Flower",
+		"inspect": "Among the dried garden plants you find a pressed flower that still retains its petals intact. (You obtained: Dried flower).",
+		"wax": "This flower was saved the day they made a promise in the study."
+	},
+	"house_working_clock": {
+		"name": "Main Hall Clock",
+		"inspect": "Unlike the plaza and station clocks, this pendulum clock still ticks with a steady heartbeat.",
+		"wax": "The Wax Notebook reveals an interior engraving: 'Here time lives on as long as someone remembers'."
+	},
+	"house_item_photo_elena": {
+		"name": "Photograph of Grandfather with Elena",
+		"inspect": "A warm photograph on the mantle in the main hall. (You obtained: Photograph).",
+		"wax": "The wax shows them smiling together in the study, surrounded by books and golden bindings."
+	},
+	"house_study_desk": {
+		"name": "Study Work Desk",
+		"inspect": "The desk where your grandfather researched the Wax Notebook.",
+		"wax": "Scattered across the desk are sketches of the three sacred bindings and notes on how memories are sealed."
+	},
+	"house_item_unfinished_letter": {
+		"name": "Unfinished Letter (Study)",
+		"inspect": "A sheet of parchment with your grandfather's youthful handwriting: it recounts the day he met Elena among books and tools. (You obtained: Unfinished letter).",
+		"wax": "The wax indicates that this letter complements the Photograph in the main hall."
+	},
+	"house_item_binding_ribbon": {
+		"name": "Binding Ribbon (Study)",
+		"inspect": "A ribbon woven with golden and moss green thread used to mark the center of the most precious tomes. (You obtained: Binding ribbon).",
+		"wax": "Its wax trace resonates with the Dried Flower in the garden."
+	},
+	"house_item_last_letter": {
+		"name": "Last Letter (Grandfather's Bedroom)",
+		"inspect": "On the bedroom nightstand rests a sealed envelope with a single written word: 'Elena'. (You obtained: Last letter).",
+		"wax": "It holds the memory of the farewell that led your grandfather to seal the town's memories."
+	},
+	"house_bedroom_keepsakes": {
+		"name": "Grandfather's Personal Keepsakes",
+		"inspect": "A spare pair of glasses, a pocket watch, and vintage sketches of Oldtown's map.",
+		"wax": "On the back of the map it reads: 'The basement will only open to whoever understands our three stages'."
+	}
+}
+
 @export var object_id: String = ""
 @export var object_name: String = "Objeto"
 @export_multiline var inspect_text: String = ""
@@ -109,11 +202,22 @@ func _inspect() -> void:
 		DialogueManager.start_dialogue(triggers_dialogue_id)
 		return
 
-	var full_text: String = inspect_text
-	if used_wax_reveal:
-		full_text += "\n\n[color=#C9AE7C][i](Cuaderno de Cera): " + wax_reveal_text + "[/i][/color]"
+	var resolved_name: String = object_name
+	var resolved_inspect: String = inspect_text
+	var resolved_wax: String = wax_reveal_text
 
-	DialogueManager.show_custom_message(object_name, full_text)
+	if LocaleManager != null and LocaleManager.current_lang == "en" and OBJECT_TRANSLATIONS_EN.has(object_id):
+		var trans: Dictionary = OBJECT_TRANSLATIONS_EN[object_id]
+		resolved_name = str(trans.get("name", resolved_name))
+		resolved_inspect = str(trans.get("inspect", resolved_inspect))
+		resolved_wax = str(trans.get("wax", resolved_wax))
+
+	var full_text: String = resolved_inspect
+	if used_wax_reveal:
+		var wax_prefix: String = LocaleManager.pick("(Cuaderno de Cera): ", "(Wax Notebook): ") if LocaleManager != null else "(Cuaderno de Cera): "
+		full_text += "\n\n[color=#C9AE7C][i]" + wax_prefix + resolved_wax + "[/i][/color]"
+
+	DialogueManager.show_custom_message(resolved_name, full_text)
 
 
 func _hide_collected_item() -> void:

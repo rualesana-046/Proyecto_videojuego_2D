@@ -15,6 +15,15 @@ const CHOICE_LABELS: Dictionary = {
 	"final_decision": "Decisión frente a La Memoria Compartida"
 }
 
+const CHOICE_LABELS_EN: Dictionary = {
+	"prologue_silhouette": "Vision in grandfather's workshop",
+	"lucia_tomas_reconstruction": "Lucía's memory reconstruction",
+	"samuel_memory_focus": "Reflection by Samuel's memory",
+	"level2_distractions_used": "Tactics in the old station",
+	"study_investigation_focus": "Investigation in grandfather's study",
+	"final_decision": "Decision before the Shared Memory"
+}
+
 const CLUE_LABELS: Dictionary = {
 	"clue_photo": "Fotografía antigua junto a la panadería (Lucía y la silueta de una bicicleta)",
 	"clue_paper_flower": "Flor de papel doblada entregada por Marta (encargo de Tomás)",
@@ -27,6 +36,32 @@ const CLUE_LABELS: Dictionary = {
 	"item_letter": "Carta inconclusa hallada en el estudio de encuadernación",
 	"item_ribbon": "Cinta de encuadernación hallada en el estudio",
 	"item_last_letter": "Última carta guardada en la habitación del abuelo"
+}
+
+const CLUE_LABELS_EN: Dictionary = {
+	"clue_photo": "Old photograph by the bakery (Lucía and the silhouette of a bicycle)",
+	"clue_paper_flower": "Folded paper flower given by Marta (on behalf of Tomás)",
+	"clue_bridge": "Inscription on the old bridge ('Here we learned not to fear falling')",
+	"llave_estacion": "Old station key given by Inés",
+	"clue_samuel_photo": "Photograph of Samuel and grandfather in the maintenance hallway",
+	"carta_abuelo": "Grandfather's letter found in the Clock Tower metal box",
+	"item_dried_flower": "Dried flower preserved in the family house garden",
+	"item_photo": "Photograph of grandfather with Elena in the main hall",
+	"item_letter": "Unfinished letter found in the bookbinding study",
+	"item_ribbon": "Binding ribbon found in the study",
+	"item_last_letter": "Last letter kept in grandfather's bedroom"
+}
+
+const MEMORY_LABELS_EN: Dictionary = {
+	"El hallazgo del Cuaderno de Cera en el taller del abuelo": "The discovery of the Wax Notebook in grandfather's workshop",
+	"Recuerdo de Lucía y Tomás (Completo)": "Lucía and Tomás's Memory (Complete)",
+	"Recuerdo de Lucía y Tomás (Parcial)": "Lucía and Tomás's Memory (Partial)",
+	"Recuerdo de Samuel en el andén": "Samuel's Memory on the platform",
+	"Carta del abuelo en la torre del reloj": "Grandfather's Letter in the clock tower",
+	"Página adicional: Los viajes del abuelo y Samuel en la estación": "Bonus page: Grandfather and Samuel's journeys at the station",
+	"El primer encuentro (Abuelo y Elena)": "The First Meeting (Grandfather and Elena)",
+	"La promesa del estudio": "The Study's Promise",
+	"La despedida de Elena": "Elena's Farewell"
 }
 
 var _save_feedback_tween: Tween = null
@@ -194,6 +229,8 @@ func _on_language_button_pressed() -> void:
 func _on_language_changed(_new_lang: String) -> void:
 	_update_locale_texts()
 	_refresh_pause_metadata()
+	if journal_panel != null and journal_panel.visible:
+		_populate_journal()
 
 
 func _update_locale_texts() -> void:
@@ -305,36 +342,172 @@ func _on_journal_button_pressed() -> void:
 
 func _populate_journal() -> void:
 	var lines: PackedStringArray = PackedStringArray()
+	var is_en: bool = LocaleManager != null and LocaleManager.current_lang == "en"
 
-	lines.append("[b][color=#C9AE7C]— %s —[/color][/b]" % (LocaleManager.pick("Páginas y Recuerdos Recuperados", "Pages & Recovered Memories") if LocaleManager != null else "Páginas y Recuerdos Recuperados"))
+	# --- Páginas y Recuerdos Recuperados ---
+	lines.append("[b][color=#C9AE7C]— %s —[/color][/b]" % (
+		LocaleManager.pick("Páginas y Recuerdos Recuperados", "Pages & Recovered Memories")
+		if LocaleManager != null else "Páginas y Recuerdos Recuperados"
+	))
 	if WorldState.recovered_memories.is_empty():
-		lines.append(LocaleManager.pick("[i]Aún no has recuperado páginas completas en el cuaderno.[/i]", "[i]You have not yet recovered complete pages in the notebook.[/i]") if LocaleManager != null else "[i]Aún no has recuperado páginas completas en el cuaderno.[/i]")
+		lines.append(
+			LocaleManager.pick(
+				"[i]Aún no has recuperado páginas completas en el cuaderno.[/i]",
+				"[i]You have not yet recovered complete pages in the notebook.[/i]"
+			) if LocaleManager != null else "[i]Aún no has recuperado páginas completas en el cuaderno.[/i]"
+		)
 	else:
 		for mem: String in WorldState.recovered_memories:
-			lines.append("• " + mem)
+			var mem_label: String = str(MEMORY_LABELS_EN.get(mem, mem)) if is_en else mem
+			lines.append("• " + mem_label)
 
-	lines.append("\n[b][color=#C9AE7C]— %s —[/color][/b]" % (LocaleManager.pick("Pistas y Objetos Descubiertos", "Clues & Discovered Objects") if LocaleManager != null else "Pistas y Objetos Descubiertos"))
+	# --- Pistas y Objetos Descubiertos ---
+	lines.append("\n[b][color=#C9AE7C]— %s —[/color][/b]" % (
+		LocaleManager.pick("Pistas y Objetos Descubiertos", "Clues & Discovered Objects")
+		if LocaleManager != null else "Pistas y Objetos Descubiertos"
+	))
 	if WorldState.clues_found.is_empty():
-		lines.append(LocaleManager.pick("[i]No hay pistas registradas en esta página.[/i]", "[i]No clues recorded on this page.[/i]") if LocaleManager != null else "[i]No hay pistas registradas en esta página.[/i]")
+		lines.append(
+			LocaleManager.pick(
+				"[i]No hay pistas registradas en esta página.[/i]",
+				"[i]No clues recorded on this page.[/i]"
+			) if LocaleManager != null else "[i]No hay pistas registradas en esta página.[/i]"
+		)
 	else:
+		var clue_dict: Dictionary = CLUE_LABELS_EN if is_en else CLUE_LABELS
 		for clue: String in WorldState.clues_found:
-			var label: String = str(CLUE_LABELS.get(clue, clue))
+			var label: String = str(clue_dict.get(clue, CLUE_LABELS.get(clue, clue)))
 			lines.append("• " + label)
 
-	lines.append("\n[b][color=#C9AE7C]— %s —[/color][/b]" % (LocaleManager.pick("Decisiones Trascendentales", "Pivotal Decisions") if LocaleManager != null else "Decisiones Trascendentales"))
+	# --- Decisiones Trascendentales ---
+	lines.append("\n[b][color=#C9AE7C]— %s —[/color][/b]" % (
+		LocaleManager.pick("Decisiones Trascendentales", "Pivotal Decisions")
+		if LocaleManager != null else "Decisiones Trascendentales"
+	))
 	if WorldState.important_choices.is_empty():
-		lines.append(LocaleManager.pick("[i]Tus decisiones comenzarán a marcar el destino de Aldeavieja a medida que avances.[/i]", "[i]Your decisions will begin shaping Oldtown's destiny as you progress.[/i]") if LocaleManager != null else "[i]Tus decisiones comenzarán a marcar el destino de Aldeavieja a medida que avances.[/i]")
+		lines.append(
+			LocaleManager.pick(
+				"[i]Tus decisiones comenzarán a marcar el destino de Aldeavieja a medida que avances.[/i]",
+				"[i]Your decisions will begin shaping Oldtown's destiny as you progress.[/i]"
+			) if LocaleManager != null else "[i]Tus decisiones comenzarán a marcar el destino de Aldeavieja a medida que avances.[/i]"
+		)
 	else:
+		var choice_dict: Dictionary = CHOICE_LABELS_EN if is_en else CHOICE_LABELS
 		for key: String in WorldState.important_choices.keys():
-			var choice_name: String = str(CHOICE_LABELS.get(key, key))
-			var choice_val: String = str(WorldState.important_choices[key])
+			var choice_name: String = str(choice_dict.get(key, CHOICE_LABELS.get(key, key)))
+			var raw_choice_val: String = str(WorldState.important_choices[key])
+			var choice_val: String = _localize_choice_value(key, raw_choice_val, is_en)
 			lines.append("• [b]%s:[/b] %s" % [choice_name, choice_val])
 
-	lines.append("\n[b][color=#C9AE7C]— %s —[/color][/b]" % (LocaleManager.pick("Estado del Guardián", "Guardian Status") if LocaleManager != null else "Estado del Guardián"))
-	lines.append("• %s: %d" % [LocaleManager.pick("Cera dorada restante", "Remaining golden wax") if LocaleManager != null else "Cera dorada restante", WorldState.wax_remaining])
-	lines.append("• %s: %d" % [LocaleManager.pick("Nivel de exploración", "Exploration level") if LocaleManager != null else "Nivel de exploración", WorldState.exploration_score])
+	# --- Estado del Guardián ---
+	lines.append("\n[b][color=#C9AE7C]— %s —[/color][/b]" % (
+		LocaleManager.pick("Estado del Guardián", "Guardian Status")
+		if LocaleManager != null else "Estado del Guardián"
+	))
+	var dominant: String = AIProfiler.get_dominant_profile() if AIProfiler != null else "nostalgia"
+	var profile_name: String = ""
+	if is_en:
+		profile_name = {
+			"nostalgia": "Nostalgia & Bonds",
+			"curiosity": "Curiosity & Investigation",
+			"pragmatism": "Pragmatism & Resolution"
+		}.get(dominant, "Nostalgia & Bonds")
+	else:
+		profile_name = {
+			"nostalgia": "Nostalgia y Vínculos",
+			"curiosity": "Curiosidad e Investigación",
+			"pragmatism": "Pragmatismo y Resolución"
+		}.get(dominant, "Nostalgia y Vínculos")
+
+	lines.append("• %s: %s" % [
+		LocaleManager.pick("Perfil dominante", "Dominant profile") if LocaleManager != null else "Perfil dominante",
+		profile_name
+	])
+	lines.append("• %s: %d" % [
+		LocaleManager.pick("Cera dorada restante", "Remaining golden wax") if LocaleManager != null else "Cera dorada restante",
+		WorldState.wax_remaining
+	])
+	lines.append("• %s: %d" % [
+		LocaleManager.pick("Nivel de exploración", "Exploration level") if LocaleManager != null else "Nivel de exploración",
+		WorldState.exploration_score
+	])
 
 	journal_content_label.text = "\n".join(lines)
+
+
+func _localize_choice_value(choice_key: String, raw_val: String, is_en: bool) -> String:
+	if not is_en:
+		match raw_val:
+			"share":
+				return "Compartir la memoria con toda Aldeavieja"
+			"preserve":
+				return "Preservar el cuaderno en soledad"
+			"let_go":
+				return "Dejar ir los recuerdos en paz"
+			_:
+				return raw_val
+
+	match choice_key:
+		"final_decision":
+			match raw_val:
+				"share":
+					return "Share memory with all of Oldtown"
+				"preserve":
+					return "Preserve the notebook in solitude"
+				"let_go":
+					return "Let memories go in peace"
+				_:
+					return raw_val
+		"lucia_tomas_reconstruction":
+			if raw_val.contains("bicicleta") or raw_val.contains("bicycle"):
+				return "Precise reconstruction: 'Tomás taught Lucía how to ride a bicycle.'"
+			elif raw_val.contains("puente") or raw_val.contains("bridge"):
+				return "Partial reconstruction: 'Tomás always waited for Lucía by the bridge.'"
+			elif raw_val.contains("prometi") or raw_val.contains("promise"):
+				return "Partial reconstruction: 'Tomás promised her he would never stop accompanying her.'"
+			return raw_val
+		"samuel_memory_focus":
+			if raw_val.contains("inventar") or raw_val.contains("invent"):
+				return "You understood that the notebook cannot invent memories."
+			elif raw_val.contains("vivos") or raw_val.contains("alive"):
+				return "You understood that memories need someone to keep them alive."
+			elif raw_val.contains("historia") or raw_val.contains("story"):
+				return "You understood that first the story disappears, and then the person."
+			return raw_val
+		"study_investigation_focus":
+			if raw_val.contains("Elena"):
+				return "You sought to understand what happened to Elena."
+			elif raw_val.contains("Cuaderno") or raw_val.contains("utiliz"):
+				return "You investigated why grandfather used the Wax Notebook."
+			elif raw_val.contains("detener") or raw_val.contains("stano"):
+				return "You focused on finding how to open the basement and stop Oblivion."
+			return raw_val
+		"level2_distractions_used":
+			if raw_val.contains("sin usar"):
+				return "Cleared the station without using distractions."
+			elif raw_val.contains("Utilizaste"):
+				return (
+					raw_val
+					.replace("Utilizaste", "Used")
+					.replace("recurso(s) del entorno", "environmental resource(s)")
+					.replace("último:", "last:")
+					.replace("Lámpara de mantenimiento (atajo iluminado)", "Maintenance lamp (illuminated shortcut)")
+					.replace("Caja de herramientas (obstáculo temporal)", "Toolbox (temporary obstacle)")
+					.replace("Campana de la estación (distracción sonora)", "Station bell (sound distraction)")
+				)
+			return raw_val
+		"prologue_silhouette":
+			if raw_val.contains("niña"):
+				return "In the Wax Notebook, you observed the silhouette of the young girl searching for someone."
+			elif raw_val.contains("anciano"):
+				return "In the Wax Notebook, you observed the silhouette of the old man holding a familiar object."
+			elif raw_val.contains("tercera"):
+				return "In the Wax Notebook, you observed the distant third figure watching in silence."
+			elif raw_val.contains("propia"):
+				return "In the Wax Notebook, you chose to observe your own silhouette before departing."
+			return raw_val
+		_:
+			return raw_val
 
 
 func _on_options_button_pressed() -> void:

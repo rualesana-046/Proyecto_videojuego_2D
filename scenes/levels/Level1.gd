@@ -29,6 +29,11 @@ func _ready() -> void:
 	WorldState.clue_registered.connect(_on_clue_registered)
 	WorldState.memory_reconstructed.connect(_on_memory_reconstructed)
 
+	if LocaleManager != null:
+		LocaleManager.language_changed.connect(func(_new_lang: String) -> void:
+			_update_objective_hud()
+		)
+
 	_update_npc_dialogues()
 	_update_objective_hud()
 
@@ -110,19 +115,44 @@ func _update_objective_hud() -> void:
 	var talked_marta: bool = bool(WorldState.state.get("talked_marta", false))
 
 	if reconstructed:
-		objective_label.text = "Objetivo: Cruza el antiguo puente hacia el norte rumbo a la Estación."
+		objective_label.text = (
+			LocaleManager.pick(
+				"Objetivo: Cruza el antiguo puente hacia el norte rumbo a la Estación.",
+				"Objective: Cross the ancient bridge northward toward the Station."
+			) if LocaleManager != null else "Objetivo: Cruza el antiguo puente hacia el norte rumbo a la Estación."
+		)
 	elif has_all_clues:
-		objective_label.text = "Objetivo: Vuelve con Lucía en la plaza para reconstruir el recuerdo."
+		objective_label.text = (
+			LocaleManager.pick(
+				"Objetivo: Vuelve con Lucía en la plaza para reconstruir el recuerdo.",
+				"Objective: Return to Lucía in the plaza to reconstruct the memory."
+			) if LocaleManager != null else "Objetivo: Vuelve con Lucía en la plaza para reconstruir el recuerdo."
+		)
 	elif not talked_lucia:
-		objective_label.text = "Objetivo: Habla con Lucía junto a la fuente en la plaza central."
+		objective_label.text = (
+			LocaleManager.pick(
+				"Objetivo: Habla con Lucía junto a la fuente en la plaza central.",
+				"Objective: Speak with Lucía next to the fountain in the central plaza."
+			) if LocaleManager != null else "Objetivo: Habla con Lucía junto a la fuente en la plaza central."
+		)
 	elif not talked_elias or not talked_marta:
-		objective_label.text = "Objetivo: Conversa con Don Elías (reloj) y Marta (floristería al oeste)."
+		objective_label.text = (
+			LocaleManager.pick(
+				"Objetivo: Conversa con Don Elías (reloj) y Marta (floristería al oeste).",
+				"Objective: Talk with Don Elías (clock) and Marta (florist to the west)."
+			) if LocaleManager != null else "Objetivo: Conversa con Don Elías (reloj) y Marta (floristería al oeste)."
+		)
 	else:
 		var clues_count: int = 0
 		for req_clue: String in WorldState.LEVEL1_REQUIRED_CLUES:
 			if WorldState.clues_found.has(req_clue):
 				clues_count += 1
-		objective_label.text = "Objetivo: Reúne las pistas con el Cuaderno [Q] — Panadería (este) y Puente (norte) · Pistas: %d/3." % clues_count
+		objective_label.text = (
+			LocaleManager.pick(
+				"Objetivo: Reúne las pistas con el Cuaderno [Q] — Panadería (este) y Puente (norte) · Pistas: %d/3." % clues_count,
+				"Objective: Gather clues with the Notebook [Q] — Bakery (east) and Bridge (north) · Clues: %d/3." % clues_count
+			) if LocaleManager != null else "Objetivo: Reúne las pistas con el Cuaderno [Q] — Panadería (este) y Puente (norte) · Pistas: %d/3." % clues_count
+		)
 
 
 func _on_status_notification_requested(message: String) -> void:

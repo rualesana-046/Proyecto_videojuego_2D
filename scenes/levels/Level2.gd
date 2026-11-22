@@ -82,6 +82,12 @@ func _ready() -> void:
 	WorldState.clue_registered.connect(func(_c: String, _t: int) -> void: _update_objective_hud())
 	WorldState.memory_reconstructed.connect(func(_m: String) -> void: _update_objective_hud())
 
+	if LocaleManager != null:
+		LocaleManager.language_changed.connect(func(_new_lang: String) -> void:
+			_update_objective_hud()
+			_update_lives_hud()
+		)
+
 	_update_all_prompts()
 
 
@@ -122,11 +128,19 @@ func _interact_samuel_photo() -> void:
 
 func _interact_maintenance_lamp() -> void:
 	if _lamp_activated:
-		_show_notification("La lámpara de mantenimiento ya ilumina el atajo hacia el andén.")
+		_show_notification(
+			LocaleManager.pick(
+				"La lámpara de mantenimiento ya ilumina el atajo hacia el andén.",
+				"The maintenance lamp already illuminates the shortcut to the platform."
+			) if LocaleManager != null else "La lámpara de mantenimiento ya ilumina el atajo hacia el andén."
+		)
 		return
 
 	_lamp_activated = true
-	_register_distraction_used("Lámpara de mantenimiento (atajo iluminado)")
+	_register_distraction_used(
+		LocaleManager.pick("Lámpara de mantenimiento (atajo iluminado)", "Maintenance lamp (illuminated shortcut)")
+		if LocaleManager != null else "Lámpara de mantenimiento (atajo iluminado)"
+	)
 
 	# Abre el atajo oculto entre el pasillo de mantenimiento y el andén central
 	if environment_layer != null:
@@ -136,18 +150,36 @@ func _interact_maintenance_lamp() -> void:
 	if maintenance_lamp_area != null:
 		maintenance_lamp_area.modulate = Color(1.3, 1.2, 0.9, 1.0)
 
-	_show_notification("La lámpara ilumina el pasillo y abre un atajo directo hacia el andén.")
+	_show_notification(
+		LocaleManager.pick(
+			"La lámpara ilumina el pasillo y abre un atajo directo hacia el andén.",
+			"The lamp illuminates the hallway and opens a direct shortcut to the platform."
+		) if LocaleManager != null else "La lámpara ilumina el pasillo y abre un atajo directo hacia el andén."
+	)
 
 
 func _interact_toolbox() -> void:
 	if _barricade_active:
-		_show_notification("La caja de herramientas ya está bloqueando el pasillo.")
+		_show_notification(
+			LocaleManager.pick(
+				"La caja de herramientas ya está bloqueando el pasillo.",
+				"The toolbox is already blocking the corridor."
+			) if LocaleManager != null else "La caja de herramientas ya está bloqueando el pasillo."
+		)
 		return
 
 	_barricade_active = true
-	_register_distraction_used("Caja de herramientas (obstáculo temporal)")
+	_register_distraction_used(
+		LocaleManager.pick("Caja de herramientas (obstáculo temporal)", "Toolbox (temporary obstacle)")
+		if LocaleManager != null else "Caja de herramientas (obstáculo temporal)"
+	)
 	_set_barricade_enabled(true)
-	_show_notification("Colocas herramientas en el pasillo para bloquear el paso durante 5 segundos.")
+	_show_notification(
+		LocaleManager.pick(
+			"Colocas herramientas en el pasillo para bloquear el paso durante 5 segundos.",
+			"You place tools in the corridor to block passage for 5 seconds."
+		) if LocaleManager != null else "Colocas herramientas en el pasillo para bloquear el paso durante 5 segundos."
+	)
 
 	var timer: SceneTreeTimer = get_tree().create_timer(5.0)
 	timer.timeout.connect(_on_barricade_timeout)
@@ -169,18 +201,36 @@ func _set_barricade_enabled(enabled: bool) -> void:
 
 func _interact_station_bell() -> void:
 	AudioManager.play_station_bell()
-	_register_distraction_used("Campana de la estación (distracción sonora)")
+	_register_distraction_used(
+		LocaleManager.pick("Campana de la estación (distracción sonora)", "Station bell (sound distraction)")
+		if LocaleManager != null else "Campana de la estación (distracción sonora)"
+	)
 	if chaser != null and chaser.is_active:
 		chaser.distract_to(station_bell_area.global_position, 4.0)
-		_show_notification("¡El tañido de la campana atrae a El Desvanecido durante 4 segundos!")
+		_show_notification(
+			LocaleManager.pick(
+				"¡El tañido de la campana atrae a El Desvanecido durante 4 segundos!",
+				"The ringing bell lures the Vanished for 4 seconds!"
+			) if LocaleManager != null else "¡El tañido de la campana atrae a El Desvanecido durante 4 segundos!"
+		)
 	else:
-		_show_notification("Haces sonar la campana de latón; su eco recorre los rieles vacíos.")
+		_show_notification(
+			LocaleManager.pick(
+				"Haces sonar la campana de latón; su eco recorre los rieles vacíos.",
+				"You ring the brass bell; its chime echoes down the empty rails."
+			) if LocaleManager != null else "Haces sonar la campana de latón; su eco recorre los rieles vacíos."
+		)
 
 
 func _interact_signal_lever() -> void:
 	var photo_examined: bool = bool(WorldState.state.get("samuel_photo_examined", false))
 	if not photo_examined:
-		_show_notification("La palanca está atascada. Primero debes investigar el pasillo de mantenimiento (centro-oeste).")
+		_show_notification(
+			LocaleManager.pick(
+				"La palanca está atascada. Primero debes investigar el pasillo de mantenimiento (centro-oeste).",
+				"The lever is jammed. You must investigate the maintenance corridor (center-west) first."
+			) if LocaleManager != null else "La palanca está atascada. Primero debes investigar el pasillo de mantenimiento (centro-oeste)."
+		)
 		return
 
 	if not _tower_gate_opened:
@@ -207,8 +257,11 @@ func _interact_clock_tower_box() -> void:
 	)
 	if not has_key:
 		DialogueManager.show_custom_message(
-			"Caja metálica del abuelo",
-			"Una caja metálica cerrada con candado bajo los engranajes de la torre. Inés, en la sala de espera al suroeste, conserva la llave antigua."
+			LocaleManager.pick("Caja metálica del abuelo", "Grandfather's metal box") if LocaleManager != null else "Caja metálica del abuelo",
+			LocaleManager.pick(
+				"Una caja metálica cerrada con candado bajo los engranajes de la torre. Inés, en la sala de espera al suroeste, conserva la llave antigua.",
+				"A padlocked metal box beneath the tower's gears. Inés, in the waiting room to the southwest, keeps the old key."
+			) if LocaleManager != null else "Una caja metálica cerrada con candado bajo los engranajes de la torre. Inés, en la sala de espera al suroeste, conserva la llave antigua."
 		)
 		return
 
@@ -234,7 +287,12 @@ func _on_dialogue_ended() -> void:
 			if not WorldState.important_choices.has("level2_distractions_used"):
 				WorldState.important_choices["level2_distractions_used"] = "Superaste la estación sin usar distracciones."
 			chaser.activate_at(CHASER_SPAWN_POSITION)
-			_show_notification("El Desvanecido recorre los pasillos... llega a la palanca del andén este.")
+			_show_notification(
+				LocaleManager.pick(
+					"El Desvanecido recorre los pasillos... llega a la palanca del andén este.",
+					"The Vanished roams the hallways... reach the lever on the eastern platform."
+				) if LocaleManager != null else "El Desvanecido recorre los pasillos... llega a la palanca del andén este."
+			)
 
 	# Si acaba de leer la Carta del Abuelo en la torre (Escena 4), desvanecer a El Desvanecido con "Olvido"
 	if bool(WorldState.state.get("clock_tower_letter_read", false)) and not _desvanecido_vanished:
@@ -242,8 +300,13 @@ func _on_dialogue_ended() -> void:
 		if chaser != null:
 			chaser.global_position = Vector2(0, -104)
 			chaser.show()
-			chaser.vanish_with_whisper("Olvido")
-		_show_notification("El sendero norte hacia la antigua casa familiar se ha desbloqueado.")
+			chaser.vanish_with_whisper(LocaleManager.pick("Olvido", "Oblivion") if LocaleManager != null else "Olvido")
+		_show_notification(
+			LocaleManager.pick(
+				"El sendero norte hacia la antigua casa familiar se ha desbloqueado.",
+				"The northern path toward the old family house is now unlocked."
+			) if LocaleManager != null else "El sendero norte hacia la antigua casa familiar se ha desbloqueado."
+		)
 
 
 func _check_waiting_room_bonus() -> void:
@@ -258,7 +321,12 @@ func _check_waiting_room_bonus() -> void:
 	if has_all_waiting_items:
 		WorldState.state["waiting_room_page_unlocked"] = true
 		WorldState.register_recovered_memory("Página adicional: Los viajes del abuelo y Samuel en la estación")
-		_show_notification("Nueva página en el Cuaderno de Cera: «Los viajes del abuelo y Samuel».")
+		_show_notification(
+			LocaleManager.pick(
+				"Nueva página en el Cuaderno de Cera: «Los viajes del abuelo y Samuel».",
+				"New page in the Wax Notebook: 'Grandfather and Samuel's journeys'."
+			) if LocaleManager != null else "Nueva página en el Cuaderno de Cera: «Los viajes del abuelo y Samuel»."
+		)
 
 
 func _update_objective_hud() -> void:
@@ -271,21 +339,49 @@ func _update_objective_hud() -> void:
 	var letter_read: bool = bool(WorldState.state.get("clock_tower_letter_read", false))
 
 	if letter_read:
-		objective_label.text = "Objetivo: Avanza por la salida norte hacia la Casa de los Recuerdos."
+		objective_label.text = (
+			LocaleManager.pick(
+				"Objetivo: Avanza por la salida norte hacia la Casa de los Recuerdos.",
+				"Objective: Head through the northern exit toward the House of Memories."
+			) if LocaleManager != null else "Objetivo: Avanza por la salida norte hacia la Casa de los Recuerdos."
+		)
 	elif lever_pulled:
-		objective_label.text = "Objetivo: Sube a la Torre del Reloj (norte) y abre la caja metálica con la llave."
+		objective_label.text = (
+			LocaleManager.pick(
+				"Objetivo: Sube a la Torre del Reloj (norte) y abre la caja metálica con la llave.",
+				"Objective: Climb the Clock Tower (north) and open the metal box with the key."
+			) if LocaleManager != null else "Objetivo: Sube a la Torre del Reloj (norte) y abre la caja metálica con la llave."
+		)
 	elif photo_examined:
-		objective_label.text = "Objetivo: Usa lámpara, caja o campana para distraer al Desvanecido y activa la palanca en el andén (este)."
+		objective_label.text = (
+			LocaleManager.pick(
+				"Objetivo: Usa lámpara, caja o campana para distraer al Desvanecido y activa la palanca en el andén (este).",
+				"Objective: Use the lamp, toolbox, or bell to distract the Vanished and pull the platform lever (east)."
+			) if LocaleManager != null else "Objetivo: Usa lámpara, caja o campana para distraer al Desvanecido y activa la palanca en el andén (este)."
+		)
 	elif has_key:
-		objective_label.text = "Objetivo: Examina la fotografía en el pasillo de mantenimiento (centro-oeste)."
+		objective_label.text = (
+			LocaleManager.pick(
+				"Objetivo: Examina la fotografía en el pasillo de mantenimiento (centro-oeste).",
+				"Objective: Examine the photograph in the maintenance hallway (center-west)."
+			) if LocaleManager != null else "Objetivo: Examina la fotografía en el pasillo de mantenimiento (centro-oeste)."
+		)
 	else:
-		objective_label.text = "Objetivo: Habla con Inés en la sala de espera (suroeste) para conseguir la llave."
+		objective_label.text = (
+			LocaleManager.pick(
+				"Objetivo: Habla con Inés en la sala de espera (suroeste) para conseguir la llave.",
+				"Objective: Speak with Inés in the waiting room (southwest) to obtain the key."
+			) if LocaleManager != null else "Objetivo: Habla con Inés en la sala de espera (suroeste) para conseguir la llave."
+		)
 
 
 func _update_lives_hud() -> void:
 	if lives_label == null:
 		return
-	lives_label.text = "Vidas: %d / %d" % [player_lives, MAX_LIVES]
+	lives_label.text = (
+		LocaleManager.pick("Vidas: %d / %d", "Lives: %d / %d")
+		if LocaleManager != null else "Vidas: %d / %d"
+	) % [player_lives, MAX_LIVES]
 	if player_lives <= 1:
 		lives_label.add_theme_color_override("font_color", Color(0.86, 0.38, 0.38, 1.0))
 	else:
@@ -335,16 +431,31 @@ func _on_chaser_player_caught(caught_player: Player) -> void:
 
 		var notice_text: String = ""
 		if player_lives == 1:
-			notice_text = "El Desvanecido te alcanzó. Te queda 1 vida."
+			notice_text = (
+				LocaleManager.pick(
+					"El Desvanecido te alcanzó. Te queda 1 vida.",
+					"The Vanished caught you. You have 1 life remaining."
+				) if LocaleManager != null else "El Desvanecido te alcanzó. Te queda 1 vida."
+			)
 		else:
-			notice_text = "El Desvanecido te alcanzó. Te quedan %d vidas." % player_lives
+			notice_text = (
+				LocaleManager.pick(
+					"El Desvanecido te alcanzó. Te quedan %d vidas." % player_lives,
+					"The Vanished caught you. You have %d lives remaining." % player_lives
+				) if LocaleManager != null else "El Desvanecido te alcanzó. Te quedan %d vidas." % player_lives
+			)
 		_show_notification(notice_text)
 	else:
 		if chaser != null:
 			chaser.set_active_state(false)
 			chaser.velocity = Vector2.ZERO
 
-		_show_notification("El Olvido ha borrado tus pasos... Reiniciando la estación")
+		_show_notification(
+			LocaleManager.pick(
+				"El Olvido ha borrado tus pasos... Reiniciando la estación",
+				"Oblivion has erased your steps... Restarting the station"
+			) if LocaleManager != null else "El Olvido ha borrado tus pasos... Reiniciando la estación"
+		)
 		get_tree().create_timer(1.5).timeout.connect(_restart_level2_local_state)
 
 

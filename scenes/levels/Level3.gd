@@ -14,6 +14,14 @@ const HOUSE_ITEM_NAMES: Dictionary = {
 	"item_last_letter": "Última carta"
 }
 
+const HOUSE_ITEM_NAMES_EN: Dictionary = {
+	"item_photo": "Photograph",
+	"item_letter": "Unfinished letter",
+	"item_ribbon": "Ribbon",
+	"item_dried_flower": "Dried flower",
+	"item_last_letter": "Last letter"
+}
+
 var time_units: int = INITIAL_TIME_UNITS
 var reconstructed_count: int = 0
 var _crafted_memories: Dictionary = {
@@ -40,6 +48,7 @@ var _notification_tween: Tween = null
 @onready var objective_label: Label = $HUD/TopBarPanel/MarginContainer/VBoxContainer/ObjectiveLabel
 
 @onready var memory_craft_modal: ColorRect = $HUD/MemoryCraftModal
+@onready var craft_title_label: Label = $HUD/MemoryCraftModal/MemoryCraftPanel/MarginContainer/VBoxContainer/CraftTitleLabel
 @onready var craft_status_label: Label = $HUD/MemoryCraftModal/MemoryCraftPanel/MarginContainer/VBoxContainer/CraftStatusLabel
 @onready var craft_memory_1_button: Button = $HUD/MemoryCraftModal/MemoryCraftPanel/MarginContainer/VBoxContainer/CraftMemory1Button
 @onready var craft_memory_2_button: Button = $HUD/MemoryCraftModal/MemoryCraftPanel/MarginContainer/VBoxContainer/CraftMemory2Button
@@ -101,6 +110,13 @@ func _ready() -> void:
 	WorldState.clue_registered.connect(_on_clue_registered)
 	DialogueManager.dialogue_started.connect(_on_dialogue_started)
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
+
+	if LocaleManager != null:
+		LocaleManager.language_changed.connect(func(_new_lang: String) -> void:
+			_update_hud()
+			if memory_craft_modal != null and memory_craft_modal.visible:
+				_refresh_craft_buttons()
+		)
 
 	_update_hud()
 	_update_prompts()
@@ -171,71 +187,133 @@ func _refresh_craft_buttons() -> void:
 	var has_flower: bool = WorldState.clues_found.has("item_dried_flower")
 	var has_last_letter: bool = WorldState.clues_found.has("item_last_letter")
 	var has_wax: bool = WorldState.wax_remaining >= 1
+	var is_en: bool = LocaleManager != null and LocaleManager.current_lang == "en"
+
+	if craft_title_label != null:
+		craft_title_label.text = (
+			LocaleManager.pick(
+				"Mesa de Encuadernación — Los 3 Sellos",
+				"Binding Table — The 3 Seals"
+			) if LocaleManager != null else "Mesa de Encuadernación — Los 3 Sellos"
+		)
+
+	if close_craft_button != null:
+		close_craft_button.text = (
+			LocaleManager.pick("Cerrar mesa", "Close Table")
+			if LocaleManager != null else "Cerrar mesa"
+		)
 
 	craft_status_label.text = (
-		"Combina los objetos hallados en la casa con 1 de Cera dorada para abrir los 3 sellos del sótano. (Cera disponible: %d)"
-		% WorldState.wax_remaining
-	)
+		LocaleManager.pick(
+			"Combina los objetos hallados en la casa con 1 de Cera dorada para abrir los 3 sellos del sótano. (Cera disponible: %d)",
+			"Combine items found in the house with 1 Golden Wax to open the 3 basement seals. (Wax available: %d)"
+		) if LocaleManager != null else "Combina los objetos hallados en la casa con 1 de Cera dorada para abrir los 3 sellos del sótano. (Cera disponible: %d)"
+	) % WorldState.wax_remaining
 
 	# --- I. El primer encuentro ---
 	if bool(_crafted_memories["first_meeting"]):
-		craft_memory_1_button.text = "I. El primer encuentro — [Recuerdo reconstruido ✓]"
+		craft_memory_1_button.text = (
+			LocaleManager.pick(
+				"I. El primer encuentro — [Recuerdo reconstruido ✓]",
+				"I. The First Meeting — [Memory Reconstructed ✓]"
+			) if LocaleManager != null else "I. El primer encuentro — [Recuerdo reconstruido ✓]"
+		)
 		craft_memory_1_button.disabled = true
 	else:
 		var missing_1: PackedStringArray = PackedStringArray()
 		if not has_photo:
-			missing_1.append("Fotografía (Sala)")
+			missing_1.append("Photograph (Hall)" if is_en else "Fotografía (Sala)")
 		if not has_letter:
-			missing_1.append("Carta (Estudio)")
+			missing_1.append("Letter (Study)" if is_en else "Carta (Estudio)")
 		if not has_wax:
-			missing_1.append("1 Cera dorada")
+			missing_1.append("1 Golden Wax" if is_en else "1 Cera dorada")
 
 		if missing_1.is_empty():
-			craft_memory_1_button.text = "I. El primer encuentro — [Listo para sellar · Consume 1 Cera]"
+			craft_memory_1_button.text = (
+				LocaleManager.pick(
+					"I. El primer encuentro — [Listo para sellar · Consume 1 Cera]",
+					"I. The First Meeting — [Ready to Seal · Consumes 1 Wax]"
+				) if LocaleManager != null else "I. El primer encuentro — [Listo para sellar · Consume 1 Cera]"
+			)
 			craft_memory_1_button.disabled = false
 		else:
-			var prefix_1: String = "Falta: " if missing_1.size() == 1 else "Faltan: "
-			craft_memory_1_button.text = "I. El primer encuentro — " + prefix_1 + ", ".join(missing_1)
+			var prefix_1: String = ""
+			if is_en:
+				prefix_1 = "Missing: "
+			else:
+				prefix_1 = "Falta: " if missing_1.size() == 1 else "Faltan: "
+			var title_1: String = "I. The First Meeting — " if is_en else "I. El primer encuentro — "
+			craft_memory_1_button.text = title_1 + prefix_1 + ", ".join(missing_1)
 			craft_memory_1_button.disabled = true
 
 	# --- II. La promesa ---
 	if bool(_crafted_memories["the_promise"]):
-		craft_memory_2_button.text = "II. La promesa — [Recuerdo reconstruido ✓]"
+		craft_memory_2_button.text = (
+			LocaleManager.pick(
+				"II. La promesa — [Recuerdo reconstruido ✓]",
+				"II. The Promise — [Memory Reconstructed ✓]"
+			) if LocaleManager != null else "II. La promesa — [Recuerdo reconstruido ✓]"
+		)
 		craft_memory_2_button.disabled = true
 	else:
 		var missing_2: PackedStringArray = PackedStringArray()
 		if not has_ribbon:
-			missing_2.append("Cinta (Estudio)")
+			missing_2.append("Ribbon (Study)" if is_en else "Cinta (Estudio)")
 		if not has_flower:
-			missing_2.append("Flor seca (Jardín)")
+			missing_2.append("Dried Flower (Garden)" if is_en else "Flor seca (Jardín)")
 		if not has_wax:
-			missing_2.append("1 Cera dorada")
+			missing_2.append("1 Golden Wax" if is_en else "1 Cera dorada")
 
 		if missing_2.is_empty():
-			craft_memory_2_button.text = "II. La promesa — [Listo para sellar · Consume 1 Cera]"
+			craft_memory_2_button.text = (
+				LocaleManager.pick(
+					"II. La promesa — [Listo para sellar · Consume 1 Cera]",
+					"II. The Promise — [Ready to Seal · Consumes 1 Wax]"
+				) if LocaleManager != null else "II. La promesa — [Listo para sellar · Consume 1 Cera]"
+			)
 			craft_memory_2_button.disabled = false
 		else:
-			var prefix_2: String = "Falta: " if missing_2.size() == 1 else "Faltan: "
-			craft_memory_2_button.text = "II. La promesa — " + prefix_2 + ", ".join(missing_2)
+			var prefix_2: String = ""
+			if is_en:
+				prefix_2 = "Missing: "
+			else:
+				prefix_2 = "Falta: " if missing_2.size() == 1 else "Faltan: "
+			var title_2: String = "II. The Promise — " if is_en else "II. La promesa — "
+			craft_memory_2_button.text = title_2 + prefix_2 + ", ".join(missing_2)
 			craft_memory_2_button.disabled = true
 
 	# --- III. La despedida ---
 	if bool(_crafted_memories["the_farewell"]):
-		craft_memory_3_button.text = "III. La despedida — [Recuerdo reconstruido ✓]"
+		craft_memory_3_button.text = (
+			LocaleManager.pick(
+				"III. La despedida — [Recuerdo reconstruido ✓]",
+				"III. The Farewell — [Memory Reconstructed ✓]"
+			) if LocaleManager != null else "III. La despedida — [Recuerdo reconstruido ✓]"
+		)
 		craft_memory_3_button.disabled = true
 	else:
 		var missing_3: PackedStringArray = PackedStringArray()
 		if not has_last_letter:
-			missing_3.append("Última carta (Habitación)")
+			missing_3.append("Last Letter (Bedroom)" if is_en else "Última carta (Habitación)")
 		if not has_wax:
-			missing_3.append("1 Cera dorada")
+			missing_3.append("1 Golden Wax" if is_en else "1 Cera dorada")
 
 		if missing_3.is_empty():
-			craft_memory_3_button.text = "III. La despedida — [Listo para sellar · Consume 1 Cera]"
+			craft_memory_3_button.text = (
+				LocaleManager.pick(
+					"III. La despedida — [Listo para sellar · Consume 1 Cera]",
+					"III. The Farewell — [Ready to Seal · Consumes 1 Wax]"
+				) if LocaleManager != null else "III. La despedida — [Listo para sellar · Consume 1 Cera]"
+			)
 			craft_memory_3_button.disabled = false
 		else:
-			var prefix_3: String = "Falta: " if missing_3.size() == 1 else "Faltan: "
-			craft_memory_3_button.text = "III. La despedida — " + prefix_3 + ", ".join(missing_3)
+			var prefix_3: String = ""
+			if is_en:
+				prefix_3 = "Missing: "
+			else:
+				prefix_3 = "Falta: " if missing_3.size() == 1 else "Faltan: "
+			var title_3: String = "III. The Farewell — " if is_en else "III. La despedida — "
+			craft_memory_3_button.text = title_3 + prefix_3 + ", ".join(missing_3)
 			craft_memory_3_button.disabled = true
 
 
@@ -283,11 +361,17 @@ func _unlock_basement_door(by_time_depletion: bool) -> void:
 
 	if by_time_depletion:
 		_show_notification(
-			"El recuerdo se debilita, pero la última chispa del cuaderno te permite abrir el sótano con lo que lograste reunir."
+			LocaleManager.pick(
+				"El recuerdo se debilita, pero la última chispa del cuaderno te permite abrir el sótano con lo que lograste reunir.",
+				"The memory fades, but the notebook's last spark allows you to open the basement with what you gathered."
+			) if LocaleManager != null else "El recuerdo se debilita, pero la última chispa del cuaderno te permite abrir el sótano con lo que lograste reunir."
 		)
 	else:
 		_show_notification(
-			"¡Los 3 sellos de cera se han abierto! El acceso norte hacia el sótano está desbloqueado."
+			LocaleManager.pick(
+				"¡Los 3 sellos de cera se han abierto! El acceso norte hacia el sótano está desbloqueado.",
+				"The 3 wax seals have opened! The northern path into the basement is unlocked."
+			) if LocaleManager != null else "¡Los 3 sellos de cera se han abierto! El acceso norte hacia el sótano está desbloqueado."
 		)
 
 
@@ -297,7 +381,12 @@ func _interact_basement_altar() -> void:
 
 func _on_wax_fragment_collected(_total: int) -> void:
 	_update_hud()
-	_show_notification("Has recogido un Fragmento de Cera dorada (+1 Cera disponible).")
+	_show_notification(
+		LocaleManager.pick(
+			"Has recogido un Fragmento de Cera dorada (+1 Cera disponible).",
+			"You collected a Golden Wax Fragment (+1 Wax available)."
+		) if LocaleManager != null else "Has recogido un Fragmento de Cera dorada (+1 Cera disponible)."
+	)
 
 
 func _on_clue_registered(_clue_id: String, _total_clues: int) -> void:
@@ -322,23 +411,40 @@ func _on_dialogue_ended() -> void:
 func _update_hud() -> void:
 	_update_objective_hud()
 	if time_label != null:
-		time_label.text = "Tiempo del recuerdo: %d" % time_units
+		time_label.text = (
+			LocaleManager.pick("Tiempo del recuerdo: %d", "Memory Time: %d")
+			if LocaleManager != null else "Tiempo del recuerdo: %d"
+		) % time_units
 	if wax_label != null:
-		wax_label.text = "Cera dorada: %d" % WorldState.wax_remaining
+		wax_label.text = (
+			LocaleManager.pick("Cera dorada: %d", "Golden Wax: %d")
+			if LocaleManager != null else "Cera dorada: %d"
+		) % WorldState.wax_remaining
 	if memories_label != null:
-		memories_label.text = "Recuerdos reconstruidos: %d / %d" % [reconstructed_count, TOTAL_REQUIRED_MEMORIES]
+		memories_label.text = (
+			LocaleManager.pick("Recuerdos reconstruidos: %d / %d", "Reconstructed Memories: %d / %d")
+			if LocaleManager != null else "Recuerdos reconstruidos: %d / %d"
+		) % [reconstructed_count, TOTAL_REQUIRED_MEMORIES]
 
 	if items_label != null:
+		var is_en: bool = LocaleManager != null and LocaleManager.current_lang == "en"
+		var dict_to_use: Dictionary = HOUSE_ITEM_NAMES_EN if is_en else HOUSE_ITEM_NAMES
 		var collected_names: PackedStringArray = PackedStringArray()
-		for item_key: Variant in HOUSE_ITEM_NAMES.keys():
+		for item_key: Variant in dict_to_use.keys():
 			var key_str: String = str(item_key)
 			if WorldState.clues_found.has(key_str):
-				collected_names.append(str(HOUSE_ITEM_NAMES[key_str]))
+				collected_names.append(str(dict_to_use[key_str]))
 
 		if collected_names.is_empty():
-			items_label.text = "Objetos de la casa: Ninguno aún (explora el jardín, la sala, el estudio y la habitación)"
+			items_label.text = (
+				LocaleManager.pick(
+					"Objetos de la casa: Ninguno aún (explora el jardín, la sala, el estudio y la habitación)",
+					"House Items: None yet (explore the garden, main hall, study, and bedroom)"
+				) if LocaleManager != null else "Objetos de la casa: Ninguno aún (explora el jardín, la sala, el estudio y la habitación)"
+			)
 		else:
-			items_label.text = "Objetos de la casa: " + ", ".join(collected_names)
+			var prefix: String = LocaleManager.pick("Objetos de la casa: ", "House Items: ") if LocaleManager != null else "Objetos de la casa: "
+			items_label.text = prefix + ", ".join(collected_names)
 
 
 func _update_objective_hud() -> void:
@@ -348,11 +454,26 @@ func _update_objective_hud() -> void:
 	var has_photo: bool = WorldState.clues_found.has("item_photo")
 
 	if reconstructed_count >= TOTAL_REQUIRED_MEMORIES and _basement_unlocked:
-		objective_label.text = "Objetivo: Entra al sótano (norte) y habla con la memoria del abuelo."
+		objective_label.text = (
+			LocaleManager.pick(
+				"Objetivo: Entra al sótano (norte) y habla con la memoria del abuelo.",
+				"Objective: Enter the basement (north) and speak with grandfather's memory."
+			) if LocaleManager != null else "Objetivo: Entra al sótano (norte) y habla con la memoria del abuelo."
+		)
 	elif not has_photo:
-		objective_label.text = "Objetivo: Examina la fotografía del abuelo y Elena en la sala principal."
+		objective_label.text = (
+			LocaleManager.pick(
+				"Objetivo: Examina la fotografía del abuelo y Elena en la sala principal.",
+				"Objective: Examine the photograph of grandfather and Elena in the main hall."
+			) if LocaleManager != null else "Objetivo: Examina la fotografía del abuelo y Elena en la sala principal."
+		)
 	else:
-		objective_label.text = "Objetivo: Explora jardín (sur), estudio (oeste) y habitación (este), y sella los recuerdos en la Mesa de Encuadernación (%d/3)." % reconstructed_count
+		objective_label.text = (
+			LocaleManager.pick(
+				"Objetivo: Explora jardín (sur), estudio (oeste) y habitación (este), y sella los recuerdos en la Mesa de Encuadernación (%d/3)." % reconstructed_count,
+				"Objective: Explore the garden (south), study (west), and bedroom (east), and seal memories at the Binding Table (%d/3)." % reconstructed_count
+			) if LocaleManager != null else "Objetivo: Explora jardín (sur), estudio (oeste) y habitación (este), y sella los recuerdos en la Mesa de Encuadernación (%d/3)." % reconstructed_count
+		)
 
 
 func _show_notification(message: String) -> void:
