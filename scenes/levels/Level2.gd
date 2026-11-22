@@ -177,6 +177,11 @@ func _interact_station_bell() -> void:
 
 
 func _interact_signal_lever() -> void:
+	var photo_examined: bool = bool(WorldState.state.get("samuel_photo_examined", false))
+	if not photo_examined:
+		_show_notification("La palanca está atascada. Primero debes investigar el pasillo de mantenimiento (centro-oeste).")
+		return
+
 	if not _tower_gate_opened:
 		_tower_gate_opened = true
 		if _pursuit_start_msec > 0:

@@ -41,14 +41,13 @@ func _ready() -> void:
 		_sparkle_tween.tween_property(wax_sparkle, "modulate:a", 0.45, 0.75)
 		_sparkle_tween.tween_property(wax_sparkle, "modulate:a", 1.0, 0.75)
 
-	var is_collected: bool = not grants_clue_id.is_empty() and WorldState.clues_found.has(grants_clue_id)
-	if is_collected:
+	if _is_already_inspected_or_collected():
 		if _sparkle_tween != null and _sparkle_tween.is_valid():
 			_sparkle_tween.kill()
 		if wax_sparkle != null:
 			wax_sparkle.hide()
 			wax_sparkle.visible = false
-		if hide_after_collect:
+		if hide_after_collect and not grants_clue_id.is_empty() and WorldState.clues_found.has(grants_clue_id):
 			_hide_collected_item()
 
 	body_entered.connect(_on_body_entered)
@@ -61,6 +60,15 @@ func _ready() -> void:
 	_update_interact_prompt()
 
 
+func _is_already_inspected_or_collected() -> bool:
+	if not object_id.is_empty():
+		if WorldState.inspected_objects.has(object_id) or bool(WorldState.state.get("inspected_" + object_id, false)):
+			return true
+	if not grants_clue_id.is_empty() and WorldState.clues_found.has(grants_clue_id):
+		return true
+	return false
+
+
 func _input(event: InputEvent) -> void:
 	if _is_collected_hidden:
 		return
@@ -71,11 +79,15 @@ func _input(event: InputEvent) -> void:
 
 func _inspect() -> void:
 	var is_first_inspection: bool = false
-	if not object_id.is_empty() and not WorldState.inspected_objects.has(object_id):
-		WorldState.inspected_objects.append(object_id)
+	if not object_id.is_empty():
+		if not WorldState.inspected_objects.has(object_id):
+			WorldState.inspected_objects.append(object_id)
+			is_first_inspection = true
+			if is_optional_exploration:
+				WorldState.exploration_score += 1
+		WorldState.state["inspected_" + object_id] = true
+	else:
 		is_first_inspection = true
-		if is_optional_exploration:
-			WorldState.exploration_score += 1
 
 	var used_wax_reveal: bool = WorldState.is_notebook_active and not wax_reveal_text.is_empty()
 	if is_first_inspection:
@@ -83,11 +95,12 @@ func _inspect() -> void:
 
 	if not grants_clue_id.is_empty():
 		WorldState.register_clue(grants_clue_id)
-		if _sparkle_tween != null and _sparkle_tween.is_valid():
-			_sparkle_tween.kill()
-		if wax_sparkle != null:
-			wax_sparkle.hide()
-			wax_sparkle.visible = false
+
+	if _sparkle_tween != null and _sparkle_tween.is_valid():
+		_sparkle_tween.kill()
+	if wax_sparkle != null:
+		wax_sparkle.hide()
+		wax_sparkle.visible = false
 
 	if hide_after_collect:
 		_hide_collected_item()
@@ -136,8 +149,7 @@ func _on_body_exited(body: Node2D) -> void:
 func _on_notebook_state_changed(is_active: bool) -> void:
 	if _is_collected_hidden:
 		return
-	var is_collected: bool = not grants_clue_id.is_empty() and WorldState.clues_found.has(grants_clue_id)
-	if is_collected:
+	if _is_already_inspected_or_collected():
 		if wax_sparkle != null:
 			wax_sparkle.hide()
 			wax_sparkle.visible = false
@@ -149,14 +161,13 @@ func _on_notebook_state_changed(is_active: bool) -> void:
 
 
 func _on_dialogue_state_changed() -> void:
-	var is_collected: bool = not grants_clue_id.is_empty() and WorldState.clues_found.has(grants_clue_id)
-	if is_collected:
+	if _is_already_inspected_or_collected():
 		if _sparkle_tween != null and _sparkle_tween.is_valid():
 			_sparkle_tween.kill()
 		if wax_sparkle != null:
 			wax_sparkle.hide()
 			wax_sparkle.visible = false
-		if hide_after_collect:
+		if hide_after_collect and not grants_clue_id.is_empty() and WorldState.clues_found.has(grants_clue_id):
 			_hide_collected_item()
 	_update_interact_prompt()
 
