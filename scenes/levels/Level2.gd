@@ -1,9 +1,13 @@
 class_name Level2
 extends Node2D
 
+const MAX_LIVES: int = 3
 const RESPAWN_POSITION: Vector2 = Vector2(-48, 24)
 const CHASER_SPAWN_POSITION: Vector2 = Vector2(-96, -8)
 
+var player_lives: int = MAX_LIVES
+var _is_invulnerable: bool = false
+var _invulnerability_tween: Tween = null
 var _pursuit_start_msec: int = 0
 var _distractions_used_count: int = 0
 var _tower_gate_opened: bool = false
@@ -28,6 +32,8 @@ var _notification_tween: Tween = null
 @onready var clock_tower_box_area: Area2D = $ClockTowerBoxArea
 @onready var clock_tower_box_prompt: Node2D = $ClockTowerBoxArea/InteractPrompt
 
+@onready var lives_panel: PanelContainer = $NotificationLayer/LivesPanel
+@onready var lives_label: Label = $NotificationLayer/LivesPanel/MarginContainer/LivesLabel
 @onready var notification_panel: PanelContainer = $NotificationLayer/NotificationPanel
 @onready var notification_label: Label = $NotificationLayer/NotificationPanel/MarginContainer/NotificationLabel
 
@@ -43,6 +49,7 @@ var _barricade_active: bool = false
 
 func _ready() -> void:
 	WorldState.current_level = "res://scenes/levels/Level2.tscn"
+	_update_lives_hud()
 	if notification_panel != null:
 		notification_panel.hide()
 		notification_panel.modulate.a = 0.0
@@ -53,7 +60,7 @@ func _ready() -> void:
 	if chaser != null:
 		chaser.starts_active = false
 		chaser.set_active_state(false)
-		chaser.player_caught.connect(_on_chaser_caught_player)
+		chaser.player_caught.connect(_on_chaser_player_caught)
 
 	_connect_interactive_area(samuel_photo_area, "_on_samuel_photo_near")
 	_connect_interactive_area(maintenance_lamp_area, "_on_lamp_near")
@@ -237,20 +244,114 @@ func _check_waiting_room_bonus() -> void:
 		_show_notification("Nueva página en el Cuaderno de Cera: «Los viajes del abuelo y Samuel».")
 
 
+func _update_lives_hud() -> void:
+	if lives_label == null:
+		return
+	lives_label.text = "Vidas: %d / %d" % [player_lives, MAX_LIVES]
+	if player_lives <= 1:
+		lives_label.add_theme_color_override("font_color", Color(0.86, 0.38, 0.38, 1.0))
+	else:
+		lives_label.add_theme_color_override("font_color", Color(0.788235, 0.682353, 0.486275, 1.0))
+
+
 func _on_chaser_caught_player(caught_player: Player) -> void:
+	_on_chaser_player_caught(caught_player)
+
+
+func _on_chaser_player_caught(caught_player: Player) -> void:
+	if _is_invulnerable:
+		return
+
+	player_lives -= 1
+	_update_lives_hud()
+
 	var catches: int = int(WorldState.state.get("level2_caught_count", 0)) + 1
 	WorldState.state["level2_caught_count"] = catches
 	WorldState.time_management["level2_catches"] = catches
 
-	if is_instance_valid(caught_player):
-		caught_player.global_position = RESPAWN_POSITION
-		caught_player.velocity = Vector2.ZERO
+	if player_lives > 0:
+		if is_instance_valid(caught_player):
+			caught_player.global_position = RESPAWN_POSITION
+			caught_player.velocity = Vector2.ZERO
 
-	if chaser != null:
-		chaser.global_position = Vector2(72, -16)
-		chaser.is_distracted = false
+		if chaser != null:
+			chaser.global_position = Vector2(72, -16)
+			chaser.is_distracted = false
 
-	_show_notification("Las páginas pierden su brillo... logras apartarte a tiempo hacia la entrada del pasillo.")
+		_is_invulnerable = true
+		if _invulnerability_tween != null and _invulnerability_tween.is_valid():
+			_invulnerability_tween.kill()
+
+		if is_instance_valid(caught_player):
+			_invulnerability_tween = create_tween()
+			for i in range(4):
+				_invulnerability_tween.tween_property(caught_player, "modulate:a", 0.3, 0.18)
+				_invulnerability_tween.tween_property(caught_player, "modulate:a", 1.0, 0.18)
+			_invulnerability_tween.tween_callback(func() -> void:
+				_is_invulnerable = false
+				if is_instance_valid(caught_player):
+					caught_player.modulate.a = 1.0
+			)
+		else:
+			_is_invulnerable = false
+
+		var notice_text: String = ""
+		if player_lives == 1:
+			notice_text = "El Desvanecido te alcanzó. Te queda 1 vida."
+		else:
+			notice_text = "El Desvanecido te alcanzó. Te quedan %d vidas." % player_lives
+		_show_notification(notice_text)
+	else:
+		if chaser != null:
+			chaser.set_active_state(false)
+			chaser.velocity = Vector2.ZERO
+
+		_show_notification("El Olvido ha borrado tus pasos... Reiniciando la estación")
+		get_tree().create_timer(1.5).timeout.connect(_restart_level2_local_state)
+
+
+func _restart_level2_local_state() -> void:
+	var state_keys_to_clear: Array[String] = [
+		"samuel_photo_examined",
+		"clock_tower_letter_read",
+		"has_station_key",
+		"station_lever_pulled",
+		"waiting_room_page_unlocked",
+		"level2_caught_count"
+	]
+	for key: String in state_keys_to_clear:
+		WorldState.state.erase(key)
+
+	var clues_to_clear: Array[String] = [
+		"clue_samuel_photo",
+		"llave_estacion",
+		"carta_abuelo"
+	]
+	for clue: String in clues_to_clear:
+		WorldState.clues_found.erase(clue)
+
+	var memories_to_clear: Array[String] = [
+		"Recuerdo de Samuel en el andén",
+		"Carta del abuelo en la torre del reloj",
+		"Página adicional: Los viajes del abuelo y Samuel en la estación"
+	]
+	for mem: String in memories_to_clear:
+		WorldState.recovered_memories.erase(mem)
+
+	WorldState.important_choices.erase("samuel_memory_focus")
+	WorldState.important_choices.erase("level2_distractions_used")
+	WorldState.time_management.erase("level2_escape_seconds")
+	WorldState.time_management.erase("level2_catches")
+
+	var inspected_to_clear: Array[String] = [
+		"waiting_room_photos",
+		"waiting_room_schedule",
+		"waiting_room_lost_box"
+	]
+	for insp: String in inspected_to_clear:
+		WorldState.inspected_objects.erase(insp)
+
+	get_tree().change_scene_to_file("res://scenes/levels/Level2.tscn")
 
 
 func _show_notification(message: String) -> void:

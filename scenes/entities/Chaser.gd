@@ -24,11 +24,18 @@ func _ready() -> void:
 	detection_zone.body_entered.connect(_on_detection_zone_body_entered)
 	detection_zone.body_exited.connect(_on_detection_zone_body_exited)
 	hit_zone.body_entered.connect(_on_hit_zone_body_entered)
+	DialogueManager.dialogue_started.connect(_on_dialogue_state_changed)
+	DialogueManager.dialogue_ended.connect(_on_dialogue_state_changed)
 
 	if whisper_container != null:
 		whisper_container.hide()
 
 	set_active_state(starts_active)
+
+
+func _on_dialogue_state_changed() -> void:
+	if DialogueManager.is_dialogue_active:
+		velocity = Vector2.ZERO
 
 
 func set_active_state(active: bool) -> void:
@@ -78,6 +85,17 @@ func _physics_process(delta: float) -> void:
 
 	if _catch_cooldown > 0.0:
 		_catch_cooldown -= delta
+	elif hit_zone != null:
+		for body: Node2D in hit_zone.get_overlapping_bodies():
+			if body is Player:
+				_on_hit_zone_body_entered(body)
+				return
+
+	if not is_instance_valid(target_player) and detection_zone != null:
+		for body: Node2D in detection_zone.get_overlapping_bodies():
+			if body is Player:
+				target_player = body as Player
+				break
 
 	if is_distracted:
 		_distraction_timer -= delta
@@ -103,6 +121,8 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_detection_zone_body_entered(body: Node2D) -> void:
+	if DialogueManager.is_dialogue_active:
+		return
 	if body is Player:
 		target_player = body
 
@@ -117,7 +137,7 @@ func _on_hit_zone_body_entered(body: Node2D) -> void:
 		return
 
 	if body is Player:
-		_catch_cooldown = 2.0
+		_catch_cooldown = 1.5
 		if player_caught.get_connections().size() > 0:
 			player_caught.emit(body as Player)
 		else:
