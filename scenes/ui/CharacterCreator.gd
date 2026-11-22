@@ -20,6 +20,11 @@ const CLOTHES_PALETTE: Array[Color] = [
 	Color(0.6, 0.1, 0.1)
 ]
 
+@onready var title_label: Label = $MainContainer/TitleLabel
+@onready var body_color_label: Label = $MainContainer/BodyColorRow/BodyColorLabel
+@onready var hair_color_label: Label = $MainContainer/HairColorRow/HairColorLabel
+@onready var clothes_color_label: Label = $MainContainer/ClothesColorRow/ClothesColorLabel
+
 @onready var preview_body_sprite: Sprite2D = $MainContainer/PreviewContainer/PreviewVisuals/BodySprite
 @onready var preview_clothes_sprite: Sprite2D = $MainContainer/PreviewContainer/PreviewVisuals/ClothesSprite
 @onready var preview_hair_sprite: Sprite2D = $MainContainer/PreviewContainer/PreviewVisuals/HairSprite
@@ -45,6 +50,11 @@ func _ready() -> void:
 	start_button.pressed.connect(_on_start_button_pressed)
 	back_button.pressed.connect(_on_back_button_pressed)
 
+	if LocaleManager != null:
+		LocaleManager.language_changed.connect(_on_language_changed)
+
+	_update_locale_texts()
+
 
 func _create_color_icon(color: Color) -> Texture2D:
 	var img: Image = Image.create_empty(32, 32, false, Image.FORMAT_RGBA8)
@@ -53,20 +63,57 @@ func _create_color_icon(color: Color) -> Texture2D:
 
 
 func _populate_options() -> void:
+	var prev_body: int = maxi(0, body_option.selected)
+	var prev_hair: int = maxi(0, hair_option.selected)
+	var prev_clothes: int = maxi(0, clothes_option.selected)
+
+	var body_names: Array[String] = [
+		LocaleManager.t("tone_light") if LocaleManager != null else "Claro",
+		LocaleManager.t("tone_medium") if LocaleManager != null else "Medio",
+		LocaleManager.t("tone_dark") if LocaleManager != null else "Oscuro"
+	]
+	var hair_names: Array[String] = [
+		LocaleManager.t("hair_brown") if LocaleManager != null else "Castaño",
+		LocaleManager.t("hair_blonde") if LocaleManager != null else "Rubio",
+		LocaleManager.t("hair_black") if LocaleManager != null else "Negro"
+	]
+	var clothes_names: Array[String] = [
+		LocaleManager.t("clothes_emerald") if LocaleManager != null else "Verde Esmeralda",
+		LocaleManager.t("clothes_gold") if LocaleManager != null else "Dorado Cera",
+		LocaleManager.t("clothes_crimson") if LocaleManager != null else "Carmesí"
+	]
+
 	body_option.clear()
-	for color: Color in BODY_PALETTE:
-		body_option.add_icon_item(_create_color_icon(color), "")
-	body_option.selected = 0
+	for i: int in range(BODY_PALETTE.size()):
+		body_option.add_icon_item(_create_color_icon(BODY_PALETTE[i]), body_names[i])
+	body_option.selected = prev_body
 
 	hair_option.clear()
-	for color: Color in HAIR_PALETTE:
-		hair_option.add_icon_item(_create_color_icon(color), "")
-	hair_option.selected = 0
+	for i: int in range(HAIR_PALETTE.size()):
+		hair_option.add_icon_item(_create_color_icon(HAIR_PALETTE[i]), hair_names[i])
+	hair_option.selected = prev_hair
 
 	clothes_option.clear()
-	for color: Color in CLOTHES_PALETTE:
-		clothes_option.add_icon_item(_create_color_icon(color), "")
-	clothes_option.selected = 0
+	for i: int in range(CLOTHES_PALETTE.size()):
+		clothes_option.add_icon_item(_create_color_icon(CLOTHES_PALETTE[i]), clothes_names[i])
+	clothes_option.selected = prev_clothes
+
+
+func _update_locale_texts() -> void:
+	if LocaleManager == null:
+		return
+
+	title_label.text = LocaleManager.t("char_title")
+	body_color_label.text = LocaleManager.t("body_color")
+	hair_color_label.text = LocaleManager.t("hair_color")
+	clothes_color_label.text = LocaleManager.t("clothes_color")
+	start_button.text = LocaleManager.t("start_adventure")
+	back_button.text = LocaleManager.t("back")
+	_populate_options()
+
+
+func _on_language_changed(_new_lang: String) -> void:
+	_update_locale_texts()
 
 
 func _on_body_option_selected(index: int) -> void:

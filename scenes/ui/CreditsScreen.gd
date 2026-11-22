@@ -4,29 +4,6 @@ extends Control
 const MAIN_MENU_PATH: String = "res://scenes/ui/MainMenu.tscn"
 const ENDING_SCREEN_PATH: String = "res://scenes/ui/EndingScreen.tscn"
 
-const CREDITS_SECTIONS: Array[Dictionary] = [
-	{
-		"title": "Desarrollo",
-		"body": "[center]Ana María Ruales\nProgramación y arquitectura en Godot Engine 4 (GDScript)[/center]"
-	},
-	{
-		"title": "Diseño narrativo",
-		"body": "[center]Ana María Ruales\nHistoria original, diálogos y sistema de decisiones[/center]"
-	},
-	{
-		"title": "Diseño visual",
-		"body": "[center]Ana María Ruales\nDirección de arte, interfaz ornamental y sprites 2D\nIlustraciones conceptuales asistidas con Gemini\nTipografías Almendra y Lora (Google Fonts)[/center]"
-	},
-	{
-		"title": "Música y sonido",
-		"body": "[center]Audio ambiental y efectos (SFX) sintetizados proceduralmente[/center]"
-	},
-	{
-		"title": "Agradecimientos",
-		"body": "[center]Materia: Diseño de interfaces de software\n\nPruebas de jugabilidad:\nJuan Ruales · Luisa Arteaga · Danilo Zamora\nStefany Portillo · Daniela Arias[/center]"
-	}
-]
-
 var _sequence_tween: Tween = null
 var _current_section_index: int = 0
 var _is_showing_final_card: bool = false
@@ -37,6 +14,8 @@ var _is_showing_final_card: bool = false
 @onready var skip_button: Button = $CreditsPanel/MarginContainer/SequenceContainer/SkipButton
 
 @onready var final_card_container: VBoxContainer = $CreditsPanel/MarginContainer/FinalCardContainer
+@onready var closing_title_label: Label = $CreditsPanel/MarginContainer/FinalCardContainer/ClosingTitleLabel
+@onready var closing_subtitle_label: Label = $CreditsPanel/MarginContainer/FinalCardContainer/ClosingSubtitleLabel
 @onready var main_menu_button: Button = $CreditsPanel/MarginContainer/FinalCardContainer/MainMenuButton
 @onready var replay_ending_button: Button = $CreditsPanel/MarginContainer/FinalCardContainer/ReplayEndingButton
 @onready var quit_game_button: Button = $CreditsPanel/MarginContainer/FinalCardContainer/QuitGameButton
@@ -51,6 +30,10 @@ func _ready() -> void:
 	replay_ending_button.pressed.connect(_on_replay_ending_button_pressed)
 	quit_game_button.pressed.connect(_on_quit_game_button_pressed)
 
+	if LocaleManager != null:
+		LocaleManager.language_changed.connect(_on_language_changed)
+
+	_update_locale_texts()
 	_start_credits_sequence()
 
 
@@ -63,6 +46,77 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 
+func _get_localized_credits_sections() -> Array[Dictionary]:
+	if LocaleManager == null:
+		return [
+			{
+				"title": "Desarrollo",
+				"body": "[center]Ana María Ruales\nProgramación y arquitectura en Godot Engine 4 (GDScript)[/center]"
+			},
+			{
+				"title": "Diseño narrativo",
+				"body": "[center]Ana María Ruales\nHistoria original, diálogos y sistema de decisiones[/center]"
+			},
+			{
+				"title": "Diseño visual",
+				"body": "[center]Ana María Ruales\nDirección de arte, interfaz ornamental y sprites 2D\nIlustraciones conceptuales asistidas con Gemini\nTipografías Almendra y Lora (Google Fonts)[/center]"
+			},
+			{
+				"title": "Música y sonido",
+				"body": "[center]Audio ambiental y efectos (SFX) sintetizados proceduralmente[/center]"
+			},
+			{
+				"title": "Agradecimientos",
+				"body": "[center]Materia: Diseño de interfaces de software\n\nPruebas de jugabilidad:\nJuan Ruales · Luisa Arteaga · Danilo Zamora\nStefany Portillo · Daniela Arias[/center]"
+			}
+		]
+
+	return [
+		{
+			"title": LocaleManager.t("credits_dev_title"),
+			"body": "[center]%s[/center]" % LocaleManager.t("credits_dev_body")
+		},
+		{
+			"title": LocaleManager.t("credits_narrative_title"),
+			"body": "[center]%s[/center]" % LocaleManager.t("credits_narrative_body")
+		},
+		{
+			"title": LocaleManager.t("credits_visual_title"),
+			"body": "[center]%s[/center]" % LocaleManager.t("credits_visual_body")
+		},
+		{
+			"title": LocaleManager.t("credits_audio_title"),
+			"body": "[center]%s[/center]" % LocaleManager.t("credits_audio_body")
+		},
+		{
+			"title": LocaleManager.t("credits_thanks_title"),
+			"body": "[center]%s[/center]" % LocaleManager.t("credits_thanks_body")
+		}
+	]
+
+
+func _update_locale_texts() -> void:
+	if LocaleManager == null:
+		return
+
+	skip_button.text = LocaleManager.t("skip_credits")
+	main_menu_button.text = LocaleManager.t("main_menu")
+	replay_ending_button.text = LocaleManager.t("replay_ending")
+	quit_game_button.text = LocaleManager.t("quit_game")
+	closing_title_label.text = LocaleManager.t("menu_title")
+	closing_subtitle_label.text = LocaleManager.pick("Gracias por recorrer Aldeavieja.", "Thank you for journeying through Oldtown.")
+
+
+func _on_language_changed(_new_lang: String) -> void:
+	_update_locale_texts()
+	if not _is_showing_final_card:
+		var sections: Array[Dictionary] = _get_localized_credits_sections()
+		if _current_section_index < sections.size():
+			var section_data: Dictionary = sections[_current_section_index]
+			section_title_label.text = str(section_data.get("title", ""))
+			section_body_label.text = str(section_data.get("body", ""))
+
+
 func _start_credits_sequence() -> void:
 	_is_showing_final_card = false
 	_current_section_index = 0
@@ -72,13 +126,14 @@ func _start_credits_sequence() -> void:
 
 
 func _play_current_section() -> void:
-	if _current_section_index >= CREDITS_SECTIONS.size():
+	var sections: Array[Dictionary] = _get_localized_credits_sections()
+	if _current_section_index >= sections.size():
 		_show_final_card()
 		return
 
-	var section_data: Dictionary = CREDITS_SECTIONS[_current_section_index]
+	var section_data: Dictionary = sections[_current_section_index]
 	var section_title: String = str(section_data.get("title", ""))
-	var hold_duration: float = 6.0 if section_title == "Agradecimientos" else 4.8
+	var hold_duration: float = 6.0 if _current_section_index == sections.size() - 1 else 4.8
 
 	section_title_label.text = section_title
 	section_body_label.text = str(section_data.get("body", ""))

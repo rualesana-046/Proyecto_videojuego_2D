@@ -1,0 +1,258 @@
+{
+	"menu_title": {
+		"es": "El Guardián de las Páginas en Blanco",
+		"en": "The Guardian of Blank Pages"
+	},
+	"menu_subtitle": {
+		"es": "Crónicas de Aldeavieja",
+		"en": "Chronicles of Oldtown"
+	},
+	"new_game": {
+		"es": "Nueva partida",
+		"en": "New Game"
+	},
+	"continue": {
+		"es": "Continuar",
+		"en": "Continue"
+	},
+	"options": {
+		"es": "Opciones",
+		"en": "Options"
+	},
+	"quit": {
+		"es": "Salir",
+		"en": "Quit"
+	},
+	"language_label": {
+		"es": "Idioma",
+		"en": "Language"
+	},
+	"language_button": {
+		"es": "Idioma: Español",
+		"en": "Language: English"
+	},
+	"master_volume": {
+		"es": "Volumen General",
+		"en": "Master Volume"
+	},
+	"music_volume": {
+		"es": "Música",
+		"en": "Music"
+	},
+	"sfx_volume": {
+		"es": "Efectos",
+		"en": "Sound Effects"
+	},
+	"fullscreen": {
+		"es": "Pantalla Completa",
+		"en": "Fullscreen"
+	},
+	"how_to_play": {
+		"es": "Cómo jugar (Tutorial)",
+		"en": "How to Play (Tutorial)"
+	},
+	"back": {
+		"es": "Volver",
+		"en": "Back"
+	},
+	"close": {
+		"es": "Cerrar",
+		"en": "Close"
+	},
+	"tutorial_title": {
+		"es": "El Cuaderno del Guardián — Guía de Aprendizaje",
+		"en": "The Guardian's Notebook — Learning Guide"
+	},
+	"tutorial_content": {
+		"es": "[b][color=#C9AE7C]— Objetivo del Guardián —[/color][/b]\nEn [i]El Guardián de las Páginas en Blanco[/i] viajas por el pueblo de Aldeavieja rescatando testimonios y recuerdos olvidados antes de que la niebla del Olvido los borre para siempre.\n\n[b][color=#C9AE7C]— Controles y Acciones Básicas —[/color][/b]\n• [b]WASD / Flechas direccionales:[/b] Desplazar al personaje por el entorno.\n• [b]Tecla [E] o Clic Izquierdo:[/b] Hablar con vecinos, examinar huellas, leer notas y accionar palancas.\n• [b]Tecla [Q] (Cuaderno de Cera):[/b] Activa o desactiva la visión de cera. Al encenderlo, revela pistas ocultas, textos borrados y destellos dorados en el escenario.\n• [b]Tecla [G]:[/b] Guardado rápido de tu aventura.\n• [b]Tecla [Esc]:[/b] Abrir el Menú de Pausa, consultar el Diario del Cuaderno de Cera y configurar opciones.\n\n[b][color=#C9AE7C]— Consejos de Exploración —[/color][/b]\n1. Conversa con los habitantes: cada elección revela matices distintos de la historia y forja el perfil narrativo del Guardián.\n2. Reúne las pistas antes de reconstruir un recuerdo para desbloquear relatos completos.\n3. En la Antigua Estación, mantén la calma y utiliza el entorno para eludir a [i]El Desvanecido[/i].",
+		"en": "[b][color=#C9AE7C]— The Guardian's Purpose —[/color][/b]\nIn [i]The Guardian of Blank Pages[/i], you journey across the town of Oldtown recovering forgotten memories and testimonies before the mist of Oblivion erases them forever.\n\n[b][color=#C9AE7C]— Basic Controls & Actions —[/color][/b]\n• [b]WASD / Arrow Keys:[/b] Move your character through the environment.\n• [b][E] Key or Left Click:[/b] Talk with residents, examine traces, read notes, and pull levers.\n• [b][Q] Key (Wax Notebook):[/b] Toggle wax vision on and off. When ignited, it reveals hidden clues, vanished writings, and golden sparkles in the scenery.\n• [b][G] Key:[/b] Quick save your journey.\n• [b][Esc] Key:[/b] Open the Pause Menu, review the Wax Notebook Journal, and adjust options.\n\n[b][color=#C9AE7C]— Exploration Advice —[/color][/b]\n1. Speak with the townspeople: every decision uncovers different nuances of the tale and shapes the Guardian's narrative profile.\n2. Gather all clues before reconstructing a memory to unlock complete accounts.\n3. In the Old Train Station, stay calm and use the surroundings to outsmart [i]The Vanished[/i]."
+	},
+	"char_title": {
+		"es": "Crear Guardián",
+		"en": "Create Guardian"
+	},
+	"body_color": {
+		"es": "Color de Cuerpo",
+		"en": "Body Tone"
+	},
+	"hair_color": {
+		"es": "Color de Cabello",
+		"en": "Hair Color"
+	},
+	"clothes_color": {
+		"es": "Color de Ropa",
+		"en": "Clothing Color"
+	},
+	"start_adventure": {
+		"es": "Comenzar Aventura",
+		"en": "Begin Adventure"
+	},
+	"tone_light": {
+		"es": "Claro",
+		"en": "Light"
+	},
+	"tone_medium": {
+		"es": "Medio",
+		"en": "Medium"
+	},
+	"tone_dark": {
+		"es": "Oscuro",
+		"en": "Dark"
+	},
+	"hair_brown": {
+		"es": "Castaño",
+		"en": "Brown"
+	},
+	"hair_blonde": {
+		"es": "Rubio",
+		"en": "Blonde"
+	},
+	"hair_black": {
+		"es": "Negro",
+		"en": "Black"
+	},
+	"clothes_emerald": {
+		"es": "Verde Esmeralda",
+		"en": "Emerald Green"
+	},
+	"clothes_gold": {
+		"es": "Dorado Cera",
+		"en": "Wax Gold"
+	},
+	"clothes_crimson": {
+		"es": "Carmesí",
+		"en": "Crimson"
+	},
+	"pause_title": {
+		"es": "Pausa — Crónicas de Aldeavieja",
+		"en": "Pause — Chronicles of Oldtown"
+	},
+	"resume": {
+		"es": "Reanudar",
+		"en": "Resume"
+	},
+	"save_game": {
+		"es": "Guardar Partida",
+		"en": "Save Game"
+	},
+	"journal": {
+		"es": "Diario de Recuerdos",
+		"en": "Memory Journal"
+	},
+	"main_menu": {
+		"es": "Menú Principal",
+		"en": "Main Menu"
+	},
+	"quit_game": {
+		"es": "Salir del Juego",
+		"en": "Quit Game"
+	},
+	"pause_footer": {
+		"es": "Presiona [Esc] para volver al juego",
+		"en": "Press [Esc] to return to game"
+	},
+	"saved_feedback": {
+		"es": "¡Partida guardada con éxito en Aldeavieja!",
+		"en": "Game saved successfully in Oldtown!"
+	},
+	"confirm_menu_title": {
+		"es": "¿Volver al Menú Principal?",
+		"en": "Return to Main Menu?"
+	},
+	"confirm_menu_body": {
+		"es": "El progreso no guardado se perderá.\n¿Deseas regresar a la pantalla de título?",
+		"en": "Unsaved progress will be lost.\nDo you wish to return to the title screen?"
+	},
+	"confirm_quit_title": {
+		"es": "¿Salir del Juego?",
+		"en": "Exit the Game?"
+	},
+	"confirm_quit_body": {
+		"es": "El progreso no guardado se perderá.\n¿Deseas cerrar la aplicación?",
+		"en": "Unsaved progress will be lost.\nDo you wish to close the application?"
+	},
+	"yes": {
+		"es": "Sí",
+		"en": "Yes"
+	},
+	"no": {
+		"es": "No",
+		"en": "No"
+	},
+	"location_prefix": {
+		"es": "Ubicación:",
+		"en": "Location:"
+	},
+	"loc_prologue": {
+		"es": "Taller de encuadernación del abuelo",
+		"en": "Grandfather's Bookbinding Workshop"
+	},
+	"loc_level1": {
+		"es": "Plaza Central de Aldeavieja",
+		"en": "Central Plaza of Oldtown"
+	},
+	"loc_level2": {
+		"es": "Antigua Estación de Tren",
+		"en": "Old Train Station"
+	},
+	"loc_level3": {
+		"es": "Casa Familiar del Abuelo",
+		"en": "Grandfather's Family House"
+	},
+	"skip_credits": {
+		"es": "Saltar créditos",
+		"en": "Skip credits"
+	},
+	"replay_ending": {
+		"es": "Volver a ver el final",
+		"en": "Replay ending"
+	},
+	"credits_dev_title": {
+		"es": "Desarrollo",
+		"en": "Development"
+	},
+	"credits_dev_body": {
+		"es": "Ana María Ruales\nProgramación y arquitectura en Godot Engine 4 (GDScript)",
+		"en": "Ana María Ruales\nProgramming and Architecture in Godot Engine 4 (GDScript)"
+	},
+	"credits_narrative_title": {
+		"es": "Diseño narrativo",
+		"en": "Narrative Design"
+	},
+	"credits_narrative_body": {
+		"es": "Ana María Ruales\nHistoria original, diálogos y sistema de decisiones",
+		"en": "Ana María Ruales\nOriginal Story, Dialogues and Decision System"
+	},
+	"credits_visual_title": {
+		"es": "Diseño visual",
+		"en": "Visual Design"
+	},
+	"credits_visual_body": {
+		"es": "Ana María Ruales\nDirección de arte, interfaz ornamental y sprites 2D\nIlustraciones conceptuales asistidas con Gemini\nTipografías Almendra y Lora (Google Fonts)",
+		"en": "Ana María Ruales\nArt Direction, Ornamental UI and 2D Sprites\nConceptual Illustrations assisted with Gemini\nAlmendra and Lora Fonts (Google Fonts)"
+	},
+	"credits_audio_title": {
+		"es": "Música y sonido",
+		"en": "Music & Sound"
+	},
+	"credits_audio_body": {
+		"es": "Audio ambiental y efectos (SFX) sintetizados proceduralmente",
+		"en": "Procedurally synthesized ambient audio and sound effects (SFX)"
+	},
+	"credits_thanks_title": {
+		"es": "Agradecimientos",
+		"en": "Acknowledgments"
+	},
+	"credits_thanks_body": {
+		"es": "Materia: Diseño de interfaces de software\n\nPruebas de jugabilidad:\nJuan Ruales · Luisa Arteaga · Danilo Zamora\nStefany Portillo · Daniela Arias",
+		"en": "Course: Software Interface Design\n\nPlaytesting:\nJuan Ruales · Luisa Arteaga · Danilo Zamora\nStefany Portillo · Daniela Arias"
+	},
+	"credits_final_quote": {
+		"es": "«Los recuerdos compartidos nunca se borran del todo mientras alguien esté dispuesto a contarlos».",
+		"en": "\"Shared memories never truly fade as long as someone is willing to recount them.\""
+	},
+	"credits_thanks_player": {
+		"es": "Gracias por proteger las páginas de Aldeavieja.",
+		"en": "Thank you for protecting the pages of Oldtown."
+	}
+}

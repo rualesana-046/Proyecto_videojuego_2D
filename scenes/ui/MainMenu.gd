@@ -10,21 +10,36 @@ var _intro_tween: Tween = null
 var _is_intro_playing: bool = false
 
 @onready var intro_title_overlay: VBoxContainer = $IntroTitleOverlay
+@onready var intro_title_label: Label = $IntroTitleOverlay/IntroTitleLabel
+@onready var intro_subtitle_label: Label = $IntroTitleOverlay/IntroSubtitleLabel
+
 @onready var menu_panel: PanelContainer = $MenuPanel
+@onready var title_label: Label = $MenuPanel/MarginContainer/VBoxContainer/TitleLabel
+@onready var subtitle_label: Label = $MenuPanel/MarginContainer/VBoxContainer/SubtitleLabel
 @onready var new_game_button: Button = $MenuPanel/MarginContainer/VBoxContainer/NewGameButton
 @onready var continue_button: Button = $MenuPanel/MarginContainer/VBoxContainer/ContinueButton
 @onready var options_button: Button = $MenuPanel/MarginContainer/VBoxContainer/OptionsButton
+@onready var language_button: Button = $MenuPanel/MarginContainer/VBoxContainer/LanguageButton
 @onready var quit_button: Button = $MenuPanel/MarginContainer/VBoxContainer/QuitButton
 
 @onready var options_modal: ColorRect = $OptionsModal
 @onready var options_panel: PanelContainer = $OptionsModal/OptionsPanel
+@onready var options_title_label: Label = $OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/OptionsTitleLabel
+@onready var master_label: Label = $OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/MasterRow/MasterLabel
 @onready var master_slider: HSlider = $OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/MasterRow/MasterSlider
+@onready var music_label: Label = $OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/MusicRow/MusicLabel
 @onready var music_slider: HSlider = $OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/MusicRow/MusicSlider
+@onready var sfx_label: Label = $OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/SfxRow/SfxLabel
 @onready var sfx_slider: HSlider = $OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/SfxRow/SfxSlider
+@onready var language_label: Label = $OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/LanguageRow/LanguageLabel
+@onready var options_language_button: Button = $OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/LanguageRow/OptionsLanguageButton
 @onready var fullscreen_check_button: CheckButton = $OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/FullscreenCheckButton
 @onready var tutorial_button: Button = $OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/TutorialButton
 @onready var close_options_button: Button = $OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/CloseOptionsButton
+
 @onready var tutorial_panel: PanelContainer = $OptionsModal/TutorialPanel
+@onready var tutorial_title_label: Label = $OptionsModal/TutorialPanel/MarginContainer/VBoxContainer/TutorialTitleLabel
+@onready var tutorial_content_label: RichTextLabel = $OptionsModal/TutorialPanel/MarginContainer/VBoxContainer/TutorialContentLabel
 @onready var close_tutorial_button: Button = $OptionsModal/TutorialPanel/MarginContainer/VBoxContainer/CloseTutorialButton
 
 
@@ -37,12 +52,16 @@ func _ready() -> void:
 	new_game_button.pressed.connect(_on_new_game_button_pressed)
 	continue_button.pressed.connect(_on_continue_button_pressed)
 	options_button.pressed.connect(_on_options_button_pressed)
+	language_button.pressed.connect(_on_language_button_pressed)
+	options_language_button.pressed.connect(_on_language_button_pressed)
 	quit_button.pressed.connect(_on_quit_button_pressed)
 
 	for btn: Button in [
 		new_game_button,
 		continue_button,
 		options_button,
+		language_button,
+		options_language_button,
 		quit_button,
 		tutorial_button,
 		close_tutorial_button,
@@ -58,6 +77,10 @@ func _ready() -> void:
 	close_tutorial_button.pressed.connect(_on_close_tutorial_button_pressed)
 	close_options_button.pressed.connect(_on_close_options_button_pressed)
 
+	if LocaleManager != null:
+		LocaleManager.language_changed.connect(_on_language_changed)
+
+	_update_locale_texts()
 	_start_intro_sequence()
 
 
@@ -174,6 +197,47 @@ func _on_options_button_pressed() -> void:
 	tutorial_panel.hide()
 	options_panel.show()
 	options_modal.show()
+
+
+func _on_language_button_pressed() -> void:
+	if LocaleManager != null:
+		LocaleManager.toggle_language()
+
+
+func _on_language_changed(_new_lang: String) -> void:
+	_update_locale_texts()
+
+
+func _update_locale_texts() -> void:
+	if LocaleManager == null:
+		return
+
+	intro_title_label.text = LocaleManager.t("menu_title")
+	intro_subtitle_label.text = LocaleManager.t("menu_subtitle")
+	title_label.text = LocaleManager.t("menu_title")
+	subtitle_label.text = LocaleManager.t("menu_subtitle")
+
+	new_game_button.text = LocaleManager.t("new_game")
+	continue_button.text = LocaleManager.t("continue")
+	options_button.text = LocaleManager.t("options")
+	quit_button.text = LocaleManager.t("quit")
+
+	var lang_text: String = LocaleManager.t("language_button")
+	language_button.text = lang_text
+	options_language_button.text = lang_text
+
+	options_title_label.text = LocaleManager.t("options_title")
+	master_label.text = LocaleManager.t("master_volume")
+	music_label.text = LocaleManager.t("music_volume")
+	sfx_label.text = LocaleManager.t("sfx_volume")
+	language_label.text = LocaleManager.t("language_label")
+	fullscreen_check_button.text = LocaleManager.t("fullscreen")
+	tutorial_button.text = LocaleManager.t("how_to_play")
+	close_options_button.text = LocaleManager.t("close")
+
+	tutorial_title_label.text = LocaleManager.t("tutorial_title")
+	tutorial_content_label.text = LocaleManager.t("tutorial_content")
+	close_tutorial_button.text = LocaleManager.t("back")
 
 
 func _on_tutorial_button_pressed() -> void:

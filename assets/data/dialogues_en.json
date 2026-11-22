@@ -1,0 +1,1140 @@
+{
+	"lucia_inicio": {
+		"speaker": "Lucía",
+		"text": "Hello... I'm trying to draw someone in my notebook who used to come to the plaza with me every afternoon, but whenever I try to sketch his face, the paper seems to stay completely blank. I know he was very dear to me...",
+		"options": [
+			{
+				"text": "Stay calm, Lucía. Sometimes the heart remembers affection long before the mind recalls a face.",
+				"next_id": "lucia_bicicleta_nostalgia",
+				"effect": [
+					"nostalgia",
+					1
+				],
+				"set_state": {
+					"talked_lucia": true,
+					"lucia_choice": "nostalgia"
+				}
+			},
+			{
+				"text": "Do you remember any place or keepsake that was with the two of you during those afternoons?",
+				"next_id": "lucia_bicicleta_curiosity",
+				"effect": [
+					"curiosity",
+					1
+				],
+				"set_state": {
+					"talked_lucia": true,
+					"lucia_choice": "curiosity"
+				}
+			},
+			{
+				"text": "Let's focus on what you do know. If we gather clues around the plaza, we will find him.",
+				"next_id": "lucia_bicicleta_pragmatism",
+				"effect": [
+					"pragmatism",
+					1
+				],
+				"set_state": {
+					"talked_lucia": true,
+					"lucia_choice": "pragmatism"
+				}
+			}
+		]
+	},
+	"lucia_bicicleta_nostalgia": {
+		"speaker": "Lucía",
+		"text": "Yes... when I close my eyes I can feel the breeze against my face and steady hands holding the bicycle seat so I wouldn't fall. He taught me to ride near the old northern bridge, and I think a photograph was taken of us right by the bakery.",
+		"set_state": {
+			"talked_lucia": true,
+			"lucia_choice": "nostalgia"
+		},
+		"options": [
+			{
+				"text": "I will find that photograph and the traces on the bridge to bring his memory back to you.",
+				"next_id": "",
+				"effect": [
+					"nostalgia",
+					1
+				]
+			},
+			{
+				"text": "I'll go inspect the bridge and speak with Don Elías and Marta across the plaza.",
+				"next_id": "",
+				"effect": [
+					"curiosity",
+					1
+				]
+			},
+			{
+				"text": "I will check the bakery and the bridge immediately. Wait for me by the fountain.",
+				"next_id": "",
+				"effect": [
+					"pragmatism",
+					1
+				]
+			}
+		]
+	},
+	"lucia_bicicleta_curiosity": {
+		"speaker": "Lucía",
+		"text": "I recall the sound of a bicycle chain and two wheels turning over the cobblestones of the old northern bridge. He was teaching me how to ride... There was also a photograph of us by the bakery, and Don Elías used to wave at us from beside the clock tower.",
+		"set_state": {
+			"talked_lucia": true,
+			"lucia_choice": "curiosity"
+		},
+		"options": [
+			{
+				"text": "I won't let such a beautiful memory fade away from Aldeavieja.",
+				"next_id": "",
+				"effect": [
+					"nostalgia",
+					1
+				]
+			},
+			{
+				"text": "I'll examine that photograph using the Wax Notebook [Q] and search near the bridge.",
+				"next_id": "",
+				"effect": [
+					"curiosity",
+					1
+				]
+			},
+			{
+				"text": "With those three landmarks in the plaza, I have more than enough to begin searching.",
+				"next_id": "",
+				"effect": [
+					"pragmatism",
+					1
+				]
+			}
+		]
+	},
+	"lucia_bicicleta_pragmatism": {
+		"speaker": "Lucía",
+		"text": "You're right. I know three things for certain: we went to the old northern bridge where I learned to ride, there was a photograph of us hanging on the bakery wall, and we would always pass by Marta's flower shop.",
+		"set_state": {
+			"talked_lucia": true,
+			"lucia_choice": "pragmatism"
+		},
+		"options": [
+			{
+				"text": "Each of those places holds a fragment of the affection you two shared.",
+				"next_id": "",
+				"effect": [
+					"nostalgia",
+					1
+				]
+			},
+			{
+				"text": "I'll use the Wax Notebook [Q] in those spots to uncover what Oblivion has concealed.",
+				"next_id": "",
+				"effect": [
+					"curiosity",
+					1
+				]
+			},
+			{
+				"text": "I will inspect the bakery, the flower shop, and the bridge right away.",
+				"next_id": "",
+				"effect": [
+					"pragmatism",
+					1
+				]
+			}
+		]
+	},
+	"lucia_seguimiento": {
+		"speaker": "Lucía",
+		"text": "I'm still trying to remember who kept me company every afternoon... Have you managed to find out anything from Don Elías by the clock or Marta at the flower shop?",
+		"options": [
+			{
+				"text": "I'm still searching for clues around the plaza. I'll be back shortly.",
+				"next_id": ""
+			}
+		]
+	},
+	"lucia_seguimiento_tomas": {
+		"speaker": "Lucía",
+		"text": "Tomás...? Hearing that name makes my heart beat faster. I know he looked after me, but I still need to remember the moments we spent together in the plaza...",
+		"options": [
+			{
+				"text": "I'll gather the necessary clues so you can remember everything clearly.",
+				"next_id": ""
+			}
+		]
+	},
+	"lucia_seguimiento_flor": {
+		"speaker": "Lucía",
+		"text": "That paper flower...! I recognize it... Someone folded it with immense patience just for me. I feel like I can almost see his face... Did you also find the photo by the bakery or the inscription on the bridge?",
+		"options": [
+			{
+				"text": "We're almost there. I will return shortly with the remaining clues.",
+				"next_id": ""
+			}
+		]
+	},
+	"elias_inicio": {
+		"speaker": "Don Elías",
+		"text": "Take a look at this clock... It stopped the very moment I started feeling that someone was missing from the plaza. Every afternoon I would watch little Lucía pass by, laughing alongside a young lad, but today his name dances on the tip of my tongue...",
+		"options": [
+			{
+				"text": "The joyful moments shared in this plaza are never truly lost, Don Elías.",
+				"next_id": "elias_recuerda_tomas_nostalgia",
+				"effect": [
+					"nostalgia",
+					1
+				],
+				"set_state": {
+					"talked_elias": true,
+					"elias_choice": "nostalgia"
+				}
+			},
+			{
+				"text": "Try to remember any detail of how he looked or where they were walking.",
+				"next_id": "elias_recuerda_tomas_curiosity",
+				"effect": [
+					"curiosity",
+					1
+				],
+				"set_state": {
+					"talked_elias": true,
+					"elias_choice": "curiosity"
+				}
+			},
+			{
+				"text": "Think of their daily routine; any concrete detail will help us find him.",
+				"next_id": "elias_recuerda_tomas_pragmatism",
+				"effect": [
+					"pragmatism",
+					1
+				],
+				"set_state": {
+					"talked_elias": true,
+					"elias_choice": "pragmatism"
+				}
+			}
+		]
+	},
+	"elias_recuerda_tomas_nostalgia": {
+		"speaker": "Don Elías",
+		"text": "Wait! Tomás! That was his name: Tomás, the kind young man who looked after Lucía's afternoons with such devotion. He always carried a folded paper flower in his coat pocket, custom-made at Marta's flower shop.",
+		"set_state": {
+			"talked_elias": true,
+			"elias_choice": "nostalgia"
+		},
+		"options": [
+			{
+				"text": "«Tomás»... What a relief to recover his name. I will speak with Marta about that flower.",
+				"next_id": "",
+				"effect": [
+					"nostalgia",
+					1
+				]
+			},
+			{
+				"text": "Why a folded paper flower? I'll go ask Marta at the flower shop.",
+				"next_id": "",
+				"effect": [
+					"curiosity",
+					1
+				]
+			},
+			{
+				"text": "Thank you, Don Elías. With Tomás's name in hand, I'll head straight to the flower shop.",
+				"next_id": "",
+				"effect": [
+					"pragmatism",
+					1
+				]
+			}
+		]
+	},
+	"elias_recuerda_tomas_curiosity": {
+		"speaker": "Don Elías",
+		"text": "It all comes back to me now! Tomás: dark unruly hair, patched wool coat, and always that paper flower folded with origami patience in his coat pocket, made by Marta. He was teaching Lucía how to ride her bicycle on the bridge.",
+		"set_state": {
+			"talked_elias": true,
+			"elias_choice": "curiosity"
+		},
+		"options": [
+			{
+				"text": "Recovering his name brings light back to the memories of Aldeavieja.",
+				"next_id": "",
+				"effect": [
+					"nostalgia",
+					1
+				]
+			},
+			{
+				"text": "I'll go speak with Marta about that paper flower and search the bridge.",
+				"next_id": "",
+				"effect": [
+					"curiosity",
+					1
+				]
+			},
+			{
+				"text": "Understood. The flower shop and the bridge are my next stops.",
+				"next_id": "",
+				"effect": [
+					"pragmatism",
+					1
+				]
+			}
+		]
+	},
+	"elias_recuerda_tomas_pragmatism": {
+		"speaker": "Don Elías",
+		"text": "Tomás! That was his name! He would walk down from the bridge, stop at the bakery to check on their photo, and pick up a paper flower at Marta's shop before meeting Lucía by the fountain. Now the pieces fall into place!",
+		"set_state": {
+			"talked_elias": true,
+			"elias_choice": "pragmatism"
+		},
+		"options": [
+			{
+				"text": "That affection was etched into the routine of this entire community.",
+				"next_id": "",
+				"effect": [
+					"nostalgia",
+					1
+				]
+			},
+			{
+				"text": "Now I know where to look: Marta's shop, the bakery, and the bridge.",
+				"next_id": "",
+				"effect": [
+					"curiosity",
+					1
+				]
+			},
+			{
+				"text": "I'm heading to Marta's shop right now to recover the paper flower.",
+				"next_id": "",
+				"effect": [
+					"pragmatism",
+					1
+				]
+			}
+		]
+	},
+	"elias_recuerda_tomas": {
+		"speaker": "Don Elías",
+		"text": "Tomás! That was his name: Tomás, the young man who watched over Lucía with such dedication. He always carried a folded paper flower in his coat pocket, made by Marta at the flower shop.",
+		"set_state": {
+			"talked_elias": true
+		},
+		"options": [
+			{
+				"text": "Thank you, Don Elías. I will speak with Marta right away.",
+				"next_id": "",
+				"effect": [
+					"nostalgia",
+					1
+				]
+			},
+			{
+				"text": "¿Por qué una flor de papel doblada? Iré a preguntarle a Marta en la floristería.",
+				"next_id": "",
+				"effect": [
+					"curiosity",
+					1
+				]
+			},
+			{
+				"text": "Gracias, Don Elías. Con el nombre de Tomás iré directo a la floristería.",
+				"next_id": "",
+				"effect": [
+					"pragmatism",
+					1
+				]
+			}
+		]
+	},
+	"elias_seguimiento": {
+		"speaker": "Don Elías",
+		"text": "The clock hands are still frozen, but remembering Tomás brings warmth back to the plaza. Have you visited Marta at the flower shop or inspected the old bridge?",
+		"options": [
+			{
+				"text": "I'm still investigating the plaza. I will return soon.",
+				"next_id": ""
+			}
+		]
+	},
+	"elias_con_flor": {
+		"speaker": "Don Elías",
+		"text": "Ah, that folded paper flower! Marta folded it for Tomás just as he asked. He kept it like a treasure to surprise Lucía after teaching her to ride on the bridge.",
+		"options": [
+			{
+				"text": "Everything is connecting. I'll reunite all the clues with Lucía.",
+				"next_id": ""
+			}
+		]
+	},
+	"elias_post_reconstruccion": {
+		"speaker": "Don Elías",
+		"text": "Look! The hands on the tower clock have begun ticking again, steady and calm. Seeing Lucía remember Tomás has brought life back to this entire square. Thank you, Guardian.",
+		"options": [
+			{
+				"text": "It was an honor, Don Elías. May the clock keep ticking for many years.",
+				"next_id": ""
+			}
+		]
+	},
+	"marta_inicio": {
+		"speaker": "Marta",
+		"text": "Welcome to the flower shop... My hands remember how to fold this delicate paper flower crease by crease, but I can't seem to recall who asked me to make it or for whom it was intended. It feels as if the reason behind my craft was carried away by the wind...",
+		"options": [
+			{
+				"text": "Flowers folded with love always find their way back to those who treasure them, Marta.",
+				"next_id": "marta_entrega_flor_nostalgia",
+				"effect": [
+					"nostalgia",
+					1
+				],
+				"set_state": {
+					"talked_marta": true,
+					"marta_choice": "nostalgia"
+				}
+			},
+			{
+				"text": "Did the customer leave any note, name, or detail about where they were going?",
+				"next_id": "marta_entrega_flor_curiosity",
+				"effect": [
+					"curiosity",
+					1
+				],
+				"set_state": {
+					"talked_marta": true,
+					"marta_choice": "curiosity"
+				}
+			},
+			{
+				"text": "Let's check your order book or recent requests to identify the buyer.",
+				"next_id": "marta_entrega_flor_pragmatism",
+				"effect": [
+					"pragmatism",
+					1
+				],
+				"set_state": {
+					"talked_marta": true,
+					"marta_choice": "pragmatism"
+				}
+			}
+		]
+	},
+	"marta_entrega_flor_nostalgia": {
+		"speaker": "Marta",
+		"text": "Wait! Tomás! It was Tomás who ordered it! He came in smiling and said: «Marta, fold me a flower that will never wither, so my sister Lucía knows I will always watch over her». Please, take this paper flower and return it to her.",
+		"grant_clue": "clue_paper_flower",
+		"set_state": {
+			"talked_marta": true,
+			"marta_choice": "nostalgia"
+		},
+		"options": [
+			{
+				"text": "A brother's promise never truly withers. I will deliver it to Lucía with care.",
+				"next_id": "",
+				"effect": [
+					"nostalgia",
+					1
+				]
+			},
+			{
+				"text": "Tomás was her brother... I will examine the flower and search for the remaining clues.",
+				"next_id": "",
+				"effect": [
+					"pragmatism",
+					1
+				]
+			}
+		]
+	},
+	"marta_entrega_flor_curiosity": {
+		"speaker": "Marta",
+		"text": "Tomás! The boy who always looked after Lucía! He asked for this flower as a surprise for when she managed to cross the bridge on her bicycle without help. Here, keep the folded paper flower; it belongs with them.",
+		"grant_clue": "clue_paper_flower",
+		"set_state": {
+			"talked_marta": true,
+			"marta_choice": "curiosity"
+		},
+		"options": [
+			{
+				"text": "This flower is a tender proof of their bond. Lucía will be overjoyed.",
+				"next_id": "",
+				"effect": [
+					"nostalgia",
+					1
+				]
+			},
+			{
+				"text": "I'll inspect the paper flower with the Wax Notebook [Q] to read its essence.",
+				"next_id": "",
+				"effect": [
+					"pragmatism",
+					1
+				]
+			}
+		]
+	},
+	"marta_entrega_flor_pragmatism": {
+		"speaker": "Marta",
+		"text": "Of course! Tomás ordered it for Lucía's birthday! He told me he would give it to her right after practicing on the northern bridge. Here is the paper flower; take it, it is a crucial piece of her memory.",
+		"grant_clue": "clue_paper_flower",
+		"set_state": {
+			"talked_marta": true,
+			"marta_choice": "pragmatism"
+		},
+		"options": [
+			{
+				"text": "Gifts preserved with devotion bridge any distance left by time.",
+				"next_id": "",
+				"effect": [
+					"nostalgia",
+					1
+				]
+			},
+			{
+				"text": "I will examine the northern bridge to find the remaining trace of Tomás.",
+				"next_id": "",
+				"effect": [
+					"pragmatism",
+					1
+				]
+			}
+		]
+	},
+	"marta_entrega_flor": {
+		"speaker": "Marta",
+		"text": "Tomás! It was Tomás who ordered it for his sister Lucía! Here is the folded paper flower; please take it to her so she remembers his brotherly devotion.",
+		"grant_clue": "clue_paper_flower",
+		"set_state": {
+			"talked_marta": true
+		},
+		"options": [
+			{
+				"text": "Thank you, Marta. I will take the flower to Lucía immediately.",
+				"next_id": "",
+				"effect": [
+					"nostalgia",
+					1
+				]
+			},
+			{
+				"text": "Revisaré las pistas de la plaza para reconstruir la escena junto a Lucía.",
+				"next_id": "",
+				"effect": [
+					"pragmatism",
+					1
+				]
+			}
+		]
+	},
+	"marta_seguimiento": {
+		"speaker": "Marta",
+		"text": "Every flower on this counter feels brighter since we began talking, but Lucía still needs all her clues. Have you spoken with Don Elías by the clock tower?",
+		"options": [
+			{
+				"text": "I'm still gathering the pieces across the plaza. I'll return soon.",
+				"next_id": ""
+			}
+		]
+	},
+	"marta_seguimiento_tomas": {
+		"speaker": "Marta",
+		"text": "Tomás... Remembering his name makes my flower shop feel warm again. Did you manage to find the photo by the bakery or the words carved on the bridge?",
+		"options": [
+			{
+				"text": "I'm on my way to retrieve them now.",
+				"next_id": ""
+			}
+		]
+	},
+	"marta_post_reconstruccion": {
+		"speaker": "Marta",
+		"text": "I saw Lucía smiling by the fountain, holding the paper flower close to her heart! You brought back a family's soul to Aldeavieja. May your notebook always find light.",
+		"options": [
+			{
+				"text": "Thank you for folding that flower with so much heart, Marta.",
+				"next_id": ""
+			}
+		]
+	},
+	"lucia_reconstruccion": {
+		"speaker": "Wax Notebook",
+		"text": "You're back! When you approach with the Wax Notebook, the air feels warm and golden. You hold the photograph from the bakery, the folded paper flower from Marta, and the words from the bridge... I feel as though my heart is ready. Will you help me remember?",
+		"options": [
+			{
+				"text": "«Tomás te enseñaba a montar bicicleta cerca del puente» (Recuerdo completo)",
+				"next_id": "lucia_escena5_completa",
+				"effect": [
+					"nostalgia",
+					1
+				]
+			},
+			{
+				"text": "«Tomás era un muchacho que te cuidaba en el puente» (Recuerdo parcial)",
+				"next_id": "lucia_escena5_parcial_puente",
+				"effect": [
+					"curiosity",
+					1
+				]
+			},
+			{
+				"text": "«Alguien te prometió cuidarte siempre» (Recuerdo difuso)",
+				"next_id": "lucia_escena5_parcial_promesa",
+				"effect": [
+					"pragmatism",
+					1
+				]
+			}
+		]
+	},
+	"lucia_escena5_completa": {
+		"speaker": "Lucía",
+		"text": "¡Tomás! ¡Mi hermano Tomás! Lo veo todo con tanta claridad... Me sostenía del abrigo mientras pedaleaba sobre el puente viejo, me entregó la flor de papel al llegar al otro lado y nos reímos juntos frente a la panadería. ¡No se ha ido, vive en mí!",
+		"unlock_memory": "Recuerdo de Lucía y Tomás (Completo)",
+		"important_choice": [
+			"lucia_tomas_reconstruction",
+			"Reconstrucción precisa: «Tomás le enseñó a Lucía a montar bicicleta»."
+		],
+		"consume_wax": 1,
+		"options": [
+			{
+				"text": "El cariño sincero de un hermano jamás se borra de las páginas de Aldeavieja.",
+				"next_id": "escena5_cuaderno_estacion"
+			}
+		]
+	},
+	"lucia_escena5_parcial_puente": {
+		"speaker": "Lucía",
+		"text": "Tomás... Sí, su nombre era Tomás. Recuerdo el sonido del puente y sus manos firmes cuidando mis pasos. Aunque algunos detalles de aquella tarde sigan entre la niebla, saber que estuvo a mi lado me llena de paz.",
+		"unlock_memory": "Recuerdo de Lucía y Tomás (Parcial)",
+		"important_choice": [
+			"lucia_tomas_reconstruction",
+			"Reconstrucción parcial: «Tomás siempre esperaba a Lucía junto al puente»."
+		],
+		"consume_wax": 1,
+		"options": [
+			{
+				"text": "Incluso un recuerdo incompleto tiene la fuerza de devolver la esperanza.",
+				"next_id": "escena5_cuaderno_estacion"
+			}
+		]
+	},
+	"lucia_escena5_parcial_promesa": {
+		"speaker": "Lucía",
+		"text": "La flor de papel... y esa promesa de cuidarme. Su rostro aún se desdibuja un poco sobre el papel en blanco, pero el calor de su abrazo sigue aquí en mi pecho. Gracias por no dejar que el olvido ganara del todo.",
+		"unlock_memory": "Recuerdo de Lucía y Tomás (Parcial)",
+		"important_choice": [
+			"lucia_tomas_reconstruction",
+			"Reconstrucción parcial: «Tomás le prometió que nunca dejaría de acompañarla»."
+		],
+		"consume_wax": 1,
+		"options": [
+			{
+				"text": "El amor permanece grabado en el alma mucho antes de que vuelva la memoria.",
+				"next_id": "escena5_cuaderno_estacion"
+			}
+		]
+	},
+	"escena5_cuaderno_estacion": {
+		"speaker": "Wax Notebook",
+		"text": "Sobre el papel pergamino, los trazos de cera dorada sellan con nitidez el recuerdo recuperado de Lucía y Tomás. Desde el noroeste del pueblo, un rumor metálico y distante llama tu atención: las vías de la Antigua Estación de Tren reclaman al Guardián.",
+		"set_state": {
+			"lucia_tomas_reconstructed": true
+		},
+		"options": [
+			{
+				"text": "Partir hacia la Antigua Estación de Tren",
+				"next_id": ""
+			}
+		]
+	},
+	"lucia_post_reconstruccion": {
+		"speaker": "Lucía",
+		"text": "¡Gracias por devolverme el recuerdo de Tomás! Ahora, cada vez que paso junto al puente o miro la flor de papel, sé exactamente quién soy y quién cuidó de mí. ¡El sendero al noroeste hacia la estación está despejado!",
+		"options": [
+			{
+				"text": "Cuida mucho ese recuerdo, Lucía. Hasta pronto.",
+				"next_id": ""
+			}
+		]
+	},
+	"ines_inicio": {
+		"speaker": "Inés",
+		"text": "No te acerques demasiado a los andenes... Desde que los trenes dejaron de pasar, una sombra errante recorre las vías de madera. La llaman El Desvanecido, y todo lo que toca pierde su nombre y su pasado.",
+		"options": [
+			{
+				"text": "¿A quién busca esa sombra en una estación abandonada?",
+				"next_id": "ines_origen",
+				"effect": [
+					"curiosity",
+					1
+				]
+			},
+			{
+				"text": "¿Quién eres tú y qué haces sola en esta sala de espera?",
+				"next_id": "ines_abuelo",
+				"effect": [
+					"nostalgia",
+					1
+				]
+			},
+			{
+				"text": "Mi abuelo me envió a investigar este lugar con el Cuaderno de Cera.",
+				"next_id": "ines_olvido",
+				"effect": [
+					"pragmatism",
+					1
+				]
+			}
+		]
+	},
+	"ines_origen": {
+		"speaker": "Inés",
+		"text": "Fui la telegrafista de la estación durante cuarenta años. Vi llegar y partir a generaciones enteras. Conservo la llave del almacén y de la torre del reloj, pero no se la entregaré a cualquiera: aquí hay historias que merecen respeto.",
+		"options": [
+			{
+				"text": "¿Qué historia oculta este lugar que tanto temes perder?",
+				"next_id": "ines_entrega_llave",
+				"effect": [
+					"pragmatism",
+					1
+				]
+			},
+			{
+				"text": "Vengo como Guardián de las Páginas en Blanco a salvar la memoria de la estación.",
+				"next_id": "ines_entrega_llave",
+				"effect": [
+					"curiosity",
+					1
+				]
+			}
+		]
+	},
+	"ines_abuelo": {
+		"speaker": "Inés",
+		"text": "¿El viejo encuadernador? Claro que lo recuerdo... Venía con frecuencia a conversar con Samuel, el jefe de estación. Ambos sabían que el olvido rondaba los rieles mucho antes de que el último tren dejara de silbar.",
+		"options": [
+			{
+				"text": "Háblame de Samuel... ¿Qué le ocurrió en esta estación?",
+				"next_id": "ines_entrega_llave",
+				"effect": [
+					"nostalgia",
+					1
+				]
+			},
+			{
+				"text": "Si mi abuelo confiaba en ti, ayúdame a entrar a la Torre del Reloj.",
+				"next_id": "ines_entrega_llave",
+				"effect": [
+					"pragmatism",
+					1
+				]
+			}
+		]
+	},
+	"ines_olvido": {
+		"speaker": "Inés",
+		"text": "Samuel no pudo soportar ver la estación vacía cuando clausuraron la línea. Se quedó esperando un tren que nunca volvió, hasta que sus recuerdos se deshilacharon en la niebla. Su silueta aún recorre los andenes... Si haces sonar la campana de latón o lo deslumbras con las lámparas, podrás distraerlo unos segundos.",
+		"options": [
+			{
+				"text": "Pobre Samuel... Nadie debería disolverse en la soledad de una estación vacía.",
+				"next_id": "ines_entrega_llave",
+				"effect": [
+					"curiosity",
+					1
+				]
+			},
+			{
+				"text": "Usaré el entorno para esquivarlo y llegar a la palanca del andén.",
+				"next_id": "ines_entrega_llave",
+				"effect": [
+					"pragmatism",
+					1
+				]
+			}
+		]
+	},
+	"ines_entrega_llave": {
+		"speaker": "Inés",
+		"text": "Veo en tus ojos el mismo brillo paciente que tenía tu abuelo. Toma: esta es la llave antigua de la estación. Te permitirá abrir la caja fuerte bajo los engranajes de la Torre del Reloj. Pero ten cuidado: para abrir la reja norte primero debes activar la palanca del andén este.",
+		"grant_clue": "llave_estacion",
+		"set_state": {
+			"has_station_key": true
+		},
+		"options": [
+			{
+				"text": "Gracias, Inés. Protegeré la memoria de Samuel y de todos los viajeros.",
+				"next_id": ""
+			}
+		]
+	},
+	"ines_post_llave": {
+		"speaker": "Inés",
+		"text": "Recuerda: la palanca del andén este abre el acceso norte hacia la Torre del Reloj. Si El Desvanecido te acorrala, corre hacia la campana o cúbrete tras las cajas de herramientas.",
+		"options": [
+			{
+				"text": "Tendré cuidado. Gracias, Inés.",
+				"next_id": ""
+			}
+		]
+	},
+	"estacion_foto_samuel": {
+		"speaker": "Wax Notebook",
+		"text": "La cera dorada ilumina un marco quebrado en el pasillo de mantenimiento: en la imagen, el jefe de estación Samuel sonríe junto a tu abuelo frente a la locomotora de vapor. Al dorso se lee: «Para que los caminos recorridos nunca se borren».",
+		"grant_clue": "clue_samuel_photo",
+		"set_state": {
+			"samuel_photo_examined": true
+		},
+		"options": [
+			{
+				"text": "Guardar la pista en el Cuaderno de Cera y avanzar hacia el andén",
+				"next_id": ""
+			}
+		]
+	},
+	"recuerdo_samuel": {
+		"speaker": "Recuerdo de Samuel y el Abuelo",
+		"text": "Al mover la palanca de señales, los rieles emiten un eco metálico y la figura espectral de Samuel se detiene en el andén. La cera dorada dibuja la silueta del jefe de estación entregando un billete a una familia sonriente antes de que partiera el último tren de vapor.",
+		"set_state": {
+			"station_lever_pulled": true
+		},
+		"options": [
+			{
+				"text": "Comprender la soledad de Samuel y devolverle la dignidad a su memoria",
+				"next_id": "recuerdo_samuel_cierre_1",
+				"effect": [
+					"pragmatism",
+					1
+				]
+			},
+			{
+				"text": "Descifrar el mensaje que Samuel dejó antes de que la estación cerrara",
+				"next_id": "recuerdo_samuel_cierre_2",
+				"effect": [
+					"nostalgia",
+					1
+				]
+			},
+			{
+				"text": "Asegurar el paso hacia la Torre del Reloj para continuar la misión",
+				"next_id": "recuerdo_samuel_cierre_3",
+				"effect": [
+					"curiosity",
+					1
+				]
+			}
+		]
+	},
+	"recuerdo_samuel_cierre_1": {
+		"speaker": "Eco del Abuelo",
+		"text": "«No era el tren lo que importaba... eran las despedidas y los abrazos de bienvenida que ocurrían en este andén». La silueta de Samuel sonríe serenamente y la reja norte hacia la Torre del Reloj se desbloquea.",
+		"unlock_memory": "Recuerdo de Samuel en el andén",
+		"important_choice": [
+			"samuel_memory_focus",
+			"Comprendiste que el cuaderno no puede inventar recuerdos."
+		],
+		"consume_wax": 1,
+		"options": [
+			{
+				"text": "Avanzar hacia la Torre del Reloj",
+				"next_id": ""
+			}
+		]
+	},
+	"recuerdo_samuel_cierre_2": {
+		"speaker": "Eco del Abuelo",
+		"text": "«Cada billete picado era una historia compartida entre dos pueblos». La memoria de Samuel queda grabada en tu Cuaderno de Cera y el camino norte a la torre queda libre.",
+		"unlock_memory": "Recuerdo de Samuel en el andén",
+		"important_choice": [
+			"samuel_memory_focus",
+			"Comprendiste que los recuerdos necesitan a alguien que los mantenga vivos."
+		],
+		"consume_wax": 1,
+		"options": [
+			{
+				"text": "Avanzar hacia la Torre del Reloj",
+				"next_id": ""
+			}
+		]
+	},
+	"recuerdo_samuel_cierre_3": {
+		"speaker": "Eco del Abuelo",
+		"text": "«El cambio de vías está hecho. Quien busque la verdad encontrará la carta en la caja de la torre». La reja de la Torre del Reloj se abre de par en par.",
+		"unlock_memory": "Recuerdo de Samuel en el andén",
+		"important_choice": [
+			"samuel_memory_focus",
+			"Comprendiste que primero desaparece la historia y después la persona."
+		],
+		"consume_wax": 1,
+		"options": [
+			{
+				"text": "Avanzar hacia la Torre del Reloj",
+				"next_id": ""
+			}
+		]
+	},
+	"carta_abuelo_torre": {
+		"speaker": "Grandfather's Letter",
+		"text": "Bajo los engranajes de la torre, la llave de Inés abre una caja metálica. Dentro reposa una carta con el sello de cera de tu abuelo:\n\n«Si has llegado hasta aquí, ya sabes que El Desvanecido no es un monstruo: es el dolor de olvidar lo que fuimos. La verdadera respuesta descansa en nuestra antigua casa familiar al norte de la colina. Ven al estudio... Elena y yo te esperamos».",
+		"unlock_memory": "Carta del abuelo en la torre del reloj",
+		"grant_clue": "carta_abuelo",
+		"set_state": {
+			"clock_tower_letter_read": true
+		},
+		"options": [
+			{
+				"text": "Comprender el dolor de la memoria y liberar la estación del Olvido",
+				"next_id": "torre_despedida_desvanecido"
+			}
+		]
+	},
+	"torre_despedida_desvanecido": {
+		"speaker": "Wax Notebook",
+		"text": "Al resonar las palabras de la carta, la silueta espectral en el andén se detiene. Un susurro de alivio recorre los rieles vacíos: «Olvido... ya no tengo miedo». La figura se disuelve en miles de motas doradas y el sendero norte hacia la casa familiar queda abierto.",
+		"options": [
+			{
+				"text": "Partir hacia la antigua casa familiar al norte",
+				"next_id": ""
+			}
+		]
+	},
+	"casa_escena1_llegada": {
+		"speaker": "Wax Notebook",
+		"text": "El silencio de la casa familiar pesa como plomo. El tiempo aquí parece haberse detenido hace años: en el jardín duermen flores secas, en la sala reposan retratos cubiertos por sábanas blancas y desde el estudio del piso superior se percibe el aroma inconfundible a cuero y cera caliente.",
+		"grant_clue": "item_photo",
+		"options": [
+			{
+				"text": "Sentir la melancolía que habita en los rincones de este hogar",
+				"next_id": ""
+			}
+		]
+	},
+	"casa_escena2_estudio": {
+		"speaker": "Eco del Estudio",
+		"text": "Sobre el escritorio de roble descansan tres cuadernos sin terminar, prensas de madera y un libro mayor con cerradura de cera dorada. En la pared cuelga un retrato de tu abuelo junto a una mujer de mirada serena: Elena.",
+		"options": [
+			{
+				"text": "Examinar los apuntes sobre Elena",
+				"next_id": "casa_estudio_elena",
+				"effect": [
+					"nostalgia",
+					1
+				]
+			},
+			{
+				"text": "Examinar el Cuaderno de Cera mayor",
+				"next_id": "casa_estudio_cuaderno",
+				"effect": [
+					"curiosity",
+					1
+				]
+			},
+			{
+				"text": "¿Cómo se detiene el Olvido?",
+				"next_id": "casa_estudio_detener",
+				"effect": [
+					"pragmatism",
+					1
+				]
+			}
+		]
+	},
+	"casa_estudio_elena": {
+		"speaker": "Grandfather's Notes",
+		"text": "«Elena fue la primera en olvidar mi nombre. Cuando la enfermedad empezó a borrar sus recuerdos, comencé a encuadernar cada día que pasamos juntos para que jamás se apartara de nuestro hogar».",
+		"important_choice": [
+			"study_investigation_focus",
+			"Buscaste comprender qué ocurrió con Elena."
+		],
+		"options": [
+			{
+				"text": "Gather the items from the house and go to the Bookbinding Table",
+				"next_id": ""
+			}
+		]
+	},
+	"casa_estudio_cuaderno": {
+		"speaker": "Grandfather's Notes",
+		"text": "«Descubrí que la cera dorada podía fijar un recuerdo vivo dentro del papel. Pero cuanto más sellaba las páginas de Aldeavieja, más inmóvil quedaba el tiempo a nuestro alrededor».",
+		"important_choice": [
+			"study_investigation_focus",
+			"Investigaste por qué el abuelo utilizó el Cuaderno de Cera."
+		],
+		"options": [
+			{
+				"text": "Gather the items from the house and go to the Bookbinding Table",
+				"next_id": ""
+			}
+		]
+	},
+	"casa_estudio_detener": {
+		"speaker": "Grandfather's Notes",
+		"text": "«Para abrir el sótano donde reposa el núcleo de la memoria compartida es necesario reconstruir nuestros tres recuerdos fundamentales en la mesa de encuadernación: El primer encuentro, La promesa y La despedida».",
+		"important_choice": [
+			"study_investigation_focus",
+			"Te enfocaste en descubrir cómo abrir el sótano y detener el Olvido."
+		],
+		"options": [
+			{
+				"text": "Gather the items from the house and go to the Bookbinding Table",
+				"next_id": ""
+			}
+		]
+	},
+	"recuerdo_primer_encuentro": {
+		"speaker": "Memory I: The First Encounter",
+		"text": "La cera dorada une la fotografía de la sala con la carta inconclusa del estudio. Las voces jóvenes de tu abuelo y Elena cobran vida en la habitación:\n\n«¿Por qué guardas tantas cosas?», preguntó Elena.\n«Porque tengo miedo de olvidar», respondió tu abuelo.\n\nEl primer sello de la puerta del sótano se ilumina.",
+		"unlock_memory": "El primer encuentro (Abuelo y Elena)",
+		"options": [
+			{
+				"text": "Continue at the Bookbinding Table",
+				"next_id": ""
+			}
+		]
+	},
+	"recuerdo_la_promesa": {
+		"speaker": "Memory II: The Promise",
+		"text": "Al entrelazar la cinta de encuadernación con la flor seca del jardín, el perfume de una tarde lejana envuelve el estudio y escuchas el juramento que sellaron sobre el primer cuaderno:\n\n«Prometo que nadie olvidará lo que vivimos aquí».\n\nEl segundo sello de la puerta del sótano se abre con un destello dorado.",
+		"unlock_memory": "La promesa del estudio",
+		"options": [
+			{
+				"text": "Continue at the Bookbinding Table",
+				"next_id": ""
+			}
+		]
+	},
+	"recuerdo_la_despedida": {
+		"speaker": "Memory III: The Parting",
+		"text": "El sello de cera dorada revela las líneas finales de la última carta de la habitación: cuando Elena desapareció, el temor a que su recuerdo se extinguiera llevó a tu abuelo a encerrar las memorias de toda Aldeavieja dentro de la cera, deteniendo sin querer el fluir natural de sus vidas.\n\nEl tercer sello cede y la puerta norte hacia el sótano queda abierta.",
+		"unlock_memory": "La despedida de Elena",
+		"options": [
+			{
+				"text": "Enter the basement of the house",
+				"next_id": ""
+			}
+		]
+	},
+	"sotano_abuelo_inicio": {
+		"speaker": "Grandfather's Memory",
+		"text": "Junto a la mesa central del sótano, donde descansa el Gran Libro abierto de Aldeavieja, la presencia translúcida de tu abuelo te recibe con una sonrisa serena:\n\n«Sabía que algún día encontrarías este lugar... Por miedo a perder el recuerdo de Elena, encerré las historias del pueblo en la cera. Creí que las protegía, pero las estaba dejando sin futuro».",
+		"options": [
+			{
+				"text": "You did it out of love for Elena and our people, Grandfather.",
+				"next_id": "sotano_abuelo_consejo",
+				"effect": [
+					"nostalgia",
+					1
+				]
+			},
+			{
+				"text": "Now I understand why the blank pages were spreading across the town.",
+				"next_id": "sotano_abuelo_consejo",
+				"effect": [
+					"curiosity",
+					1
+				]
+			},
+			{
+				"text": "I am here to finish what you started and free Aldeavieja.",
+				"next_id": "sotano_abuelo_consejo",
+				"effect": [
+					"pragmatism",
+					1
+				]
+			}
+		]
+	},
+	"sotano_abuelo_consejo": {
+		"speaker": "Grandfather's Memory",
+		"text": "La figura de tu abuelo contempla la esfera resplandeciente que levita sobre el libro «La memoria compartida» y te entrega su último consejo:\n\n«No guardes las historias para ti. Devuélvelas a quienes les pertenecen».",
+		"options": [
+			{
+				"text": "Behold The Shared Memory and make the Final Decision",
+				"next_id": "sotano_decision_final"
+			}
+		]
+	},
+	"sotano_decision_final": {
+		"speaker": "The Shared Memory",
+		"text": "Ante ti brilla La memoria compartida de Aldeavieja: los recuerdos de Lucía y Tomás, de Samuel e Inés, y de tu abuelo y Elena laten dentro de la cera dorada. ¿Qué decides hacer con el Gran Libro?",
+		"options": [
+			{
+				"text": "Share the memories",
+				"next_id": "final_eleccion_share",
+				"effect": [
+					"nostalgia",
+					2
+				]
+			},
+			{
+				"text": "Preserve the memory",
+				"next_id": "final_eleccion_preserve",
+				"effect": [
+					"curiosity",
+					2
+				]
+			},
+			{
+				"text": "Let the memories take their natural course",
+				"next_id": "final_eleccion_let_go",
+				"effect": [
+					"pragmatism",
+					2
+				]
+			}
+		]
+	},
+	"final_eleccion_share": {
+		"speaker": "Wax Notebook",
+		"text": "Abres las páginas del Gran Libro y permites que la cera dorada fluya hacia cada rincón de Aldeavieja, devolviendo las historias a las manos y voces de quienes las vivieron.",
+		"important_choice": [
+			"final_decision",
+			"share"
+		],
+		"set_state": {
+			"final_decision_made": true
+		},
+		"options": [
+			{
+				"text": "Witness the destiny of Aldeavieja",
+				"next_id": ""
+			}
+		]
+	},
+	"final_eleccion_preserve": {
+		"speaker": "Wax Notebook",
+		"text": "Sellas con cuidado el Gran Libro para custodiar cada recuerdo intacto en el santuario del taller, preservando para siempre el testimonio de lo que Aldeavieja vivió.",
+		"important_choice": [
+			"final_decision",
+			"preserve"
+		],
+		"set_state": {
+			"final_decision_made": true
+		},
+		"options": [
+			{
+				"text": "Witness the destiny of Aldeavieja",
+				"next_id": ""
+			}
+		]
+	},
+	"final_eleccion_let_go": {
+		"speaker": "Wax Notebook",
+		"text": "Dejas que la cera antigua se disuelva con suavidad en el aire, permitiendo que los recuerdos cumplan su ciclo natural para que Aldeavieja pueda escribir páginas nuevas sin ataduras.",
+		"important_choice": [
+			"final_decision",
+			"let_go"
+		],
+		"set_state": {
+			"final_decision_made": true
+		},
+		"options": [
+			{
+				"text": "Witness the destiny of Aldeavieja",
+				"next_id": ""
+			}
+		]
+	}
+}

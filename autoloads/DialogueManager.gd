@@ -4,24 +4,29 @@ signal dialogue_started
 signal dialogue_ended
 signal dialogue_line_updated(speaker_name: String, text: String, options: Array)
 
-const DIALOGUES_FILE_PATH: String = "res://assets/data/dialogues.json"
+const DIALOGUES_ES_PATH: String = "res://assets/data/dialogues.json"
+const DIALOGUES_EN_PATH: String = "res://assets/data/dialogues_en.json"
 
 var dialogues: Dictionary = {}
 var is_dialogue_active: bool = false
+var current_dialogue_id: String = ""
 
 
 func _ready() -> void:
 	load_dialogues()
+	if LocaleManager != null:
+		LocaleManager.language_changed.connect(_on_language_changed)
 
 
 func load_dialogues() -> void:
-	if not FileAccess.file_exists(DIALOGUES_FILE_PATH):
-		push_error("Dialogue file not found at path: " + DIALOGUES_FILE_PATH)
+	var path: String = DIALOGUES_EN_PATH if LocaleManager != null and LocaleManager.current_lang == "en" else DIALOGUES_ES_PATH
+	if not FileAccess.file_exists(path):
+		push_error("Dialogue file not found at path: " + path)
 		return
 
-	var file: FileAccess = FileAccess.open(DIALOGUES_FILE_PATH, FileAccess.READ)
+	var file: FileAccess = FileAccess.open(path, FileAccess.READ)
 	if file == null:
-		push_error("Failed to open dialogue file: " + DIALOGUES_FILE_PATH)
+		push_error("Failed to open dialogue file: " + path)
 		return
 
 	var json_text: String = file.get_as_text()
@@ -44,6 +49,8 @@ func start_dialogue(dialogue_id: String) -> void:
 		end_dialogue()
 		return
 
+	current_dialogue_id = dialogue_id
+
 	if not is_dialogue_active:
 		is_dialogue_active = true
 		dialogue_started.emit()
@@ -58,18 +65,32 @@ func start_dialogue(dialogue_id: String) -> void:
 	dialogue_line_updated.emit(speaker_name, text, options)
 
 
-func show_custom_message(speaker_name: String, text: String, close_label: String = "Cerrar") -> void:
+func show_custom_message(speaker_name: String, text: String, close_label: String = "") -> void:
+	var resolved_close: String = close_label
+	if resolved_close.is_empty():
+		resolved_close = LocaleManager.t("close") if LocaleManager != null else "Cerrar"
+
 	if not is_dialogue_active:
 		is_dialogue_active = true
 		dialogue_started.emit()
 
 	var single_option: Array = [
 		{
-			"text": close_label,
+			"text": resolved_close,
 			"next_id": ""
 		}
 	]
 	dialogue_line_updated.emit(speaker_name, text, single_option)
+
+
+func _on_language_changed(_new_lang: String) -> void:
+	load_dialogues()
+	if is_dialogue_active and not current_dialogue_id.is_empty() and dialogues.has(current_dialogue_id):
+		var node_data: Dictionary = dialogues[current_dialogue_id]
+		var speaker_name: String = str(node_data.get("speaker", ""))
+		var text: String = str(node_data.get("text", ""))
+		var options: Array = node_data.get("options", [])
+		dialogue_line_updated.emit(speaker_name, text, options)
 
 
 func _process_node_events(node_data: Dictionary) -> void:
@@ -97,6 +118,7 @@ func _process_node_events(node_data: Dictionary) -> void:
 
 
 func end_dialogue() -> void:
+	current_dialogue_id = ""
 	if is_dialogue_active:
 		is_dialogue_active = false
 		dialogue_ended.emit()

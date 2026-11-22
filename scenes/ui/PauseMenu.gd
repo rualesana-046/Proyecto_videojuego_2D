@@ -33,6 +33,7 @@ var _save_feedback_tween: Tween = null
 var _open_tween: Tween = null
 
 @onready var main_pause_panel: PanelContainer = $Overlay/MainPausePanel
+@onready var pause_main_title: Label = $Overlay/MainPausePanel/MarginContainer/VBoxContainer/TitleLabel
 @onready var current_location_label: Label = $Overlay/MainPausePanel/MarginContainer/VBoxContainer/CurrentLocationLabel
 @onready var save_feedback_label: Label = $Overlay/MainPausePanel/MarginContainer/VBoxContainer/SaveFeedbackLabel
 @onready var resume_button: Button = $Overlay/MainPausePanel/MarginContainer/VBoxContainer/ResumeButton
@@ -48,21 +49,31 @@ var _open_tween: Tween = null
 @onready var close_journal_button: Button = $Overlay/JournalPanel/MarginContainer/VBoxContainer/CloseJournalButton
 
 @onready var options_panel: PanelContainer = $Overlay/OptionsPanel
+@onready var options_title_label: Label = $Overlay/OptionsPanel/MarginContainer/VBoxContainer/OptionsTitleLabel
+@onready var master_label: Label = $Overlay/OptionsPanel/MarginContainer/VBoxContainer/MasterRow/MasterLabel
 @onready var master_slider: HSlider = $Overlay/OptionsPanel/MarginContainer/VBoxContainer/MasterRow/MasterSlider
+@onready var music_label: Label = $Overlay/OptionsPanel/MarginContainer/VBoxContainer/MusicRow/MusicLabel
 @onready var music_slider: HSlider = $Overlay/OptionsPanel/MarginContainer/VBoxContainer/MusicRow/MusicSlider
+@onready var sfx_label: Label = $Overlay/OptionsPanel/MarginContainer/VBoxContainer/SfxRow/SfxLabel
 @onready var sfx_slider: HSlider = $Overlay/OptionsPanel/MarginContainer/VBoxContainer/SfxRow/SfxSlider
+@onready var language_label: Label = $Overlay/OptionsPanel/MarginContainer/VBoxContainer/LanguageRow/LanguageLabel
+@onready var language_button: Button = $Overlay/OptionsPanel/MarginContainer/VBoxContainer/LanguageRow/LanguageButton
 @onready var fullscreen_check_button: CheckButton = $Overlay/OptionsPanel/MarginContainer/VBoxContainer/FullscreenCheckButton
 @onready var tutorial_button: Button = $Overlay/OptionsPanel/MarginContainer/VBoxContainer/TutorialButton
 @onready var close_options_button: Button = $Overlay/OptionsPanel/MarginContainer/VBoxContainer/CloseOptionsButton
 
 @onready var tutorial_panel: PanelContainer = $Overlay/TutorialPanel
+@onready var tutorial_title_label: Label = $Overlay/TutorialPanel/MarginContainer/VBoxContainer/TutorialTitleLabel
+@onready var tutorial_content_label: RichTextLabel = $Overlay/TutorialPanel/MarginContainer/VBoxContainer/ScrollContainer/TutorialContentLabel
 @onready var close_tutorial_button: Button = $Overlay/TutorialPanel/MarginContainer/VBoxContainer/CloseTutorialButton
 
 @onready var confirm_main_menu_panel: PanelContainer = $Overlay/ConfirmMainMenuPanel
+@onready var confirm_main_menu_label: Label = $Overlay/ConfirmMainMenuPanel/MarginContainer/VBoxContainer/ConfirmMainMenuLabel
 @onready var confirm_main_menu_yes_button: Button = $Overlay/ConfirmMainMenuPanel/MarginContainer/VBoxContainer/ConfirmMainMenuYesButton
 @onready var confirm_main_menu_no_button: Button = $Overlay/ConfirmMainMenuPanel/MarginContainer/VBoxContainer/ConfirmMainMenuNoButton
 
 @onready var confirm_quit_panel: PanelContainer = $Overlay/ConfirmQuitPanel
+@onready var confirm_quit_label: Label = $Overlay/ConfirmQuitPanel/MarginContainer/VBoxContainer/ConfirmQuitLabel
 @onready var confirm_quit_yes_button: Button = $Overlay/ConfirmQuitPanel/MarginContainer/VBoxContainer/ConfirmQuitYesButton
 @onready var confirm_quit_no_button: Button = $Overlay/ConfirmQuitPanel/MarginContainer/VBoxContainer/ConfirmQuitNoButton
 
@@ -79,12 +90,14 @@ func _ready() -> void:
 	options_button.pressed.connect(_on_options_button_pressed)
 	main_menu_button.pressed.connect(_on_main_menu_button_pressed)
 	quit_game_button.pressed.connect(_on_quit_game_button_pressed)
+	language_button.pressed.connect(_on_language_button_pressed)
 
 	for btn: Button in [
 		resume_button,
 		save_button,
 		journal_button,
 		options_button,
+		language_button,
 		main_menu_button,
 		quit_game_button,
 		close_journal_button,
@@ -113,6 +126,11 @@ func _ready() -> void:
 
 	confirm_quit_yes_button.pressed.connect(_on_confirm_quit_yes_pressed)
 	confirm_quit_no_button.pressed.connect(_show_main_pause_panel)
+
+	if LocaleManager != null:
+		LocaleManager.language_changed.connect(_on_language_changed)
+
+	_update_locale_texts()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -144,7 +162,8 @@ func toggle_pause() -> void:
 
 func _refresh_pause_metadata() -> void:
 	current_location_label.text = _resolve_current_location_name()
-	pause_footer_label.text = "Cera: %d · Recuerdos: %d" % [
+	var footer_format: String = LocaleManager.pick("Cera: %d · Recuerdos: %d", "Wax: %d · Memories: %d") if LocaleManager != null else "Cera: %d · Recuerdos: %d"
+	pause_footer_label.text = footer_format % [
 		WorldState.wax_remaining,
 		WorldState.recovered_memories.size()
 	]
@@ -156,30 +175,90 @@ func _resolve_current_location_name() -> String:
 		scene_path = get_tree().current_scene.scene_file_path
 
 	if scene_path.contains("Prologue"):
-		return "Prólogo · Taller del Abuelo"
+		return LocaleManager.pick("Prólogo · Taller del Abuelo", "Prologue · Grandfather's Workshop") if LocaleManager != null else "Prólogo · Taller del Abuelo"
 	if scene_path.contains("Level1"):
-		return "Nivel 1 · La Plaza de Aldeavieja"
+		return LocaleManager.pick("Nivel 1 · La Plaza de Aldeavieja", "Level 1 · Oldtown Plaza") if LocaleManager != null else "Nivel 1 · La Plaza de Aldeavieja"
 	if scene_path.contains("Level2"):
-		return "Nivel 2 · La Antigua Estación"
+		return LocaleManager.pick("Nivel 2 · La Antigua Estación", "Level 2 · The Old Station") if LocaleManager != null else "Nivel 2 · La Antigua Estación"
 	if scene_path.contains("Level3"):
-		return "Nivel 3 · La Casa de los Recuerdos"
-	return "Crónicas de Aldeavieja"
+		return LocaleManager.pick("Nivel 3 · La Casa de los Recuerdos", "Level 3 · The House of Memories") if LocaleManager != null else "Nivel 3 · La Casa de los Recuerdos"
+
+	return LocaleManager.pick("Aldeavieja", "Oldtown") if LocaleManager != null else "Aldeavieja"
+
+
+func _on_language_button_pressed() -> void:
+	if LocaleManager != null:
+		LocaleManager.toggle_language()
+
+
+func _on_language_changed(_new_lang: String) -> void:
+	_update_locale_texts()
+	_refresh_pause_metadata()
+
+
+func _update_locale_texts() -> void:
+	if LocaleManager == null:
+		return
+
+	pause_main_title.text = LocaleManager.pick("En pausa", "Paused")
+	resume_button.text = LocaleManager.t("resume")
+	save_button.text = LocaleManager.t("save_game")
+	journal_button.text = LocaleManager.t("journal")
+	options_button.text = LocaleManager.t("options")
+	main_menu_button.text = LocaleManager.t("main_menu")
+	quit_game_button.text = LocaleManager.t("quit_game")
+
+	options_title_label.text = LocaleManager.t("options_title")
+	master_label.text = LocaleManager.t("master_volume")
+	music_label.text = LocaleManager.t("music_volume")
+	sfx_label.text = LocaleManager.t("sfx_volume")
+	language_label.text = LocaleManager.t("language_label")
+	language_button.text = LocaleManager.t("language_button")
+	fullscreen_check_button.text = LocaleManager.t("fullscreen")
+	tutorial_button.text = LocaleManager.t("how_to_play")
+	close_options_button.text = LocaleManager.t("back")
+	close_journal_button.text = LocaleManager.t("back")
+
+	tutorial_title_label.text = LocaleManager.t("tutorial_title")
+	tutorial_content_label.text = LocaleManager.t("tutorial_content")
+	close_tutorial_button.text = LocaleManager.t("back")
+
+	confirm_main_menu_label.text = LocaleManager.pick(
+		"¿Estás seguro de que deseas volver al menú principal? Se perderá el progreso no guardado.",
+		"Are you sure you want to return to the main menu? Unsaved progress will be lost."
+	)
+	confirm_main_menu_yes_button.text = LocaleManager.t("yes")
+	confirm_main_menu_no_button.text = LocaleManager.t("no")
+
+	confirm_quit_label.text = LocaleManager.pick(
+		"¿Estás seguro de que deseas salir del juego? Se perderá el progreso no guardado.",
+		"Are you sure you want to exit the game? Unsaved progress will be lost."
+	)
+	confirm_quit_yes_button.text = LocaleManager.t("yes")
+	confirm_quit_no_button.text = LocaleManager.t("no")
 
 
 func _play_open_animation() -> void:
 	if _open_tween != null and _open_tween.is_valid():
 		_open_tween.kill()
 
-	main_pause_panel.reset_size()
-	main_pause_panel.pivot_offset = main_pause_panel.size * 0.5
-	main_pause_panel.scale = Vector2(0.95, 0.95)
 	main_pause_panel.modulate.a = 0.0
+	main_pause_panel.scale = Vector2(0.96, 0.96)
+	main_pause_panel.pivot_offset = main_pause_panel.size * 0.5
 
 	_open_tween = create_tween()
-	_open_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	_open_tween.set_parallel(true)
-	_open_tween.tween_property(main_pause_panel, "scale", Vector2.ONE, 0.18).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	_open_tween.tween_property(main_pause_panel, "modulate:a", 1.0, 0.18)
+	_open_tween.tween_property(main_pause_panel, "scale", Vector2.ONE, 0.18)
+
+
+func _show_main_pause_panel() -> void:
+	journal_panel.hide()
+	options_panel.hide()
+	tutorial_panel.hide()
+	confirm_main_menu_panel.hide()
+	confirm_quit_panel.hide()
+	main_pause_panel.show()
 
 
 func _is_any_subpanel_open() -> bool:
@@ -192,82 +271,68 @@ func _is_any_subpanel_open() -> bool:
 	)
 
 
-func _show_main_pause_panel() -> void:
-	journal_panel.hide()
-	options_panel.hide()
-	tutorial_panel.hide()
-	confirm_main_menu_panel.hide()
-	confirm_quit_panel.hide()
-	_refresh_pause_metadata()
-	main_pause_panel.show()
-
-
 func _on_resume_button_pressed() -> void:
-	get_tree().paused = false
-	hide()
+	toggle_pause()
 
 
 func _on_save_button_pressed() -> void:
-	WorldState.save_game()
+	if WorldState.save_game():
+		_show_save_feedback(LocaleManager.t("saved_feedback") if LocaleManager != null else "¡Partida guardada!")
+	else:
+		_show_save_feedback(LocaleManager.pick("Error al guardar partida.", "Error saving game.") if LocaleManager != null else "Error al guardar partida.")
+
+
+func _show_save_feedback(message: String) -> void:
 	if _save_feedback_tween != null and _save_feedback_tween.is_valid():
 		_save_feedback_tween.kill()
 
-	save_feedback_label.text = "Partida guardada"
-	save_feedback_label.modulate.a = 1.0
+	save_feedback_label.text = message
+	save_feedback_label.modulate.a = 0.0
 	save_feedback_label.show()
 
 	_save_feedback_tween = create_tween()
-	_save_feedback_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	_save_feedback_tween.tween_interval(1.6)
-	_save_feedback_tween.tween_property(save_feedback_label, "modulate:a", 0.0, 0.5)
+	_save_feedback_tween.tween_property(save_feedback_label, "modulate:a", 1.0, 0.25)
+	_save_feedback_tween.tween_interval(1.8)
+	_save_feedback_tween.tween_property(save_feedback_label, "modulate:a", 0.0, 0.4)
 	_save_feedback_tween.tween_callback(save_feedback_label.hide)
 
 
 func _on_journal_button_pressed() -> void:
-	_refresh_journal_display()
+	_populate_journal()
 	main_pause_panel.hide()
 	journal_panel.show()
 
 
-func _refresh_journal_display() -> void:
+func _populate_journal() -> void:
 	var lines: PackedStringArray = PackedStringArray()
 
-	lines.append("[b][color=#C9AE7C]Personajes conocidos[/color][/b]")
-	if WorldState.known_characters.is_empty():
-		lines.append("• Aún no has conversado con los habitantes de Aldeavieja.")
-	else:
-		for character_name: String in WorldState.known_characters:
-			lines.append("• " + character_name)
-
-	lines.append("\n[b][color=#C9AE7C]Recuerdos reconstruidos[/color][/b]")
+	lines.append("[b][color=#C9AE7C]— %s —[/color][/b]" % (LocaleManager.pick("Páginas y Recuerdos Recuperados", "Pages & Recovered Memories") if LocaleManager != null else "Páginas y Recuerdos Recuperados"))
 	if WorldState.recovered_memories.is_empty():
-		lines.append("• Ningún recuerdo restaurado todavía.")
+		lines.append(LocaleManager.pick("[i]Aún no has recuperado páginas completas en el cuaderno.[/i]", "[i]You have not yet recovered complete pages in the notebook.[/i]") if LocaleManager != null else "[i]Aún no has recuperado páginas completas en el cuaderno.[/i]")
 	else:
-		for memory_text: String in WorldState.recovered_memories:
-			lines.append("• " + memory_text)
+		for mem: String in WorldState.recovered_memories:
+			lines.append("• " + mem)
 
-	lines.append("\n[b][color=#C9AE7C]Pistas y objetos descubiertos[/color][/b]")
+	lines.append("\n[b][color=#C9AE7C]— %s —[/color][/b]" % (LocaleManager.pick("Pistas y Objetos Descubiertos", "Clues & Discovered Objects") if LocaleManager != null else "Pistas y Objetos Descubiertos"))
 	if WorldState.clues_found.is_empty():
-		lines.append("• Aún no has registrado pistas en este capítulo.")
+		lines.append(LocaleManager.pick("[i]No hay pistas registradas en esta página.[/i]", "[i]No clues recorded on this page.[/i]") if LocaleManager != null else "[i]No hay pistas registradas en esta página.[/i]")
 	else:
-		for clue_id: String in WorldState.clues_found:
-			var clue_desc: String = str(CLUE_LABELS.get(clue_id, clue_id))
-			lines.append("• " + clue_desc)
+		for clue: String in WorldState.clues_found:
+			var label: String = str(CLUE_LABELS.get(clue, clue))
+			lines.append("• " + label)
 
-	lines.append("\n[b][color=#C9AE7C]Decisiones importantes[/color][/b]")
+	lines.append("\n[b][color=#C9AE7C]— %s —[/color][/b]" % (LocaleManager.pick("Decisiones Trascendentales", "Pivotal Decisions") if LocaleManager != null else "Decisiones Trascendentales"))
 	if WorldState.important_choices.is_empty():
-		lines.append("• Aún no has tomado decisiones definitivas en el cuaderno.")
+		lines.append(LocaleManager.pick("[i]Tus decisiones comenzarán a marcar el destino de Aldeavieja a medida que avances.[/i]", "[i]Your decisions will begin shaping Oldtown's destiny as you progress.[/i]") if LocaleManager != null else "[i]Tus decisiones comenzarán a marcar el destino de Aldeavieja a medida que avances.[/i]")
 	else:
-		for choice_key: Variant in WorldState.important_choices.keys():
-			var key_str: String = str(choice_key)
-			var label_title: String = str(CHOICE_LABELS.get(key_str, key_str.capitalize()))
-			var choice_value: String = str(WorldState.important_choices[choice_key])
-			lines.append("• [b]%s:[/b] %s" % [label_title, choice_value])
+		for key: String in WorldState.important_choices.keys():
+			var choice_name: String = str(CHOICE_LABELS.get(key, key))
+			var choice_val: String = str(WorldState.important_choices[key])
+			lines.append("• [b]%s:[/b] %s" % [choice_name, choice_val])
 
-	lines.append("\n[b][color=#C9AE7C]Cera disponible y exploración[/color][/b]")
-	lines.append("• Cera restante en el cuaderno: %d" % WorldState.wax_remaining)
-	lines.append("• Fragmentos de cera recolectados: %d" % WorldState.wax_fragments)
-	lines.append("• Nivel de exploración: %d" % WorldState.exploration_score)
+	lines.append("\n[b][color=#C9AE7C]— %s —[/color][/b]" % (LocaleManager.pick("Estado del Guardián", "Guardian Status") if LocaleManager != null else "Estado del Guardián"))
+	lines.append("• %s: %d" % [LocaleManager.pick("Cera dorada restante", "Remaining golden wax") if LocaleManager != null else "Cera dorada restante", WorldState.wax_remaining])
+	lines.append("• %s: %d" % [LocaleManager.pick("Nivel de exploración", "Exploration level") if LocaleManager != null else "Nivel de exploración", WorldState.exploration_score])
 
 	journal_content_label.text = "\n".join(lines)
 
