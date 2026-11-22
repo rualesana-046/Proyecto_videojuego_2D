@@ -1,10 +1,11 @@
 class_name DialogueOverlay
 extends CanvasLayer
 
-@onready var dialogue_box: PanelContainer = $UIContainer/DialogueBox
-@onready var speaker_name_label: Label = $UIContainer/DialogueBox/MarginContainer/ContentLayout/SpeakerName
-@onready var dialogue_text_label: RichTextLabel = $UIContainer/DialogueBox/MarginContainer/ContentLayout/DialogueText
-@onready var options_container: VBoxContainer = $UIContainer/DialogueBox/MarginContainer/ContentLayout/OptionsContainer
+@onready var dialogue_box: PanelContainer = $DialogueMargin/DialogueAligner/DialogueBox
+@onready var speaker_label: Label = $DialogueMargin/DialogueAligner/DialogueBox/MarginContainer/ContentLayout/SpeakerLabel
+@onready var speaker_name_label: Label = speaker_label
+@onready var dialogue_text_label: RichTextLabel = $DialogueMargin/DialogueAligner/DialogueBox/MarginContainer/ContentLayout/DialogueText
+@onready var options_container: VBoxContainer = $DialogueMargin/DialogueAligner/DialogueBox/MarginContainer/ContentLayout/OptionsContainer
 
 
 func _ready() -> void:
@@ -25,15 +26,13 @@ func _on_dialogue_ended() -> void:
 
 func _on_dialogue_line_updated(speaker_name: String, text: String, options: Array) -> void:
 	show()
-	speaker_name_label.text = speaker_name
+	speaker_label.text = speaker_name
 	dialogue_text_label.text = text
 	if not speaker_name.is_empty() and not WorldState.known_characters.has(speaker_name):
 		WorldState.known_characters.append(speaker_name)
 		WorldState.exploration_score += 1
 	_clear_options()
 	_create_option_buttons(options)
-	if dialogue_box != null:
-		dialogue_box.reset_size()
 
 
 func _clear_options() -> void:
