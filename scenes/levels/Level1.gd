@@ -7,6 +7,8 @@ var _notification_tween: Tween = null
 @onready var npc_elias: NPC = $NPC_Elias
 @onready var npc_marta: NPC = $NPC_Marta
 
+@onready var objective_panel: PanelContainer = $NotificationLayer/ObjectivePanel
+@onready var objective_label: Label = $NotificationLayer/ObjectivePanel/MarginContainer/ObjectiveLabel
 @onready var notification_panel: PanelContainer = $NotificationLayer/NotificationPanel
 @onready var notification_label: Label = $NotificationLayer/NotificationPanel/MarginContainer/NotificationLabel
 
@@ -19,18 +21,22 @@ func _ready() -> void:
 
 	WorldState.status_notification_requested.connect(_on_status_notification_requested)
 	DialogueManager.dialogue_ended.connect(_update_npc_dialogues)
+	DialogueManager.dialogue_ended.connect(_update_objective_hud)
 	WorldState.clue_registered.connect(_on_clue_registered)
 	WorldState.memory_reconstructed.connect(_on_memory_reconstructed)
 
 	_update_npc_dialogues()
+	_update_objective_hud()
 
 
 func _on_clue_registered(_clue_id: String, _total: int) -> void:
 	_update_npc_dialogues()
+	_update_objective_hud()
 
 
 func _on_memory_reconstructed(_memory_id: String) -> void:
 	_update_npc_dialogues()
+	_update_objective_hud()
 
 
 func _update_npc_dialogues() -> void:
@@ -87,6 +93,32 @@ func _update_npc_dialogues() -> void:
 				npc_marta.dialogue_id = "marta_seguimiento"
 		else:
 			npc_marta.dialogue_id = "marta_inicio"
+
+
+func _update_objective_hud() -> void:
+	if objective_label == null:
+		return
+
+	var reconstructed: bool = bool(WorldState.state.get("lucia_tomas_reconstructed", false))
+	var has_all_clues: bool = WorldState.has_all_level1_clues()
+	var talked_lucia: bool = bool(WorldState.state.get("talked_lucia", false))
+	var talked_elias: bool = bool(WorldState.state.get("talked_elias", false))
+	var talked_marta: bool = bool(WorldState.state.get("talked_marta", false))
+
+	if reconstructed:
+		objective_label.text = "Objetivo: Cruza el antiguo puente hacia el norte rumbo a la Estación."
+	elif has_all_clues:
+		objective_label.text = "Objetivo: Vuelve con Lucía en la plaza para reconstruir el recuerdo."
+	elif not talked_lucia:
+		objective_label.text = "Objetivo: Habla con Lucía junto a la fuente en la plaza central."
+	elif not talked_elias or not talked_marta:
+		objective_label.text = "Objetivo: Conversa con Don Elías (reloj) y Marta (floristería al oeste)."
+	else:
+		var clues_count: int = 0
+		for req_clue: String in WorldState.LEVEL1_REQUIRED_CLUES:
+			if WorldState.clues_found.has(req_clue):
+				clues_count += 1
+		objective_label.text = "Objetivo: Reúne las pistas con el Cuaderno [Q] — Panadería (este) y Puente (norte) · Pistas: %d/3." % clues_count
 
 
 func _on_status_notification_requested(message: String) -> void:

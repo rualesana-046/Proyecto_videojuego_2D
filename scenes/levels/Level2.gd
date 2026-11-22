@@ -32,6 +32,8 @@ var _notification_tween: Tween = null
 @onready var clock_tower_box_area: Area2D = $ClockTowerBoxArea
 @onready var clock_tower_box_prompt: Node2D = $ClockTowerBoxArea/InteractPrompt
 
+@onready var objective_panel: PanelContainer = $NotificationLayer/ObjectivePanel
+@onready var objective_label: Label = $NotificationLayer/ObjectivePanel/MarginContainer/ObjectiveLabel
 @onready var lives_panel: PanelContainer = $NotificationLayer/LivesPanel
 @onready var lives_label: Label = $NotificationLayer/LivesPanel/MarginContainer/LivesLabel
 @onready var notification_panel: PanelContainer = $NotificationLayer/NotificationPanel
@@ -50,6 +52,7 @@ var _barricade_active: bool = false
 func _ready() -> void:
 	WorldState.current_level = "res://scenes/levels/Level2.tscn"
 	_update_lives_hud()
+	_update_objective_hud()
 	if notification_panel != null:
 		notification_panel.hide()
 		notification_panel.modulate.a = 0.0
@@ -72,6 +75,8 @@ func _ready() -> void:
 	DialogueManager.dialogue_started.connect(_update_all_prompts)
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
 	WorldState.status_notification_requested.connect(_show_notification)
+	WorldState.clue_registered.connect(func(_c: String, _t: int) -> void: _update_objective_hud())
+	WorldState.memory_reconstructed.connect(func(_m: String) -> void: _update_objective_hud())
 
 	_update_all_prompts()
 
@@ -181,6 +186,7 @@ func _interact_signal_lever() -> void:
 			environment_layer.erase_cell(Vector2i(-1, -7))
 			environment_layer.erase_cell(Vector2i(0, -7))
 
+	_update_objective_hud()
 	DialogueManager.start_dialogue("recuerdo_samuel")
 
 
@@ -209,6 +215,7 @@ func _register_distraction_used(distraction_name: String) -> void:
 func _on_dialogue_ended() -> void:
 	_update_all_prompts()
 	_check_waiting_room_bonus()
+	_update_objective_hud()
 
 	# Si acaba de examinar la foto de Samuel (Escena 2), activar a El Desvanecido
 	if bool(WorldState.state.get("samuel_photo_examined", false)) and not _desvanecido_vanished:
@@ -242,6 +249,27 @@ func _check_waiting_room_bonus() -> void:
 		WorldState.state["waiting_room_page_unlocked"] = true
 		WorldState.register_recovered_memory("Página adicional: Los viajes del abuelo y Samuel en la estación")
 		_show_notification("Nueva página en el Cuaderno de Cera: «Los viajes del abuelo y Samuel».")
+
+
+func _update_objective_hud() -> void:
+	if objective_label == null:
+		return
+
+	var has_key: bool = bool(WorldState.state.get("has_station_key", false)) or WorldState.clues_found.has("llave_estacion")
+	var photo_examined: bool = bool(WorldState.state.get("samuel_photo_examined", false))
+	var lever_pulled: bool = bool(WorldState.state.get("station_lever_pulled", false))
+	var letter_read: bool = bool(WorldState.state.get("clock_tower_letter_read", false))
+
+	if letter_read:
+		objective_label.text = "Objetivo: Avanza por la salida norte hacia la Casa de los Recuerdos."
+	elif lever_pulled:
+		objective_label.text = "Objetivo: Sube a la Torre del Reloj (norte) y abre la caja metálica con la llave."
+	elif photo_examined:
+		objective_label.text = "Objetivo: Usa lámpara, caja o campana para distraer al Desvanecido y activa la palanca en el andén (este)."
+	elif has_key:
+		objective_label.text = "Objetivo: Examina la fotografía en el pasillo de mantenimiento (centro-oeste)."
+	else:
+		objective_label.text = "Objetivo: Habla con Inés en la sala de espera (suroeste) para conseguir la llave."
 
 
 func _update_lives_hud() -> void:

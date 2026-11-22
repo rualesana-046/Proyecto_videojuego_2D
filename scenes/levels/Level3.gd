@@ -45,6 +45,8 @@ var _notification_tween: Tween = null
 @onready var craft_memory_3_button: Button = $HUD/MemoryCraftModal/MemoryCraftPanel/MarginContainer/VBoxContainer/CraftMemory3Button
 @onready var close_craft_button: Button = $HUD/MemoryCraftModal/MemoryCraftPanel/MarginContainer/VBoxContainer/CloseCraftButton
 
+@onready var objective_panel: PanelContainer = $HUD/ObjectivePanel
+@onready var objective_label: Label = $HUD/ObjectivePanel/MarginContainer/ObjectiveLabel
 @onready var notification_panel: PanelContainer = $HUD/NotificationPanel
 @onready var notification_label: Label = $HUD/NotificationPanel/MarginContainer/NotificationLabel
 
@@ -303,6 +305,7 @@ func _on_dialogue_ended() -> void:
 
 
 func _update_hud() -> void:
+	_update_objective_hud()
 	if time_label != null:
 		time_label.text = "Tiempo del recuerdo: %d" % time_units
 	if wax_label != null:
@@ -321,6 +324,20 @@ func _update_hud() -> void:
 			items_label.text = "Objetos de la casa: Ninguno aún (explora el jardín, la sala, el estudio y la habitación)"
 		else:
 			items_label.text = "Objetos de la casa: " + ", ".join(collected_names)
+
+
+func _update_objective_hud() -> void:
+	if objective_label == null:
+		return
+
+	var has_photo: bool = WorldState.clues_found.has("item_photo")
+
+	if reconstructed_count >= TOTAL_REQUIRED_MEMORIES and _basement_unlocked:
+		objective_label.text = "Objetivo: Entra al sótano (norte) y habla con la memoria del abuelo."
+	elif not has_photo:
+		objective_label.text = "Objetivo: Examina la fotografía del abuelo y Elena en la sala principal."
+	else:
+		objective_label.text = "Objetivo: Explora jardín (sur), estudio (oeste) y habitación (este), y sella los recuerdos en la Mesa de Encuadernación (%d/3)." % reconstructed_count
 
 
 func _show_notification(message: String) -> void:
