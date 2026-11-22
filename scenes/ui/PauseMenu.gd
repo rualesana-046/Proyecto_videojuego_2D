@@ -99,7 +99,7 @@ var _open_tween: Tween = null
 
 @onready var tutorial_panel: PanelContainer = $Overlay/TutorialPanel
 @onready var tutorial_title_label: Label = $Overlay/TutorialPanel/MarginContainer/VBoxContainer/TutorialTitleLabel
-@onready var tutorial_content_label: RichTextLabel = $Overlay/TutorialPanel/MarginContainer/VBoxContainer/ScrollContainer/TutorialContentLabel
+@onready var tutorial_content_label: RichTextLabel = $Overlay/TutorialPanel/MarginContainer/VBoxContainer/TutorialContentLabel
 @onready var close_tutorial_button: Button = $Overlay/TutorialPanel/MarginContainer/VBoxContainer/CloseTutorialButton
 
 @onready var confirm_main_menu_panel: PanelContainer = $Overlay/ConfirmMainMenuPanel
