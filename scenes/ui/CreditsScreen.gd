@@ -78,26 +78,37 @@ func _play_current_section() -> void:
 
 	var section_data: Dictionary = CREDITS_SECTIONS[_current_section_index]
 	var section_title: String = str(section_data.get("title", ""))
-	var reading_duration: float = 6.0 if section_title == "Agradecimientos" else 4.8
+	var hold_duration: float = 6.0 if section_title == "Agradecimientos" else 4.8
 
 	section_title_label.text = section_title
 	section_body_label.text = str(section_data.get("body", ""))
 
-	section_title_label.modulate.a = 0.0
-	section_body_label.modulate.a = 0.0
+	section_title_label.modulate.a = 1.0
+	section_body_label.modulate.a = 1.0
+
+	sequence_container.visible = true
+	sequence_container.modulate.a = 0.0
 
 	if _sequence_tween != null and _sequence_tween.is_valid():
 		_sequence_tween.kill()
 
 	_sequence_tween = create_tween()
-	_sequence_tween.set_parallel(true)
-	_sequence_tween.tween_property(section_title_label, "modulate:a", 1.0, 0.8)
-	_sequence_tween.tween_property(section_body_label, "modulate:a", 1.0, 0.8)
-	_sequence_tween.chain().tween_interval(reading_duration)
-	_sequence_tween.set_parallel(true)
-	_sequence_tween.tween_property(section_title_label, "modulate:a", 0.0, 0.7)
-	_sequence_tween.tween_property(section_body_label, "modulate:a", 0.0, 0.7)
-	_sequence_tween.chain().tween_callback(_advance_section)
+	_sequence_tween.set_parallel(false)
+
+	# Paso 1: Fade-in
+	_sequence_tween.tween_property(sequence_container, "modulate:a", 1.0, 0.8)
+
+	# Paso 2: Permanencia visible con texto en pantalla
+	_sequence_tween.tween_interval(hold_duration)
+
+	# Paso 3: Fade-out
+	_sequence_tween.tween_property(sequence_container, "modulate:a", 0.0, 0.7)
+
+	# Paso 4: Pausa breve en blanco entre tarjetas
+	_sequence_tween.tween_interval(0.35)
+
+	# Paso 5: Avanzar a la siguiente sección
+	_sequence_tween.tween_callback(_advance_section)
 
 
 func _advance_section() -> void:
