@@ -169,38 +169,37 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.65)
+color = Color(0.01, 0.04, 0.03, 0.72)
 
 [node name="OptionsPanel" type="PanelContainer" parent="OptionsModal"]
+custom_minimum_size = Vector2(450, 0)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -220.0
-offset_top = -170.0
-offset_right = 220.0
-offset_bottom = 170.0
+offset_left = -225.0
+offset_right = 225.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="OptionsModal/OptionsPanel"]
 layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 16
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 18
 
 [node name="VBoxContainer" type="VBoxContainer" parent="OptionsModal/OptionsPanel/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 14
+theme_override_constants/separation = 12
 
 [node name="OptionsTitleLabel" type="Label" parent="OptionsModal/OptionsPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.788235, 0.682353, 0.486275, 1)
 theme_override_fonts/font = ExtResource("5_title_font")
-theme_override_font_sizes/font_size = 26
+theme_override_font_sizes/font_size = 28
 text = "Opciones"
 horizontal_alignment = 1
 
@@ -208,7 +207,7 @@ horizontal_alignment = 1
 layout_mode = 2
 
 [node name="MasterLabel" type="Label" parent="OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/MasterRow"]
-custom_minimum_size = Vector2(140, 0)
+custom_minimum_size = Vector2(145, 0)
 layout_mode = 2
 text = "Volumen General"
 
@@ -224,7 +223,7 @@ value = 1.0
 layout_mode = 2
 
 [node name="MusicLabel" type="Label" parent="OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/MusicRow"]
-custom_minimum_size = Vector2(140, 0)
+custom_minimum_size = Vector2(145, 0)
 layout_mode = 2
 text = "Música"
 
@@ -240,7 +239,7 @@ value = 1.0
 layout_mode = 2
 
 [node name="SfxLabel" type="Label" parent="OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/SfxRow"]
-custom_minimum_size = Vector2(140, 0)
+custom_minimum_size = Vector2(145, 0)
 layout_mode = 2
 text = "Efectos"
 
@@ -256,7 +255,70 @@ value = 1.0
 layout_mode = 2
 text = "Pantalla Completa"
 
+[node name="TutorialButton" type="Button" parent="OptionsModal/OptionsPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+text = "Cómo jugar (Tutorial)"
+autowrap_mode = 3
+
 [node name="CloseOptionsButton" type="Button" parent="OptionsModal/OptionsPanel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
 text = "Cerrar"
+
+[node name="TutorialPanel" type="PanelContainer" parent="OptionsModal"]
+visible = false
+custom_minimum_size = Vector2(680, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -340.0
+offset_right = 340.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="OptionsModal/TutorialPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 18
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsModal/TutorialPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TutorialTitleLabel" type="Label" parent="OptionsModal/TutorialPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.788235, 0.682353, 0.486275, 1)
+theme_override_fonts/font = ExtResource("5_title_font")
+theme_override_font_sizes/font_size = 28
+text = "Cómo jugar (Tutorial)"
+horizontal_alignment = 1
+
+[node name="TutorialContentLabel" type="RichTextLabel" parent="OptionsModal/TutorialPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0.929412, 0.913725, 0.847059, 1)
+bbcode_enabled = true
+text = "[b][color=#C9AE7C]Controles básicos[/color][/b]
+• [b]WASD o Flechas:[/b] Moverse por los escenarios de Aldeavieja.
+• [b]E (o clic izquierdo):[/b] Hablar con personajes, examinar objetos y activar mecanismos.
+• [b]Q:[/b] Abrir o cerrar el [b]Cuaderno de Cera[/b] para revelar pistas ocultas y marcas doradas.
+• [b]Esc:[/b] Abrir el menú de pausa y consultar el diario del Cuaderno de Cera.
+
+[b][color=#C9AE7C]Cómo avanzar en cada capítulo[/color][/b]
+• [b]Nivel 1 (La Plaza):[/b] Habla con los habitantes, usa el Cuaderno ([b]Q[/b]) para hallar las 3 pistas y regresa con Lucía.
+• [b]Nivel 2 (La Estación):[/b] Consigue la llave de Inés, usa lámpara, caja y campana para distraer al Desvanecido (tienes 3 vidas) y activa la palanca del andén.
+• [b]Nivel 3 (La Casa):[/b] Recoge los 5 objetos de las habitaciones y las ceras, combínalos en la Mesa de Encuadernación para abrir el sótano y toma la decisión final."
+fit_content = true
+scroll_active = false
+autowrap_mode = 3
+
+[node name="CloseTutorialButton" type="Button" parent="OptionsModal/TutorialPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(220, 38)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Volver a Opciones"

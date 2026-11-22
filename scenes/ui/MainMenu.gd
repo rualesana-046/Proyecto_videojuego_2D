@@ -17,11 +17,15 @@ var _is_intro_playing: bool = false
 @onready var quit_button: Button = $MenuPanel/MarginContainer/VBoxContainer/QuitButton
 
 @onready var options_modal: ColorRect = $OptionsModal
+@onready var options_panel: PanelContainer = $OptionsModal/OptionsPanel
 @onready var master_slider: HSlider = $OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/MasterRow/MasterSlider
 @onready var music_slider: HSlider = $OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/MusicRow/MusicSlider
 @onready var sfx_slider: HSlider = $OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/SfxRow/SfxSlider
 @onready var fullscreen_check_button: CheckButton = $OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/FullscreenCheckButton
+@onready var tutorial_button: Button = $OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/TutorialButton
 @onready var close_options_button: Button = $OptionsModal/OptionsPanel/MarginContainer/VBoxContainer/CloseOptionsButton
+@onready var tutorial_panel: PanelContainer = $OptionsModal/TutorialPanel
+@onready var close_tutorial_button: Button = $OptionsModal/TutorialPanel/MarginContainer/VBoxContainer/CloseTutorialButton
 
 
 func _ready() -> void:
@@ -39,6 +43,8 @@ func _ready() -> void:
 	music_slider.value_changed.connect(_on_bus_volume_changed.bind(MUSIC_BUS_NAME))
 	sfx_slider.value_changed.connect(_on_bus_volume_changed.bind(SFX_BUS_NAME))
 	fullscreen_check_button.toggled.connect(_on_fullscreen_toggled)
+	tutorial_button.pressed.connect(_on_tutorial_button_pressed)
+	close_tutorial_button.pressed.connect(_on_close_tutorial_button_pressed)
 	close_options_button.pressed.connect(_on_close_options_button_pressed)
 
 	_start_intro_sequence()
@@ -153,10 +159,24 @@ func _on_continue_button_pressed() -> void:
 
 
 func _on_options_button_pressed() -> void:
+	_sync_options_controls()
+	tutorial_panel.hide()
+	options_panel.show()
 	options_modal.show()
 
 
+func _on_tutorial_button_pressed() -> void:
+	options_panel.hide()
+	tutorial_panel.show()
+
+
+func _on_close_tutorial_button_pressed() -> void:
+	tutorial_panel.hide()
+	options_panel.show()
+
+
 func _on_close_options_button_pressed() -> void:
+	tutorial_panel.hide()
 	options_modal.hide()
 
 

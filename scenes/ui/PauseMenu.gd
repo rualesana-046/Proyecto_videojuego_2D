@@ -30,8 +30,10 @@ const CLUE_LABELS: Dictionary = {
 }
 
 var _save_feedback_tween: Tween = null
+var _open_tween: Tween = null
 
 @onready var main_pause_panel: PanelContainer = $Overlay/MainPausePanel
+@onready var current_location_label: Label = $Overlay/MainPausePanel/MarginContainer/VBoxContainer/CurrentLocationLabel
 @onready var save_feedback_label: Label = $Overlay/MainPausePanel/MarginContainer/VBoxContainer/SaveFeedbackLabel
 @onready var resume_button: Button = $Overlay/MainPausePanel/MarginContainer/VBoxContainer/ResumeButton
 @onready var save_button: Button = $Overlay/MainPausePanel/MarginContainer/VBoxContainer/SaveButton
@@ -39,6 +41,7 @@ var _save_feedback_tween: Tween = null
 @onready var options_button: Button = $Overlay/MainPausePanel/MarginContainer/VBoxContainer/OptionsButton
 @onready var main_menu_button: Button = $Overlay/MainPausePanel/MarginContainer/VBoxContainer/MainMenuButton
 @onready var quit_game_button: Button = $Overlay/MainPausePanel/MarginContainer/VBoxContainer/QuitGameButton
+@onready var pause_footer_label: Label = $Overlay/MainPausePanel/MarginContainer/VBoxContainer/PauseFooterLabel
 
 @onready var journal_panel: PanelContainer = $Overlay/JournalPanel
 @onready var journal_content_label: RichTextLabel = $Overlay/JournalPanel/MarginContainer/VBoxContainer/ScrollContainer/JournalContentLabel
@@ -49,7 +52,11 @@ var _save_feedback_tween: Tween = null
 @onready var music_slider: HSlider = $Overlay/OptionsPanel/MarginContainer/VBoxContainer/MusicRow/MusicSlider
 @onready var sfx_slider: HSlider = $Overlay/OptionsPanel/MarginContainer/VBoxContainer/SfxRow/SfxSlider
 @onready var fullscreen_check_button: CheckButton = $Overlay/OptionsPanel/MarginContainer/VBoxContainer/FullscreenCheckButton
+@onready var tutorial_button: Button = $Overlay/OptionsPanel/MarginContainer/VBoxContainer/TutorialButton
 @onready var close_options_button: Button = $Overlay/OptionsPanel/MarginContainer/VBoxContainer/CloseOptionsButton
+
+@onready var tutorial_panel: PanelContainer = $Overlay/TutorialPanel
+@onready var close_tutorial_button: Button = $Overlay/TutorialPanel/MarginContainer/VBoxContainer/CloseTutorialButton
 
 @onready var confirm_main_menu_panel: PanelContainer = $Overlay/ConfirmMainMenuPanel
 @onready var confirm_main_menu_yes_button: Button = $Overlay/ConfirmMainMenuPanel/MarginContainer/VBoxContainer/ConfirmMainMenuYesButton
@@ -73,6 +80,8 @@ func _ready() -> void:
 	quit_game_button.pressed.connect(_on_quit_game_button_pressed)
 
 	close_journal_button.pressed.connect(_show_main_pause_panel)
+	tutorial_button.pressed.connect(_on_tutorial_button_pressed)
+	close_tutorial_button.pressed.connect(_on_close_tutorial_button_pressed)
 	close_options_button.pressed.connect(_show_main_pause_panel)
 
 	master_slider.value_changed.connect(_on_bus_volume_changed.bind(MASTER_BUS_NAME))
@@ -89,6 +98,11 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
+		if visible and tutorial_panel.visible:
+			_on_close_tutorial_button_pressed()
+			get_viewport().set_input_as_handled()
+			return
+
 		if visible and _is_any_subpanel_open():
 			_show_main_pause_panel()
 			get_viewport().set_input_as_handled()
@@ -104,13 +118,56 @@ func toggle_pause() -> void:
 	visible = new_pause_state
 	if new_pause_state:
 		save_feedback_label.hide()
+		_refresh_pause_metadata()
 		_show_main_pause_panel()
+		_play_open_animation()
+
+
+func _refresh_pause_metadata() -> void:
+	current_location_label.text = _resolve_current_location_name()
+	pause_footer_label.text = "Cera: %d · Recuerdos: %d" % [
+		WorldState.wax_remaining,
+		WorldState.recovered_memories.size()
+	]
+
+
+func _resolve_current_location_name() -> String:
+	var scene_path: String = WorldState.current_level
+	if get_tree().current_scene != null and not get_tree().current_scene.scene_file_path.is_empty():
+		scene_path = get_tree().current_scene.scene_file_path
+
+	if scene_path.contains("Prologue"):
+		return "Prólogo · Taller del Abuelo"
+	if scene_path.contains("Level1"):
+		return "Nivel 1 · La Plaza de Aldeavieja"
+	if scene_path.contains("Level2"):
+		return "Nivel 2 · La Antigua Estación"
+	if scene_path.contains("Level3"):
+		return "Nivel 3 · La Casa de los Recuerdos"
+	return "Crónicas de Aldeavieja"
+
+
+func _play_open_animation() -> void:
+	if _open_tween != null and _open_tween.is_valid():
+		_open_tween.kill()
+
+	main_pause_panel.reset_size()
+	main_pause_panel.pivot_offset = main_pause_panel.size * 0.5
+	main_pause_panel.scale = Vector2(0.95, 0.95)
+	main_pause_panel.modulate.a = 0.0
+
+	_open_tween = create_tween()
+	_open_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	_open_tween.set_parallel(true)
+	_open_tween.tween_property(main_pause_panel, "scale", Vector2.ONE, 0.18).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	_open_tween.tween_property(main_pause_panel, "modulate:a", 1.0, 0.18)
 
 
 func _is_any_subpanel_open() -> bool:
 	return (
 		journal_panel.visible
 		or options_panel.visible
+		or tutorial_panel.visible
 		or confirm_main_menu_panel.visible
 		or confirm_quit_panel.visible
 	)
@@ -119,8 +176,10 @@ func _is_any_subpanel_open() -> bool:
 func _show_main_pause_panel() -> void:
 	journal_panel.hide()
 	options_panel.hide()
+	tutorial_panel.hide()
 	confirm_main_menu_panel.hide()
 	confirm_quit_panel.hide()
+	_refresh_pause_metadata()
 	main_pause_panel.show()
 
 
@@ -139,6 +198,7 @@ func _on_save_button_pressed() -> void:
 	save_feedback_label.show()
 
 	_save_feedback_tween = create_tween()
+	_save_feedback_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	_save_feedback_tween.tween_interval(1.6)
 	_save_feedback_tween.tween_property(save_feedback_label, "modulate:a", 0.0, 0.5)
 	_save_feedback_tween.tween_callback(save_feedback_label.hide)
@@ -196,6 +256,17 @@ func _refresh_journal_display() -> void:
 func _on_options_button_pressed() -> void:
 	_sync_options_controls()
 	main_pause_panel.hide()
+	tutorial_panel.hide()
+	options_panel.show()
+
+
+func _on_tutorial_button_pressed() -> void:
+	options_panel.hide()
+	tutorial_panel.show()
+
+
+func _on_close_tutorial_button_pressed() -> void:
+	tutorial_panel.hide()
 	options_panel.show()
 
 

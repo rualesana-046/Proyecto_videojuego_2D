@@ -1,6 +1,7 @@
 class_name DialogueOverlay
 extends CanvasLayer
 
+@onready var dialogue_box: PanelContainer = $UIContainer/DialogueBox
 @onready var speaker_name_label: Label = $UIContainer/DialogueBox/MarginContainer/ContentLayout/SpeakerName
 @onready var dialogue_text_label: RichTextLabel = $UIContainer/DialogueBox/MarginContainer/ContentLayout/DialogueText
 @onready var options_container: VBoxContainer = $UIContainer/DialogueBox/MarginContainer/ContentLayout/OptionsContainer
@@ -31,10 +32,13 @@ func _on_dialogue_line_updated(speaker_name: String, text: String, options: Arra
 		WorldState.exploration_score += 1
 	_clear_options()
 	_create_option_buttons(options)
+	if dialogue_box != null:
+		dialogue_box.reset_size()
 
 
 func _clear_options() -> void:
 	for child: Node in options_container.get_children():
+		options_container.remove_child(child)
 		child.queue_free()
 
 

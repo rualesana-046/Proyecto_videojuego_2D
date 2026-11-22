@@ -1,8 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://p7m2n9x4q1r8w"]
+[gd_scene load_steps=5 format=3 uid="uid://p7m2n9x4q1r8w"]
 
 [ext_resource type="Theme" uid="uid://d2m8x4rar1p7v" path="res://scenes/ui/main_theme.tres" id="1_main_theme"]
 [ext_resource type="Script" path="res://scenes/ui/PauseMenu.gd" id="2_pause_menu_script"]
 [ext_resource type="FontFile" path="res://assets/fonts/Almendra-Bold.ttf" id="3_title_font"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_gold_sep"]
+color = Color(0.788235, 0.682353, 0.486275, 0.5)
+grow_begin = -6.0
+grow_end = -6.0
 
 [node name="PauseMenu" type="CanvasLayer"]
 process_mode = 3
@@ -16,27 +21,26 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_main_theme")
-color = Color(0, 0, 0, 0.62)
+color = Color(0.01, 0.04, 0.03, 0.72)
 
 [node name="MainPausePanel" type="PanelContainer" parent="Overlay"]
+custom_minimum_size = Vector2(390, 0)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -180.0
-offset_top = -210.0
-offset_right = 180.0
-offset_bottom = 210.0
+offset_left = -195.0
+offset_right = 195.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="Overlay/MainPausePanel"]
 layout_mode = 2
-theme_override_constants/margin_left = 20
+theme_override_constants/margin_left = 22
 theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 20
+theme_override_constants/margin_right = 22
 theme_override_constants/margin_bottom = 16
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Overlay/MainPausePanel/MarginContainer"]
@@ -48,9 +52,21 @@ alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(0.788235, 0.682353, 0.486275, 1)
 theme_override_fonts/font = ExtResource("3_title_font")
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 38
 text = "En pausa"
 horizontal_alignment = 1
+
+[node name="CurrentLocationLabel" type="Label" parent="Overlay/MainPausePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.788235, 0.682353, 0.486275, 0.85)
+theme_override_font_sizes/font_size = 14
+text = "Nivel 1 · La Plaza de Aldeavieja"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="HeaderSeparator" type="HSeparator" parent="Overlay/MainPausePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_gold_sep")
 
 [node name="SaveFeedbackLabel" type="Label" parent="Overlay/MainPausePanel/MarginContainer/VBoxContainer"]
 visible = false
@@ -64,37 +80,48 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 text = "Continuar"
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="SaveButton" type="Button" parent="Overlay/MainPausePanel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 text = "Guardar partida"
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="JournalButton" type="Button" parent="Overlay/MainPausePanel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 text = "Cuaderno de Cera"
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="OptionsButton" type="Button" parent="Overlay/MainPausePanel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 text = "Opciones"
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="MainMenuButton" type="Button" parent="Overlay/MainPausePanel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 text = "Volver al menú principal"
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="QuitGameButton" type="Button" parent="Overlay/MainPausePanel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 text = "Salir del juego"
-autowrap_mode = 2
+autowrap_mode = 3
+
+[node name="FooterSeparator" type="HSeparator" parent="Overlay/MainPausePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_gold_sep")
+
+[node name="PauseFooterLabel" type="Label" parent="Overlay/MainPausePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.788235, 0.682353, 0.486275, 0.85)
+theme_override_font_sizes/font_size = 13
+text = "Cera: 5 · Recuerdos: 0"
+horizontal_alignment = 1
 
 [node name="JournalPanel" type="PanelContainer" parent="Overlay"]
 visible = false
@@ -130,6 +157,10 @@ theme_override_font_sizes/font_size = 28
 text = "Cuaderno de Cera"
 horizontal_alignment = 1
 
+[node name="JournalSeparator" type="HSeparator" parent="Overlay/JournalPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_gold_sep")
+
 [node name="ScrollContainer" type="ScrollContainer" parent="Overlay/JournalPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -143,6 +174,7 @@ theme_override_colors/default_color = Color(0.929412, 0.913725, 0.847059, 1)
 bbcode_enabled = true
 fit_content = true
 scroll_active = false
+autowrap_mode = 3
 
 [node name="CloseJournalButton" type="Button" parent="Overlay/JournalPanel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(180, 38)
@@ -152,43 +184,46 @@ text = "Volver"
 
 [node name="OptionsPanel" type="PanelContainer" parent="Overlay"]
 visible = false
+custom_minimum_size = Vector2(450, 0)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -220.0
-offset_top = -170.0
-offset_right = 220.0
-offset_bottom = 170.0
+offset_left = -225.0
+offset_right = 225.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="Overlay/OptionsPanel"]
 layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 16
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 18
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Overlay/OptionsPanel/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 14
+theme_override_constants/separation = 12
 
 [node name="OptionsTitleLabel" type="Label" parent="Overlay/OptionsPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.788235, 0.682353, 0.486275, 1)
 theme_override_fonts/font = ExtResource("3_title_font")
-theme_override_font_sizes/font_size = 26
+theme_override_font_sizes/font_size = 28
 text = "Opciones"
 horizontal_alignment = 1
+
+[node name="OptionsSeparator" type="HSeparator" parent="Overlay/OptionsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_gold_sep")
 
 [node name="MasterRow" type="HBoxContainer" parent="Overlay/OptionsPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
 [node name="MasterLabel" type="Label" parent="Overlay/OptionsPanel/MarginContainer/VBoxContainer/MasterRow"]
-custom_minimum_size = Vector2(140, 0)
+custom_minimum_size = Vector2(145, 0)
 layout_mode = 2
 text = "Volumen General"
 
@@ -204,7 +239,7 @@ value = 1.0
 layout_mode = 2
 
 [node name="MusicLabel" type="Label" parent="Overlay/OptionsPanel/MarginContainer/VBoxContainer/MusicRow"]
-custom_minimum_size = Vector2(140, 0)
+custom_minimum_size = Vector2(145, 0)
 layout_mode = 2
 text = "Música"
 
@@ -220,7 +255,7 @@ value = 1.0
 layout_mode = 2
 
 [node name="SfxLabel" type="Label" parent="Overlay/OptionsPanel/MarginContainer/VBoxContainer/SfxRow"]
-custom_minimum_size = Vector2(140, 0)
+custom_minimum_size = Vector2(145, 0)
 layout_mode = 2
 text = "Efectos"
 
@@ -236,23 +271,89 @@ value = 1.0
 layout_mode = 2
 text = "Pantalla Completa"
 
+[node name="TutorialButton" type="Button" parent="Overlay/OptionsPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+text = "Cómo jugar (Tutorial)"
+autowrap_mode = 3
+
 [node name="CloseOptionsButton" type="Button" parent="Overlay/OptionsPanel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
 text = "Volver"
 
-[node name="ConfirmMainMenuPanel" type="PanelContainer" parent="Overlay"]
+[node name="TutorialPanel" type="PanelContainer" parent="Overlay"]
 visible = false
+custom_minimum_size = Vector2(680, 0)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -240.0
-offset_top = -120.0
-offset_right = 240.0
-offset_bottom = 120.0
+offset_left = -340.0
+offset_right = 340.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Overlay/TutorialPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 18
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Overlay/TutorialPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TutorialTitleLabel" type="Label" parent="Overlay/TutorialPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.788235, 0.682353, 0.486275, 1)
+theme_override_fonts/font = ExtResource("3_title_font")
+theme_override_font_sizes/font_size = 28
+text = "Cómo jugar (Tutorial)"
+horizontal_alignment = 1
+
+[node name="TutorialSeparator" type="HSeparator" parent="Overlay/TutorialPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_gold_sep")
+
+[node name="TutorialContentLabel" type="RichTextLabel" parent="Overlay/TutorialPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0.929412, 0.913725, 0.847059, 1)
+bbcode_enabled = true
+text = "[b][color=#C9AE7C]Controles básicos[/color][/b]
+• [b]WASD o Flechas:[/b] Moverse por los escenarios de Aldeavieja.
+• [b]E (o clic izquierdo):[/b] Hablar con personajes, examinar objetos y activar mecanismos.
+• [b]Q:[/b] Abrir o cerrar el [b]Cuaderno de Cera[/b] para revelar pistas ocultas y marcas doradas.
+• [b]Esc:[/b] Abrir el menú de pausa y consultar el diario del Cuaderno de Cera.
+
+[b][color=#C9AE7C]Cómo avanzar en cada capítulo[/color][/b]
+• [b]Nivel 1 (La Plaza):[/b] Habla con los habitantes, usa el Cuaderno ([b]Q[/b]) para hallar las 3 pistas y regresa con Lucía.
+• [b]Nivel 2 (La Estación):[/b] Consigue la llave de Inés, usa lámpara, caja y campana para distraer al Desvanecido (tienes 3 vidas) y activa la palanca del andén.
+• [b]Nivel 3 (La Casa):[/b] Recoge los 5 objetos de las habitaciones y las ceras, combínalos en la Mesa de Encuadernación para abrir el sótano y toma la decisión final."
+fit_content = true
+scroll_active = false
+autowrap_mode = 3
+
+[node name="CloseTutorialButton" type="Button" parent="Overlay/TutorialPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(220, 38)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Volver a Opciones"
+
+[node name="ConfirmMainMenuPanel" type="PanelContainer" parent="Overlay"]
+visible = false
+custom_minimum_size = Vector2(460, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -230.0
+offset_right = 230.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -265,7 +366,7 @@ theme_override_constants/margin_bottom = 18
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Overlay/ConfirmMainMenuPanel/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 14
+theme_override_constants/separation = 12
 alignment = 1
 
 [node name="ConfirmMainMenuLabel" type="Label" parent="Overlay/ConfirmMainMenuPanel/MarginContainer/VBoxContainer"]
@@ -273,32 +374,31 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.929412, 0.913725, 0.847059, 1)
 text = "¿Quieres volver al menú principal? Tu progreso guardado estará disponible cuando regreses."
 horizontal_alignment = 1
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="ConfirmMainMenuYesButton" type="Button" parent="Overlay/ConfirmMainMenuPanel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
 text = "Sí, volver al menú"
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="ConfirmMainMenuNoButton" type="Button" parent="Overlay/ConfirmMainMenuPanel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
 text = "No, continuar jugando"
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="ConfirmQuitPanel" type="PanelContainer" parent="Overlay"]
 visible = false
+custom_minimum_size = Vector2(460, 0)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -240.0
-offset_top = -120.0
-offset_right = 240.0
-offset_bottom = 120.0
+offset_left = -230.0
+offset_right = 230.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -311,7 +411,7 @@ theme_override_constants/margin_bottom = 18
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Overlay/ConfirmQuitPanel/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 14
+theme_override_constants/separation = 12
 alignment = 1
 
 [node name="ConfirmQuitLabel" type="Label" parent="Overlay/ConfirmQuitPanel/MarginContainer/VBoxContainer"]
@@ -319,16 +419,16 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.929412, 0.913725, 0.847059, 1)
 text = "¿Ya quieres dejar Aldeavieja por hoy? Tu aventura te estará esperando."
 horizontal_alignment = 1
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="ConfirmQuitYesButton" type="Button" parent="Overlay/ConfirmQuitPanel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
 text = "Salir del juego"
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="ConfirmQuitNoButton" type="Button" parent="Overlay/ConfirmQuitPanel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
 text = "Seguir jugando"
-autowrap_mode = 2
+autowrap_mode = 3

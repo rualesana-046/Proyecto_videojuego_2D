@@ -52,16 +52,17 @@ var _is_ready_to_transition: bool = false
 @onready var examine_prompt: Node2D = $NotebookTable/ExaminePrompt
 
 @onready var prologue_overlay: CanvasLayer = $PrologueOverlay
-@onready var narrative_text_label: RichTextLabel = $PrologueOverlay/Dimmer/ProloguePanel/MarginContainer/VBoxContainer/NarrativeTextLabel
-@onready var notebook_page_container: PanelContainer = $PrologueOverlay/Dimmer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer
-@onready var choices_container: VBoxContainer = $PrologueOverlay/Dimmer/ProloguePanel/MarginContainer/VBoxContainer/ChoicesContainer
-@onready var continue_button: Button = $PrologueOverlay/Dimmer/ProloguePanel/MarginContainer/VBoxContainer/ContinueButton
+@onready var prologue_panel: PanelContainer = $PrologueOverlay/Dimmer/CenterContainer/ProloguePanel
+@onready var narrative_text_label: RichTextLabel = $PrologueOverlay/Dimmer/CenterContainer/ProloguePanel/MarginContainer/VBoxContainer/NarrativeTextLabel
+@onready var notebook_page_container: PanelContainer = $PrologueOverlay/Dimmer/CenterContainer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer
+@onready var choices_container: VBoxContainer = $PrologueOverlay/Dimmer/CenterContainer/ProloguePanel/MarginContainer/VBoxContainer/ChoicesContainer
+@onready var continue_button: Button = $PrologueOverlay/Dimmer/CenterContainer/ProloguePanel/MarginContainer/VBoxContainer/ContinueButton
 
 @onready var silhouette_nodes: Dictionary = {
-	"girl": $PrologueOverlay/Dimmer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteGirl,
-	"elder": $PrologueOverlay/Dimmer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteElder,
-	"distant": $PrologueOverlay/Dimmer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteDistant,
-	"self": $PrologueOverlay/Dimmer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteSelf
+	"girl": $PrologueOverlay/Dimmer/CenterContainer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteGirl,
+	"elder": $PrologueOverlay/Dimmer/CenterContainer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteElder,
+	"distant": $PrologueOverlay/Dimmer/CenterContainer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteDistant,
+	"self": $PrologueOverlay/Dimmer/CenterContainer/ProloguePanel/MarginContainer/VBoxContainer/NotebookPageContainer/SilhouettesRow/SilhouetteSelf
 }
 
 
@@ -127,6 +128,7 @@ func _show_current_page() -> void:
 		notebook_page_container.hide()
 		choices_container.hide()
 		continue_button.show()
+		prologue_panel.reset_size()
 	else:
 		_show_silhouette_choice_step()
 
@@ -153,6 +155,7 @@ func _show_silhouette_choice_step() -> void:
 			card.modulate.a = 1.0
 
 	for child: Node in choices_container.get_children():
+		choices_container.remove_child(child)
 		child.queue_free()
 
 	for choice_data: Dictionary in SILHOUETTE_CHOICES:
@@ -163,6 +166,8 @@ func _show_silhouette_choice_step() -> void:
 		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		button.pressed.connect(_on_silhouette_selected.bind(choice_data))
 		choices_container.add_child(button)
+
+	prologue_panel.reset_size()
 
 
 func _on_silhouette_selected(choice_data: Dictionary) -> void:
@@ -176,6 +181,7 @@ func _on_silhouette_selected(choice_data: Dictionary) -> void:
 	WorldState.narrative_profile = AIProfiler.get_dominant_profile()
 
 	choices_container.hide()
+	prologue_panel.reset_size()
 
 	var fade_tween: Tween = create_tween().set_parallel(true)
 	for key: Variant in silhouette_nodes.keys():
@@ -197,3 +203,4 @@ func _on_silhouettes_fade_completed() -> void:
 	_is_ready_to_transition = true
 	continue_button.text = "Salir a Aldeavieja"
 	continue_button.show()
+	prologue_panel.reset_size()
