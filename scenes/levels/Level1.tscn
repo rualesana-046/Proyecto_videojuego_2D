@@ -51,12 +51,16 @@ position = Vector2(38, -20)
 dialogue_id = "elias_inicio"
 is_losing_memory = true
 npc_texture = ExtResource("10_elias_tex")
+completed_state_key = "lucia_tomas_reconstructed"
+completed_dialogue_id = "elias_post_reconstruccion"
 
 [node name="NPC_Marta" parent="." instance=ExtResource("4_npc_scene")]
 position = Vector2(-136, -20)
 dialogue_id = "marta_inicio"
 is_losing_memory = false
 npc_texture = ExtResource("11_marta_tex")
+completed_state_key = "lucia_tomas_reconstructed"
+completed_dialogue_id = "marta_post_reconstruccion"
 
 [node name="InspectableClock" parent="." instance=ExtResource("8_inspectable_scene")]
 position = Vector2(40, -36)

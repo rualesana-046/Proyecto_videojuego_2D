@@ -6,23 +6,39 @@
 			{
 				"text": "Tranquila, Lucía. A veces el corazón recuerda el afecto antes que el rostro.",
 				"next_id": "lucia_bicicleta_nostalgia",
-				"effect": ["nostalgia", 1]
+				"effect": ["nostalgia", 1],
+				"set_state": {
+					"talked_lucia": true,
+					"lucia_choice": "nostalgia"
+				}
 			},
 			{
 				"text": "¿Recuerdas algún lugar u objeto que estuviera con ustedes en esas tardes?",
 				"next_id": "lucia_bicicleta_curiosity",
-				"effect": ["curiosity", 1]
+				"effect": ["curiosity", 1],
+				"set_state": {
+					"talked_lucia": true,
+					"lucia_choice": "curiosity"
+				}
 			},
 			{
 				"text": "Concentrémonos en lo que sí sabes. Si reunimos pistas en la plaza, lo encontraremos.",
 				"next_id": "lucia_bicicleta_pragmatism",
-				"effect": ["pragmatism", 1]
+				"effect": ["pragmatism", 1],
+				"set_state": {
+					"talked_lucia": true,
+					"lucia_choice": "pragmatism"
+				}
 			}
 		]
 	},
 	"lucia_bicicleta_nostalgia": {
 		"speaker": "Lucía",
 		"text": "Sí... cuando cierro los ojos siento el viento en la cara y unas manos firmes sujetando el asiento para que no cayera. Me enseñó a montar bicicleta cerca del antiguo puente del norte, y creo que nos tomaron una fotografía junto a la panadería.",
+		"set_state": {
+			"talked_lucia": true,
+			"lucia_choice": "nostalgia"
+		},
 		"options": [
 			{
 				"text": "Buscaré esa fotografía y las huellas en el puente para devolverte su recuerdo.",
@@ -44,6 +60,10 @@
 	"lucia_bicicleta_curiosity": {
 		"speaker": "Lucía",
 		"text": "Recuerdo el sonido de una cadena y dos ruedas girando sobre las piedras del antiguo puente del norte. Él me enseñaba a montar bicicleta... También había una fotografía nuestra junto a la panadería, y Don Elías solía saludarnos desde el reloj.",
+		"set_state": {
+			"talked_lucia": true,
+			"lucia_choice": "curiosity"
+		},
 		"options": [
 			{
 				"text": "No dejaré que un recuerdo tan hermoso se borre de Aldeavieja.",
@@ -65,6 +85,10 @@
 	"lucia_bicicleta_pragmatism": {
 		"speaker": "Lucía",
 		"text": "Tienes razón. Sé tres cosas con certeza: íbamos al antiguo puente del norte donde aprendí a montar bicicleta, había una fotografía nuestra en la pared de la panadería, y solíamos pasar por la floristería de Marta.",
+		"set_state": {
+			"talked_lucia": true,
+			"lucia_choice": "pragmatism"
+		},
 		"options": [
 			{
 				"text": "Cada uno de esos lugares guarda una parte del cariño que compartían.",
@@ -83,30 +107,76 @@
 			}
 		]
 	},
+	"lucia_seguimiento": {
+		"speaker": "Lucía",
+		"text": "Sigo intentando recordar quién me acompañaba por las tardes... ¿Has podido averiguar algo con Don Elías junto al reloj o con Marta en la floristería?",
+		"options": [
+			{
+				"text": "Sigo buscando pistas en la plaza. Enseguida vuelvo.",
+				"next_id": ""
+			}
+		]
+	},
+	"lucia_seguimiento_tomas": {
+		"speaker": "Lucía",
+		"text": "¿Tomás...? Cuando dices ese nombre, el corazón me late más rápido. Sé que él me cuidaba, pero aún necesito recordar los momentos que vivimos juntos en la plaza...",
+		"options": [
+			{
+				"text": "Encontraré las pistas necesarias para que recuerdes todo.",
+				"next_id": ""
+			}
+		]
+	},
+	"lucia_seguimiento_flor": {
+		"speaker": "Lucía",
+		"text": "¡Esa flor de papel...! La reconozco... Alguien la dobló con mucha paciencia para mí. Siento que ya casi puedo ver su rostro... ¿Encontraste también la fotografía en la panadería o la inscripción del puente?",
+		"options": [
+			{
+				"text": "Ya casi lo tenemos. Enseguida vuelvo con las pistas que faltan.",
+				"next_id": ""
+			}
+		]
+	},
 	"elias_inicio": {
 		"speaker": "Don Elías",
 		"text": "Mire usted este reloj... Se detuvo justo cuando empecé a sentir que faltaba alguien en la plaza. Todas las tardes veía pasar a la pequeña Lucía riendo junto a un muchacho, pero hoy su nombre me baila en la punta de la lengua...",
 		"options": [
 			{
 				"text": "Los buenos momentos de la plaza nunca se pierden del todo, Don Elías.",
-				"next_id": "elias_recuerda_tomas",
-				"effect": ["nostalgia", 1]
+				"next_id": "elias_recuerda_tomas_nostalgia",
+				"effect": ["nostalgia", 1],
+				"set_state": {
+					"talked_elias": true,
+					"elias_choice": "nostalgia"
+				}
 			},
 			{
 				"text": "Intente recordar algún detalle de su aspecto o hacia dónde caminaban.",
-				"next_id": "elias_recuerda_tomas",
-				"effect": ["curiosity", 1]
+				"next_id": "elias_recuerda_tomas_curiosity",
+				"effect": ["curiosity", 1],
+				"set_state": {
+					"talked_elias": true,
+					"elias_choice": "curiosity"
+				}
 			},
 			{
 				"text": "Piense en sus costumbres diarias; cualquier dato concreto nos ayudará.",
-				"next_id": "elias_recuerda_tomas",
-				"effect": ["pragmatism", 1]
+				"next_id": "elias_recuerda_tomas_pragmatism",
+				"effect": ["pragmatism", 1],
+				"set_state": {
+					"talked_elias": true,
+					"elias_choice": "pragmatism"
+				}
 			}
 		]
 	},
-	"elias_recuerda_tomas": {
+	"elias_recuerda_tomas_nostalgia": {
 		"speaker": "Don Elías",
-		"text": "¡Espere! ¡Tomás! Así se llamaba el muchacho: Tomás, el joven que cuidaba de las tardes de Lucía. Siempre llevaba en el bolsillo del abrigo una pequeña flor de papel doblada que encargaba en la floristería de Marta.",
+		"text": "¡Espere! ¡Tomás! Así se llamaba el muchacho: Tomás, el joven que cuidaba de las tardes de Lucía con tanta devoción. Siempre llevaba en el bolsillo del abrigo una pequeña flor de papel doblada que encargaba en la floristería de Marta.",
+		"set_state": {
+			"talked_elias": true,
+			"elias_choice": "nostalgia"
+		},
 		"options": [
 			{
 				"text": "«Tomás»... Qué alivio recuperar su nombre. Hablaré con Marta sobre esa flor.",
@@ -125,31 +195,151 @@
 			}
 		]
 	},
+	"elias_recuerda_tomas_curiosity": {
+		"speaker": "Don Elías",
+		"text": "¡Espere! ¡Tomás! Así se llamaba el muchacho: Tomás, el joven que cuidaba de las tardes de Lucía. Recuerdo que siempre llevaba en el bolsillo del abrigo una pequeña flor de papel doblada... Marta, en la floristería, seguro sabe de qué se trataba.",
+		"set_state": {
+			"talked_elias": true,
+			"elias_choice": "curiosity"
+		},
+		"options": [
+			{
+				"text": "«Tomás»... Qué alivio recuperar su nombre. Hablaré con Marta sobre esa flor.",
+				"next_id": "",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "¿Por qué una flor de papel doblada? Iré a preguntarle a Marta en la floristería.",
+				"next_id": "",
+				"effect": ["curiosity", 1]
+			},
+			{
+				"text": "Gracias, Don Elías. Con el nombre de Tomás iré directo a la floristería.",
+				"next_id": "",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"elias_recuerda_tomas_pragmatism": {
+		"speaker": "Don Elías",
+		"text": "¡Espere! ¡Tomás! Así se llamaba el muchacho: Tomás. Siempre llevaba en el bolsillo del abrigo una pequeña flor de papel doblada que encargaba en la floristería de Marta, al oeste de la plaza.",
+		"set_state": {
+			"talked_elias": true,
+			"elias_choice": "pragmatism"
+		},
+		"options": [
+			{
+				"text": "«Tomás»... Qué alivio recuperar su nombre. Hablaré con Marta sobre esa flor.",
+				"next_id": "",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "¿Por qué una flor de papel doblada? Iré a preguntarle a Marta en la floristería.",
+				"next_id": "",
+				"effect": ["curiosity", 1]
+			},
+			{
+				"text": "Gracias, Don Elías. Con el nombre de Tomás iré directo a la floristería.",
+				"next_id": "",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"elias_recuerda_tomas": {
+		"speaker": "Don Elías",
+		"text": "¡Espere! ¡Tomás! Así se llamaba el muchacho: Tomás, el joven que cuidaba de las tardes de Lucía. Siempre llevaba en el bolsillo del abrigo una pequeña flor de papel doblada que encargaba en la floristería de Marta.",
+		"set_state": {
+			"talked_elias": true
+		},
+		"options": [
+			{
+				"text": "«Tomás»... Qué alivio recuperar su nombre. Hablaré con Marta sobre esa flor.",
+				"next_id": "",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "¿Por qué una flor de papel doblada? Iré a preguntarle a Marta en la floristería.",
+				"next_id": "",
+				"effect": ["curiosity", 1]
+			},
+			{
+				"text": "Gracias, Don Elías. Con el nombre de Tomás iré directo a la floristería.",
+				"next_id": "",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"elias_seguimiento": {
+		"speaker": "Don Elías",
+		"text": "El nombre de Tomás trajo algo de luz a mi memoria, pero este viejo reloj sigue detenido. Marta, en la floristería al oeste, solía preparar encargos para él... Deberías hablar con ella.",
+		"options": [
+			{
+				"text": "Hablaré con Marta de inmediato.",
+				"next_id": ""
+			}
+		]
+	},
+	"elias_con_flor": {
+		"speaker": "Don Elías",
+		"text": "¡Ah, esa flor de papel doblada! Es exactamente la que Tomás llevaba siempre en el abrigo. Decía que una flor de papel nunca se marchita, igual que una verdadera promesa. Llévasela a Lucía; le devolverá la memoria.",
+		"options": [
+			{
+				"text": "Gracias por confirmarlo, Don Elías. Se la llevaré.",
+				"next_id": ""
+			}
+		]
+	},
+	"elias_post_reconstruccion": {
+		"speaker": "Don Elías",
+		"text": "Ver sonreír de nuevo a la pequeña Lucía ha hecho que este reloj casi vuelva a sonar. Ve con cuidado hacia el puente del norte; las historias olvidadas del pueblo necesitan que alguien las proteja.",
+		"options": [
+			{
+				"text": "Gracias, Don Elías. Cuidaré sus historias.",
+				"next_id": ""
+			}
+		]
+	},
 	"marta_inicio": {
 		"speaker": "Marta",
 		"text": "Bienvenido a la floristería. Hoy abrí mi libreta de encargos y encontré una página casi en blanco... Solo quedaba escrita una nota al margen sobre enseñar a alguien a perder el miedo, y junto a la libreta hallé esta flor de papel doblada.",
 		"options": [
 			{
 				"text": "Qué detalle tan tierno; quien la dobló quería que perdurara más que las flores frescas.",
-				"next_id": "marta_entrega_flor",
-				"effect": ["nostalgia", 1]
+				"next_id": "marta_entrega_flor_nostalgia",
+				"effect": ["nostalgia", 1],
+				"set_state": {
+					"talked_marta": true,
+					"marta_choice": "nostalgia"
+				}
 			},
 			{
 				"text": "Don Elías recordó que Tomás llevaba siempre una flor de papel así en el bolsillo.",
-				"next_id": "marta_entrega_flor",
-				"effect": ["curiosity", 1]
+				"next_id": "marta_entrega_flor_curiosity",
+				"effect": ["curiosity", 1],
+				"set_state": {
+					"talked_marta": true,
+					"marta_choice": "curiosity"
+				}
 			},
 			{
 				"text": "Esa flor es la pieza que me faltaba. ¿Puedo llevársela a Lucía?",
-				"next_id": "marta_entrega_flor",
-				"effect": ["pragmatism", 1]
+				"next_id": "marta_entrega_flor_pragmatism",
+				"effect": ["pragmatism", 1],
+				"set_state": {
+					"talked_marta": true,
+					"marta_choice": "pragmatism"
+				}
 			}
 		]
 	},
-	"marta_entrega_flor": {
+	"marta_entrega_flor_nostalgia": {
 		"speaker": "Marta",
 		"text": "¡Claro, Tomás! Él mismo doblaba estas flores de papel para regalárselas a Lucía cada vez que lograba cruzar el antiguo puente sin caerse de la bicicleta. Llévate la flor de papel; seguro ayudará a tu Cuaderno de Cera.",
 		"grant_clue": "clue_paper_flower",
+		"set_state": {
+			"talked_marta": true,
+			"marta_choice": "nostalgia"
+		},
 		"options": [
 			{
 				"text": "Gracias, Marta. Con esto el recuerdo de Tomás volverá a florecer.",
@@ -160,6 +350,98 @@
 				"text": "Revisaré las pistas de la plaza para reconstruir la escena junto a Lucía.",
 				"next_id": "",
 				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"marta_entrega_flor_curiosity": {
+		"speaker": "Marta",
+		"text": "¡Claro, Tomás! Él mismo doblaba estas flores de papel para regalárselas a Lucía cada vez que lograba cruzar el antiguo puente sin caerse de la bicicleta. Llévate la flor de papel; seguro ayudará a tu Cuaderno de Cera.",
+		"grant_clue": "clue_paper_flower",
+		"set_state": {
+			"talked_marta": true,
+			"marta_choice": "curiosity"
+		},
+		"options": [
+			{
+				"text": "Gracias, Marta. Con esto el recuerdo de Tomás volverá a florecer.",
+				"next_id": "",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "Revisaré las pistas de la plaza para reconstruir la escena junto a Lucía.",
+				"next_id": "",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"marta_entrega_flor_pragmatism": {
+		"speaker": "Marta",
+		"text": "¡Claro, Tomás! Él mismo doblaba estas flores de papel para regalárselas a Lucía cada vez que lograba cruzar el antiguo puente sin caerse de la bicicleta. Llévate la flor de papel; seguro ayudará a tu Cuaderno de Cera.",
+		"grant_clue": "clue_paper_flower",
+		"set_state": {
+			"talked_marta": true,
+			"marta_choice": "pragmatism"
+		},
+		"options": [
+			{
+				"text": "Gracias, Marta. Con esto el recuerdo de Tomás volverá a florecer.",
+				"next_id": "",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "Revisaré las pistas de la plaza para reconstruir la escena junto a Lucía.",
+				"next_id": "",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"marta_entrega_flor": {
+		"speaker": "Marta",
+		"text": "¡Claro, Tomás! Él mismo doblaba estas flores de papel para regalárselas a Lucía cada vez que lograba cruzar el antiguo puente sin caerse de la bicicleta. Llévate la flor de papel; seguro ayudará a tu Cuaderno de Cera.",
+		"grant_clue": "clue_paper_flower",
+		"set_state": {
+			"talked_marta": true
+		},
+		"options": [
+			{
+				"text": "Gracias, Marta. Con esto el recuerdo de Tomás volverá a florecer.",
+				"next_id": "",
+				"effect": ["nostalgia", 1]
+			},
+			{
+				"text": "Revisaré las pistas de la plaza para reconstruir la escena junto a Lucía.",
+				"next_id": "",
+				"effect": ["pragmatism", 1]
+			}
+		]
+	},
+	"marta_seguimiento": {
+		"speaker": "Marta",
+		"text": "Esa flor de papel pertenece a Lucía y a Tomás. Busca la fotografía en la pared este de la panadería y revisa la barandilla de piedra del puente norte; ambas conservan la memoria de sus paseos.",
+		"options": [
+			{
+				"text": "Iré a inspeccionar esos lugares con el Cuaderno.",
+				"next_id": ""
+			}
+		]
+	},
+	"marta_seguimiento_tomas": {
+		"speaker": "Marta",
+		"text": "Así que Don Elías recordó a Tomás... Me alegra tanto. Con la flor de papel en tus manos, solo necesitas examinar la fotografía en la panadería y la inscripción en el puente norte para reconstruir su recuerdo junto a Lucía.",
+		"options": [
+			{
+				"text": "Gracias, Marta. Iré por las pistas que faltan.",
+				"next_id": ""
+			}
+		]
+	},
+	"marta_post_reconstruccion": {
+		"speaker": "Marta",
+		"text": "He visto a Lucía frente a la fuente, sonriendo con el recuerdo de Tomás en su corazón. Gracias por cuidar las memorias de nuestra gente. Que las flores acompañen tus pasos hacia la estación.",
+		"options": [
+			{
+				"text": "Hasta pronto, Marta.",
+				"next_id": ""
 			}
 		]
 	},

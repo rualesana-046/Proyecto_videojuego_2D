@@ -52,17 +52,23 @@ func _create_option_buttons(options: Array) -> void:
 		var next_id: String = str(option_data.get("next_id", ""))
 		var raw_effect: Variant = option_data.get("effect", [])
 		var effect: Array = raw_effect if raw_effect is Array else []
+		var raw_set_state: Variant = option_data.get("set_state", {})
+		var option_set_state: Dictionary = raw_set_state if raw_set_state is Dictionary else {}
 
 		var button: Button = Button.new()
 		button.text = option_text
 		button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		button.pressed.connect(_on_option_selected.bind(next_id, effect))
+		button.pressed.connect(_on_option_selected.bind(next_id, effect, option_set_state))
 		options_container.add_child(button)
 
 
-func _on_option_selected(next_id: String, effect: Array = []) -> void:
+func _on_option_selected(next_id: String, effect: Array = [], option_set_state: Dictionary = {}) -> void:
+	if not option_set_state.is_empty():
+		for state_key: Variant in option_set_state.keys():
+			WorldState.state[str(state_key)] = option_set_state[state_key]
+
 	if effect.size() >= 2:
 		var trait_name: String = str(effect[0])
 		var amount: int = int(effect[1])
