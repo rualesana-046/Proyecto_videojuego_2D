@@ -20,6 +20,10 @@ func _ready() -> void:
 		notification_panel.modulate.a = 0.0
 
 	WorldState.status_notification_requested.connect(_on_status_notification_requested)
+	DialogueManager.dialogue_started.connect(func() -> void:
+		if notification_panel != null:
+			notification_panel.hide()
+	)
 	DialogueManager.dialogue_ended.connect(_update_npc_dialogues)
 	DialogueManager.dialogue_ended.connect(_update_objective_hud)
 	WorldState.clue_registered.connect(_on_clue_registered)
@@ -122,7 +126,7 @@ func _update_objective_hud() -> void:
 
 
 func _on_status_notification_requested(message: String) -> void:
-	if notification_panel == null or notification_label == null:
+	if notification_panel == null or notification_label == null or DialogueManager.is_dialogue_active:
 		return
 
 	if _notification_tween != null and _notification_tween.is_valid():

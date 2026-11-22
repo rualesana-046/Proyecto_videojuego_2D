@@ -73,6 +73,10 @@ func _ready() -> void:
 	_connect_interactive_area(clock_tower_box_area, "_on_tower_box_near")
 
 	DialogueManager.dialogue_started.connect(_update_all_prompts)
+	DialogueManager.dialogue_started.connect(func() -> void:
+		if notification_panel != null:
+			notification_panel.hide()
+	)
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
 	WorldState.status_notification_requested.connect(_show_notification)
 	WorldState.clue_registered.connect(func(_c: String, _t: int) -> void: _update_objective_hud())
@@ -383,7 +387,7 @@ func _restart_level2_local_state() -> void:
 
 
 func _show_notification(message: String) -> void:
-	if notification_panel == null or notification_label == null:
+	if notification_panel == null or notification_label == null or DialogueManager.is_dialogue_active:
 		return
 
 	if _notification_tween != null and _notification_tween.is_valid():

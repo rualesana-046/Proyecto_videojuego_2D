@@ -17,6 +17,7 @@ signal object_inspected(inspected_id: String, used_wax: bool)
 
 var is_player_near: bool = false
 var _is_collected_hidden: bool = false
+var _sparkle_tween: Tween = null
 
 @onready var object_sprite: Sprite2D = $ObjectSprite
 @onready var wax_sparkle: Sprite2D = $WaxSparkle
@@ -35,13 +36,20 @@ func _ready() -> void:
 		object_sprite.texture = object_texture
 		object_sprite.show()
 
-	if hide_after_collect and not grants_clue_id.is_empty() and WorldState.clues_found.has(grants_clue_id):
-		_hide_collected_item()
-
 	if wax_sparkle != null:
-		var spark_tween: Tween = create_tween().set_loops()
-		spark_tween.tween_property(wax_sparkle, "modulate:a", 0.45, 0.75)
-		spark_tween.tween_property(wax_sparkle, "modulate:a", 1.0, 0.75)
+		_sparkle_tween = create_tween().set_loops()
+		_sparkle_tween.tween_property(wax_sparkle, "modulate:a", 0.45, 0.75)
+		_sparkle_tween.tween_property(wax_sparkle, "modulate:a", 1.0, 0.75)
+
+	var is_collected: bool = not grants_clue_id.is_empty() and WorldState.clues_found.has(grants_clue_id)
+	if is_collected:
+		if _sparkle_tween != null and _sparkle_tween.is_valid():
+			_sparkle_tween.kill()
+		if wax_sparkle != null:
+			wax_sparkle.hide()
+			wax_sparkle.visible = false
+		if hide_after_collect:
+			_hide_collected_item()
 
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
@@ -75,6 +83,11 @@ func _inspect() -> void:
 
 	if not grants_clue_id.is_empty():
 		WorldState.register_clue(grants_clue_id)
+		if _sparkle_tween != null and _sparkle_tween.is_valid():
+			_sparkle_tween.kill()
+		if wax_sparkle != null:
+			wax_sparkle.hide()
+			wax_sparkle.visible = false
 
 	if hide_after_collect:
 		_hide_collected_item()
@@ -93,10 +106,15 @@ func _inspect() -> void:
 func _hide_collected_item() -> void:
 	_is_collected_hidden = true
 	is_player_near = false
+	monitoring = false
+	monitorable = false
+	if _sparkle_tween != null and _sparkle_tween.is_valid():
+		_sparkle_tween.kill()
 	if object_sprite != null:
 		object_sprite.hide()
 	if wax_sparkle != null:
 		wax_sparkle.hide()
+		wax_sparkle.visible = false
 	if interact_prompt != null:
 		interact_prompt.hide()
 
@@ -118,12 +136,28 @@ func _on_body_exited(body: Node2D) -> void:
 func _on_notebook_state_changed(is_active: bool) -> void:
 	if _is_collected_hidden:
 		return
+	var is_collected: bool = not grants_clue_id.is_empty() and WorldState.clues_found.has(grants_clue_id)
+	if is_collected:
+		if wax_sparkle != null:
+			wax_sparkle.hide()
+			wax_sparkle.visible = false
+		return
+
 	if wax_sparkle != null:
 		var has_hidden_detail: bool = not wax_reveal_text.is_empty() or not grants_clue_id.is_empty()
 		wax_sparkle.visible = always_show_sparkle or (is_active and has_hidden_detail)
 
 
 func _on_dialogue_state_changed() -> void:
+	var is_collected: bool = not grants_clue_id.is_empty() and WorldState.clues_found.has(grants_clue_id)
+	if is_collected:
+		if _sparkle_tween != null and _sparkle_tween.is_valid():
+			_sparkle_tween.kill()
+		if wax_sparkle != null:
+			wax_sparkle.hide()
+			wax_sparkle.visible = false
+		if hide_after_collect:
+			_hide_collected_item()
 	_update_interact_prompt()
 
 

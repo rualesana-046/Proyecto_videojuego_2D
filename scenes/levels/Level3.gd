@@ -3,7 +3,7 @@ extends Node2D
 
 const ENDING_SCREEN_PATH: String = "res://scenes/ui/EndingScreen.tscn"
 const INITIAL_TIME_UNITS: int = 12
-const INITIAL_MIN_WAX: int = 4
+const INITIAL_MIN_WAX: int = 3
 const TOTAL_REQUIRED_MEMORIES: int = 3
 
 const HOUSE_ITEM_NAMES: Dictionary = {
@@ -37,6 +37,7 @@ var _notification_tween: Tween = null
 @onready var wax_label: Label = $HUD/TopBarPanel/MarginContainer/VBoxContainer/StatsRow/WaxLabel
 @onready var memories_label: Label = $HUD/TopBarPanel/MarginContainer/VBoxContainer/StatsRow/MemoriesLabel
 @onready var items_label: Label = $HUD/TopBarPanel/MarginContainer/VBoxContainer/ItemsLabel
+@onready var objective_label: Label = $HUD/TopBarPanel/MarginContainer/VBoxContainer/ObjectiveLabel
 
 @onready var memory_craft_modal: ColorRect = $HUD/MemoryCraftModal
 @onready var craft_status_label: Label = $HUD/MemoryCraftModal/MemoryCraftPanel/MarginContainer/VBoxContainer/CraftStatusLabel
@@ -45,16 +46,13 @@ var _notification_tween: Tween = null
 @onready var craft_memory_3_button: Button = $HUD/MemoryCraftModal/MemoryCraftPanel/MarginContainer/VBoxContainer/CraftMemory3Button
 @onready var close_craft_button: Button = $HUD/MemoryCraftModal/MemoryCraftPanel/MarginContainer/VBoxContainer/CloseCraftButton
 
-@onready var objective_panel: PanelContainer = $HUD/ObjectivePanel
-@onready var objective_label: Label = $HUD/ObjectivePanel/MarginContainer/ObjectiveLabel
 @onready var notification_panel: PanelContainer = $HUD/NotificationPanel
 @onready var notification_label: Label = $HUD/NotificationPanel/MarginContainer/NotificationLabel
 
 
 func _ready() -> void:
 	WorldState.current_level = "res://scenes/levels/Level3.tscn"
-	if WorldState.wax_remaining < INITIAL_MIN_WAX:
-		WorldState.wax_remaining = INITIAL_MIN_WAX
+	WorldState.wax_remaining = maxi(WorldState.wax_remaining, INITIAL_MIN_WAX)
 
 	if notification_panel != null:
 		notification_panel.hide()
@@ -74,15 +72,22 @@ func _ready() -> void:
 		if child is InspectableObject:
 			var inspectable: InspectableObject = child as InspectableObject
 			inspectable.object_inspected.connect(_on_house_object_inspected)
-			if not inspectable.grants_clue_id.is_empty():
+			var is_already_collected: bool = (
+				not inspectable.grants_clue_id.is_empty()
+				and WorldState.clues_found.has(inspectable.grants_clue_id)
+			)
+			if is_already_collected:
+				inspectable._hide_collected_item()
+			elif not inspectable.grants_clue_id.is_empty():
 				inspectable.always_show_sparkle = true
-				if inspectable.wax_sparkle != null and not inspectable._is_collected_hidden:
+				if inspectable.wax_sparkle != null:
 					inspectable.wax_sparkle.show()
-				var col_shape: CollisionShape2D = inspectable.get_node_or_null("CollisionShape2D")
-				if col_shape != null:
-					var new_shape: CircleShape2D = CircleShape2D.new()
-					new_shape.radius = 28.0
-					col_shape.shape = new_shape
+
+			var col_shape: CollisionShape2D = inspectable.get_node_or_null("CollisionShape2D")
+			if col_shape != null:
+				var new_shape: CircleShape2D = CircleShape2D.new()
+				new_shape.radius = 28.0
+				col_shape.shape = new_shape
 
 	if WorldState.inspected_objects.has("house_item_photo_elena") and not WorldState.clues_found.has("item_photo"):
 		WorldState.register_clue("item_photo")
@@ -94,10 +99,16 @@ func _ready() -> void:
 
 	WorldState.wax_fragment_collected.connect(_on_wax_fragment_collected)
 	WorldState.clue_registered.connect(_on_clue_registered)
-	DialogueManager.dialogue_started.connect(_update_prompts)
+	DialogueManager.dialogue_started.connect(_on_dialogue_started)
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
 
 	_update_hud()
+	_update_prompts()
+
+
+func _on_dialogue_started() -> void:
+	if notification_panel != null:
+		notification_panel.hide()
 	_update_prompts()
 
 
@@ -120,11 +131,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 
 
-func _on_house_object_inspected(inspected_id: String, used_wax: bool) -> void:
+func _on_house_object_inspected(inspected_id: String, _used_wax: bool) -> void:
 	if inspected_id == "house_item_photo_elena" or inspected_id == "item_photo":
 		WorldState.register_clue("item_photo")
-	if used_wax and WorldState.wax_remaining > 0:
-		WorldState.wax_remaining -= 1
 	_consume_time_unit(1)
 	_update_hud()
 	if memory_craft_modal != null and memory_craft_modal.visible:
@@ -296,6 +305,12 @@ func _on_clue_registered(_clue_id: String, _total_clues: int) -> void:
 
 
 func _on_dialogue_ended() -> void:
+	for child: Node in get_children():
+		if child is InspectableObject:
+			var obj: InspectableObject = child as InspectableObject
+			if not obj.grants_clue_id.is_empty() and WorldState.clues_found.has(obj.grants_clue_id):
+				obj._hide_collected_item()
+
 	_update_prompts()
 	_update_hud()
 
@@ -341,7 +356,7 @@ func _update_objective_hud() -> void:
 
 
 func _show_notification(message: String) -> void:
-	if notification_panel == null or notification_label == null:
+	if notification_panel == null or notification_label == null or DialogueManager.is_dialogue_active:
 		return
 
 	if _notification_tween != null and _notification_tween.is_valid():
