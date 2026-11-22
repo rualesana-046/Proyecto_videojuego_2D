@@ -19,12 +19,17 @@ run/main_scene="res://scenes/ui/MainMenu.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="res://default_bus_layout.tres"
+
 [autoload]
 
 GameManager="*res://autoloads/GameManager.gd"
 WorldState="*res://autoloads/WorldState.gd"
 DialogueManager="*res://autoloads/DialogueManager.gd"
 AIProfiler="*res://autoloads/AIProfiler.gd"
+AudioManager="*res://autoloads/AudioManager.gd"
 
 [display]
 

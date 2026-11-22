@@ -168,6 +168,7 @@ func _set_barricade_enabled(enabled: bool) -> void:
 
 
 func _interact_station_bell() -> void:
+	AudioManager.play_station_bell()
 	_register_distraction_used("Campana de la estación (distracción sonora)")
 	if chaser != null and chaser.is_active:
 		chaser.distract_to(station_bell_area.global_position, 4.0)

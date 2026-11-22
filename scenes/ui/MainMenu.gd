@@ -39,6 +39,17 @@ func _ready() -> void:
 	options_button.pressed.connect(_on_options_button_pressed)
 	quit_button.pressed.connect(_on_quit_button_pressed)
 
+	for btn: Button in [
+		new_game_button,
+		continue_button,
+		options_button,
+		quit_button,
+		tutorial_button,
+		close_tutorial_button,
+		close_options_button
+	]:
+		btn.pressed.connect(AudioManager.play_ui_click)
+
 	master_slider.value_changed.connect(_on_bus_volume_changed.bind(MASTER_BUS_NAME))
 	music_slider.value_changed.connect(_on_bus_volume_changed.bind(MUSIC_BUS_NAME))
 	sfx_slider.value_changed.connect(_on_bus_volume_changed.bind(SFX_BUS_NAME))

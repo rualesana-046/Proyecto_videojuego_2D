@@ -79,6 +79,24 @@ func _ready() -> void:
 	main_menu_button.pressed.connect(_on_main_menu_button_pressed)
 	quit_game_button.pressed.connect(_on_quit_game_button_pressed)
 
+	for btn: Button in [
+		resume_button,
+		save_button,
+		journal_button,
+		options_button,
+		main_menu_button,
+		quit_game_button,
+		close_journal_button,
+		tutorial_button,
+		close_tutorial_button,
+		close_options_button,
+		confirm_main_menu_yes_button,
+		confirm_main_menu_no_button,
+		confirm_quit_yes_button,
+		confirm_quit_no_button
+	]:
+		btn.pressed.connect(AudioManager.play_ui_click)
+
 	close_journal_button.pressed.connect(_show_main_pause_panel)
 	tutorial_button.pressed.connect(_on_tutorial_button_pressed)
 	close_tutorial_button.pressed.connect(_on_close_tutorial_button_pressed)

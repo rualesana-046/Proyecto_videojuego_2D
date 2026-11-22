@@ -40,6 +40,8 @@ func _ready() -> void:
 	body_option.item_selected.connect(_on_body_option_selected)
 	hair_option.item_selected.connect(_on_hair_option_selected)
 	clothes_option.item_selected.connect(_on_clothes_option_selected)
+	start_button.pressed.connect(AudioManager.play_ui_click)
+	back_button.pressed.connect(AudioManager.play_ui_click)
 	start_button.pressed.connect(_on_start_button_pressed)
 	back_button.pressed.connect(_on_back_button_pressed)
 

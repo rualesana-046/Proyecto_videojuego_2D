@@ -64,6 +64,7 @@ func _create_option_buttons(options: Array) -> void:
 
 
 func _on_option_selected(next_id: String, effect: Array = [], option_set_state: Dictionary = {}) -> void:
+	AudioManager.play_ui_click()
 	if not option_set_state.is_empty():
 		for state_key: Variant in option_set_state.keys():
 			WorldState.state[str(state_key)] = option_set_state[state_key]
