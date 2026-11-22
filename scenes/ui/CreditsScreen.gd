@@ -77,7 +77,10 @@ func _play_current_section() -> void:
 		return
 
 	var section_data: Dictionary = CREDITS_SECTIONS[_current_section_index]
-	section_title_label.text = str(section_data.get("title", ""))
+	var section_title: String = str(section_data.get("title", ""))
+	var reading_duration: float = 6.0 if section_title == "Agradecimientos" else 4.8
+
+	section_title_label.text = section_title
 	section_body_label.text = str(section_data.get("body", ""))
 
 	section_title_label.modulate.a = 0.0
@@ -88,12 +91,12 @@ func _play_current_section() -> void:
 
 	_sequence_tween = create_tween()
 	_sequence_tween.set_parallel(true)
-	_sequence_tween.tween_property(section_title_label, "modulate:a", 1.0, 0.7)
-	_sequence_tween.tween_property(section_body_label, "modulate:a", 1.0, 0.7)
-	_sequence_tween.chain().tween_interval(2.6)
+	_sequence_tween.tween_property(section_title_label, "modulate:a", 1.0, 0.8)
+	_sequence_tween.tween_property(section_body_label, "modulate:a", 1.0, 0.8)
+	_sequence_tween.chain().tween_interval(reading_duration)
 	_sequence_tween.set_parallel(true)
-	_sequence_tween.tween_property(section_title_label, "modulate:a", 0.0, 0.5)
-	_sequence_tween.tween_property(section_body_label, "modulate:a", 0.0, 0.5)
+	_sequence_tween.tween_property(section_title_label, "modulate:a", 0.0, 0.7)
+	_sequence_tween.tween_property(section_body_label, "modulate:a", 0.0, 0.7)
 	_sequence_tween.chain().tween_callback(_advance_section)
 
 
