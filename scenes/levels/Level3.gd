@@ -72,6 +72,18 @@ func _ready() -> void:
 		if child is InspectableObject:
 			var inspectable: InspectableObject = child as InspectableObject
 			inspectable.object_inspected.connect(_on_house_object_inspected)
+			if not inspectable.grants_clue_id.is_empty():
+				inspectable.always_show_sparkle = true
+				if inspectable.wax_sparkle != null and not inspectable._is_collected_hidden:
+					inspectable.wax_sparkle.show()
+				var col_shape: CollisionShape2D = inspectable.get_node_or_null("CollisionShape2D")
+				if col_shape != null:
+					var new_shape: CircleShape2D = CircleShape2D.new()
+					new_shape.radius = 28.0
+					col_shape.shape = new_shape
+
+	if WorldState.inspected_objects.has("house_item_photo_elena") and not WorldState.clues_found.has("item_photo"):
+		WorldState.register_clue("item_photo")
 
 	craft_memory_1_button.pressed.connect(_on_craft_memory_pressed.bind("first_meeting"))
 	craft_memory_2_button.pressed.connect(_on_craft_memory_pressed.bind("the_promise"))
@@ -106,11 +118,15 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 
 
-func _on_house_object_inspected(_inspected_id: String, used_wax: bool) -> void:
+func _on_house_object_inspected(inspected_id: String, used_wax: bool) -> void:
+	if inspected_id == "house_item_photo_elena" or inspected_id == "item_photo":
+		WorldState.register_clue("item_photo")
 	if used_wax and WorldState.wax_remaining > 0:
 		WorldState.wax_remaining -= 1
 	_consume_time_unit(1)
 	_update_hud()
+	if memory_craft_modal != null and memory_craft_modal.visible:
+		_refresh_craft_buttons()
 
 
 func _consume_time_unit(amount: int) -> void:
@@ -150,31 +166,82 @@ func _refresh_craft_buttons() -> void:
 		% WorldState.wax_remaining
 	)
 
+	# --- I. El primer encuentro ---
 	if bool(_crafted_memories["first_meeting"]):
-		craft_memory_1_button.text = "✓ I. El primer encuentro (Reconstruido)"
+		craft_memory_1_button.text = "I. El primer encuentro — [Recuerdo reconstruido ✓]"
 		craft_memory_1_button.disabled = true
 	else:
-		craft_memory_1_button.text = "I. El primer encuentro — Fotografía + Carta inconclusa (1 Cera)"
-		craft_memory_1_button.disabled = not (has_photo and has_letter and has_wax)
+		var missing_1: PackedStringArray = PackedStringArray()
+		if not has_photo:
+			missing_1.append("Fotografía (Sala)")
+		if not has_letter:
+			missing_1.append("Carta (Estudio)")
+		if not has_wax:
+			missing_1.append("1 Cera dorada")
 
+		if missing_1.is_empty():
+			craft_memory_1_button.text = "I. El primer encuentro — [Listo para sellar · Consume 1 Cera]"
+			craft_memory_1_button.disabled = false
+		else:
+			var prefix_1: String = "Falta: " if missing_1.size() == 1 else "Faltan: "
+			craft_memory_1_button.text = "I. El primer encuentro — " + prefix_1 + ", ".join(missing_1)
+			craft_memory_1_button.disabled = true
+
+	# --- II. La promesa ---
 	if bool(_crafted_memories["the_promise"]):
-		craft_memory_2_button.text = "✓ II. La promesa (Reconstruido)"
+		craft_memory_2_button.text = "II. La promesa — [Recuerdo reconstruido ✓]"
 		craft_memory_2_button.disabled = true
 	else:
-		craft_memory_2_button.text = "II. La promesa — Cinta de encuadernación + Flor seca (1 Cera)"
-		craft_memory_2_button.disabled = not (has_ribbon and has_flower and has_wax)
+		var missing_2: PackedStringArray = PackedStringArray()
+		if not has_ribbon:
+			missing_2.append("Cinta (Estudio)")
+		if not has_flower:
+			missing_2.append("Flor seca (Jardín)")
+		if not has_wax:
+			missing_2.append("1 Cera dorada")
 
+		if missing_2.is_empty():
+			craft_memory_2_button.text = "II. La promesa — [Listo para sellar · Consume 1 Cera]"
+			craft_memory_2_button.disabled = false
+		else:
+			var prefix_2: String = "Falta: " if missing_2.size() == 1 else "Faltan: "
+			craft_memory_2_button.text = "II. La promesa — " + prefix_2 + ", ".join(missing_2)
+			craft_memory_2_button.disabled = true
+
+	# --- III. La despedida ---
 	if bool(_crafted_memories["the_farewell"]):
-		craft_memory_3_button.text = "✓ III. La despedida (Reconstruido)"
+		craft_memory_3_button.text = "III. La despedida — [Recuerdo reconstruido ✓]"
 		craft_memory_3_button.disabled = true
 	else:
-		craft_memory_3_button.text = "III. La despedida — Última carta de la habitación (1 Cera)"
-		craft_memory_3_button.disabled = not (has_last_letter and has_wax)
+		var missing_3: PackedStringArray = PackedStringArray()
+		if not has_last_letter:
+			missing_3.append("Última carta (Habitación)")
+		if not has_wax:
+			missing_3.append("1 Cera dorada")
+
+		if missing_3.is_empty():
+			craft_memory_3_button.text = "III. La despedida — [Listo para sellar · Consume 1 Cera]"
+			craft_memory_3_button.disabled = false
+		else:
+			var prefix_3: String = "Falta: " if missing_3.size() == 1 else "Faltan: "
+			craft_memory_3_button.text = "III. La despedida — " + prefix_3 + ", ".join(missing_3)
+			craft_memory_3_button.disabled = true
 
 
 func _on_craft_memory_pressed(memory_key: String) -> void:
 	if bool(_crafted_memories.get(memory_key, false)) or WorldState.wax_remaining < 1:
 		return
+
+	match memory_key:
+		"first_meeting":
+			if not (WorldState.clues_found.has("item_photo") and WorldState.clues_found.has("item_letter")):
+				return
+		"the_promise":
+			if not (WorldState.clues_found.has("item_ribbon") and WorldState.clues_found.has("item_dried_flower")):
+				return
+		"the_farewell":
+			if not WorldState.clues_found.has("item_last_letter"):
+				return
 
 	WorldState.wax_remaining -= 1
 	_crafted_memories[memory_key] = true

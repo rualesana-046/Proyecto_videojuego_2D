@@ -12,6 +12,8 @@ signal object_inspected(inspected_id: String, used_wax: bool)
 @export var object_texture: Texture2D = null
 @export var triggers_dialogue_id: String = ""
 @export var hide_after_collect: bool = false
+@export var always_show_sparkle: bool = false
+@export var collision_radius: float = 0.0
 
 var is_player_near: bool = false
 var _is_collected_hidden: bool = false
@@ -22,12 +24,24 @@ var _is_collected_hidden: bool = false
 
 
 func _ready() -> void:
+	if collision_radius > 0.0:
+		var col_shape: CollisionShape2D = get_node_or_null("CollisionShape2D")
+		if col_shape != null:
+			var new_shape: CircleShape2D = CircleShape2D.new()
+			new_shape.radius = collision_radius
+			col_shape.shape = new_shape
+
 	if object_texture != null and object_sprite != null:
 		object_sprite.texture = object_texture
 		object_sprite.show()
 
 	if hide_after_collect and not grants_clue_id.is_empty() and WorldState.clues_found.has(grants_clue_id):
 		_hide_collected_item()
+
+	if wax_sparkle != null:
+		var spark_tween: Tween = create_tween().set_loops()
+		spark_tween.tween_property(wax_sparkle, "modulate:a", 0.45, 0.75)
+		spark_tween.tween_property(wax_sparkle, "modulate:a", 1.0, 0.75)
 
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
@@ -106,7 +120,7 @@ func _on_notebook_state_changed(is_active: bool) -> void:
 		return
 	if wax_sparkle != null:
 		var has_hidden_detail: bool = not wax_reveal_text.is_empty() or not grants_clue_id.is_empty()
-		wax_sparkle.visible = is_active and has_hidden_detail
+		wax_sparkle.visible = always_show_sparkle or (is_active and has_hidden_detail)
 
 
 func _on_dialogue_state_changed() -> void:

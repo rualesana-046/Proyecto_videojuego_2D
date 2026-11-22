@@ -64,6 +64,8 @@ wax_reveal_text = "Esta flor fue guardada el día en que hicieron una promesa en
 grants_clue_id = "item_dried_flower"
 object_texture = ExtResource("8_item_tex")
 hide_after_collect = true
+always_show_sparkle = true
+collision_radius = 28.0
 
 [node name="InspectableWorkingClock" parent="." instance=ExtResource("6_inspectable_scene")]
 position = Vector2(36, -32)
@@ -74,7 +76,7 @@ wax_reveal_text = "El Cuaderno de Cera revela una inscripción interior: «Aquí
 is_optional_exploration = true
 
 [node name="ItemPhotoElena" parent="." instance=ExtResource("6_inspectable_scene")]
-position = Vector2(-36, -32)
+position = Vector2(-36, -20)
 object_id = "house_item_photo_elena"
 object_name = "Fotografía del abuelo junto a Elena"
 inspect_text = "Una fotografía cálida sobre la repisa de la sala principal."
@@ -82,6 +84,8 @@ grants_clue_id = "item_photo"
 object_texture = ExtResource("8_item_tex")
 triggers_dialogue_id = "casa_escena1_llegada"
 hide_after_collect = true
+always_show_sparkle = true
+collision_radius = 28.0
 
 [node name="InspectableStudyDesk" parent="." instance=ExtResource("6_inspectable_scene")]
 position = Vector2(-152, -32)
@@ -92,7 +96,7 @@ is_optional_exploration = true
 triggers_dialogue_id = "casa_escena2_estudio"
 
 [node name="ItemUnfinishedLetter" parent="." instance=ExtResource("6_inspectable_scene")]
-position = Vector2(-188, -8)
+position = Vector2(-176, -4)
 object_id = "house_item_unfinished_letter"
 object_name = "Carta inconclusa (Estudio)"
 inspect_text = "Un pliego de papel pergamino con la caligrafía joven de tu abuelo: relata el día en que conoció a Elena entre libros y herramientas. (Has obtenido: Carta inconclusa)."
@@ -100,6 +104,8 @@ wax_reveal_text = "La cera indica que esta carta se complementa con la Fotograf�
 grants_clue_id = "item_letter"
 object_texture = ExtResource("8_item_tex")
 hide_after_collect = true
+always_show_sparkle = true
+collision_radius = 28.0
 
 [node name="ItemBindingRibbon" parent="." instance=ExtResource("6_inspectable_scene")]
 position = Vector2(-132, 32)
@@ -110,9 +116,11 @@ wax_reveal_text = "Su trazo en cera resuena con la Flor seca del jardín."
 grants_clue_id = "item_ribbon"
 object_texture = ExtResource("8_item_tex")
 hide_after_collect = true
+always_show_sparkle = true
+collision_radius = 28.0
 
 [node name="ItemLastLetter" parent="." instance=ExtResource("6_inspectable_scene")]
-position = Vector2(148, -28)
+position = Vector2(148, -14)
 object_id = "house_item_last_letter"
 object_name = "Última carta (Habitación del abuelo)"
 inspect_text = "Sobre la mesa de noche de la habitación reposa un sobre cerrado con una sola palabra escrita: «Elena». (Has obtenido: Última carta)."
@@ -120,6 +128,8 @@ wax_reveal_text = "Contiene el recuerdo de la despedida que llevó a tu abuelo a
 grants_clue_id = "item_last_letter"
 object_texture = ExtResource("8_item_tex")
 hide_after_collect = true
+always_show_sparkle = true
+collision_radius = 28.0
 
 [node name="InspectableBedroomKeepsakes" parent="." instance=ExtResource("6_inspectable_scene")]
 position = Vector2(128, 32)
@@ -303,10 +313,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -310.0
-offset_top = -180.0
-offset_right = 310.0
-offset_bottom = 180.0
+offset_left = -340.0
+offset_top = -195.0
+offset_right = 340.0
+offset_bottom = 195.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -337,25 +347,25 @@ horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="CraftMemory1Button" type="Button" parent="HUD/MemoryCraftModal/MemoryCraftPanel/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 42)
+custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 text = "I. El primer encuentro — Fotografía + Carta inconclusa (1 Cera)"
 alignment = 0
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="CraftMemory2Button" type="Button" parent="HUD/MemoryCraftModal/MemoryCraftPanel/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 42)
+custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 text = "II. La promesa — Cinta de encuadernación + Flor seca (1 Cera)"
 alignment = 0
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="CraftMemory3Button" type="Button" parent="HUD/MemoryCraftModal/MemoryCraftPanel/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 42)
+custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 text = "III. La despedida — Última carta de la habitación (1 Cera)"
 alignment = 0
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="CloseCraftButton" type="Button" parent="HUD/MemoryCraftModal/MemoryCraftPanel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 38)
